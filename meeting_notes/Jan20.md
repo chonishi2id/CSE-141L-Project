@@ -15,22 +15,22 @@ Operations
 
 With 9 instructions, we can have a 3 bit encoding for each instruction.
 
-Program 1 Notes:
+Program 1 Notes:  
 -XOR can be expressed in terms of AND/OR
 
-Program 2 Notes:
--Is printing to console/output an instruction?
+Program 2 Notes:  
+-Is printing to console/output an instruction?  
 -Idea: replace two-bit error with immediate value to show an error was detected
 
-Program 3 Notes:
--Need comparison operator because we need to compare all 5-bit groupings to the 5-bit pattern
+Program 3 Notes:  
+-Need comparison operator because we need to compare all 5-bit groupings to the 5-bit pattern  
 -Increment (add)
 
-To think about more:
--How many bits do we want to allow immediate value to have => max number we can support
+To think about more:  
+-How many bits do we want to allow immediate value to have => max number we can support  
 -Find a clever way to represent immediates, probably need at least up to 256
 
 Brainstorming overall goals for ISA:
--Maybe two instruction types: register only and with immediates
--Think of which of the design archetypes is best-suited (load/store)
+-Maybe two instruction types: register only and with immediates  
+-Think of which of the design archetypes is best-suited (load/store)  
 -Start with load/store architecture since it is used in modern architecture and is a good reference 
