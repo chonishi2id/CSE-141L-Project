@@ -30,7 +30,7 @@ To think about more:
 -How many bits do we want to allow immediate value to have => max number we can support  
 -Find a clever way to represent immediates, probably need at least up to 256
 
-Brainstorming overall goals for ISA:
+Brainstorming overall goals for ISA:  
 -Maybe two instruction types: register only and with immediates  
 -Think of which of the design archetypes is best-suited (load/store)  
 -Start with load/store architecture since it is used in modern architecture and is a good reference 
