@@ -61,3 +61,8 @@ NOTE: The immediate is tentative until we figure out a way to encode 8 bits wort
 
 ### J-type:
 We probably don't need J-type instructions
+
+### Action goals
+- Nishi: Figure out immediate encoding method
+- Matt: Implement programs in higher level language
+- Jel: Read meeting notes and attempt to find flaws in the writeup
