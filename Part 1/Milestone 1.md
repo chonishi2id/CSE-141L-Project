@@ -9,7 +9,12 @@ Our group's processor, named "INSERT NAME HERE" is designed to perform the follo
 2. SECDED Hamming Decoding of 11-bit strings
 3. Pattern matching 5-bit strings on 11-bit strings
 
-The machine takes major influence from typical load-store architectures.
+The machine takes major influence from typical load-store architectures. Although being constrained to 9 bits in our ISA, we strived to come up with a processor that would make writing the three assigned programs a relatively simple endeavor. As such, we agreed we should try to have 3 general purpose registers. This should also help make the programs run faster.
+
+To achieve this, one of the things we do differently from a typical load-store architecture is that when we load and store registers, we use one of the two as both a source and a destination. This allows for a more efficient use of space per instruction because we only need 4 bits to specify which registers we will use during execution.
+
+Another thing we do differently is that our I-Type instructions have 3 bits dedicated to representing immediate values. We represent any 8 bit number in the system via shifting and adding. A demonstration will be shown below.
+
 * * *
 ## **Component 2:** Architectural Overview
 <img src="https://media.discordapp.net/attachments/927665045213679638/935371997444177981/unknown.png?width=1253&height=910">
@@ -70,18 +75,16 @@ Wait what the heck does this part mean?
 3. What is the maximum branch distance supported?
 
 ### **Addressing Modes:**
-We support indirect memory addressing via registers. If a programmer wants to access a specific memory address, they must perform several shifting and masking operations. An example is outlined below: 
+We support direct memory addressing via registers. However, if a programmer wants to access a specific memory address, they must perform several shifting and masking operations. An example is outlined below: 
 
 **Task: load address 01110101**
 	
-	ldi r1, 011  -- r1: 00000011
-	ls r1, #5    -- r1: 01100000
-	ldi r2, 101  -- r1: 01100000 r2: 00000101
-	ls r2, #2    -- r1: 01100000 r2: 00010100
-	or r1, r2    -- r1: 01110100 r2: 00010100
-	ldi r2, 01   -- r1: 01110100 r2: 00000001
-	or r1, r2    -- r1: 01110101 r2: 00000001
-	ldr r0, (r1)
+	ldi r1, #3    -- r1: 00000011
+	ls r1, #3     -- r1: 00011000
+	addi r1, #5   -- r1: 00011101
+	ls r1, #2     -- r1: 01110100
+	addi r1, #1   -- r1: 01110101
+	ldr r0, (r1)  == value stored in memory address r1 = [170]
 	
 * * *
 ## **Component 4:** Programmer's Model
