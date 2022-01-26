@@ -70,6 +70,7 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 ### **Control Flow (Branches):**
 We will support one branching instruction, branch if equal (beq). If the values stored in the registers specified are equal, the program counter will jump to the address stored in a particular register, r2, that is guaranteed to hold the target address. This makes calculation of the target address simple and it does not need to be encoded within the instruction because if the branching condition is met, the program will jump to the address stored always stored in the same register, r2. The maximum branching distance will be at most 255 bytes, so that register r2 may contain a target address that is within the full range of memory address space.
 Example:
+
 	//access target memory address and load into r2
 	ldi r1, #3    -- r1: 00000011
 	ls r1, #3     -- r1: 00011000
