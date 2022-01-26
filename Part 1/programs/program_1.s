@@ -78,20 +78,20 @@ Func1_loop:
 
 	//b9 (We're now on the MSB)
 	ls r2, #7
-	rs r1, #7
-	str r1, [205]
-	ldr r1, [196]
+	rs r2, #7
+	str r2, [205]
+	ldr r2, [196]
 
 	//b10
-	ls r1, #6
-	rs r1, #7
-	str r1, [206]
-	ldr r1, [196]
+	ls r2, #6
+	rs r2, #7
+	str r2, [206]
+	ldr r2, [196]
 
 	//b11
-	rs r1, #2
-	str r1, [207]
-	ldr r1, [196]
+	rs r2, #2
+	str r2, [207]
+	ldr r2, [196]
 
 	// parity bit creation 
 	// p8 = ^(b11:b5)
