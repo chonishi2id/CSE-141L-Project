@@ -51,7 +51,7 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 | 0100 | I | load immediate | ldi | ldi r0, #7   | 0100 00 111  |
 | 0101 | R | load register  | ldr | ldr r2, (r0) | 0101 10 00 X |
 | 0110 | R | store register | str | str (r2), r0 | 0110 10 00 X |
-| 0111 | R | branch if equal| beq | beq r0, r1   | 0111 00 01 X |
+| 0111 | R | branch if equal| beq | beq r0, r1   | 0111 XX XX X |
 | 1000 | R | >=          | geq | geq r0, r1  | 1000 00 01 X |
 | 1001 | R | ==          | eq  | eq r0, r1   | 1001 00 01 X |
 | 1010 | R | 2's Comp Negation| neg | neg r1, r1 | 1010 01 01 X |
