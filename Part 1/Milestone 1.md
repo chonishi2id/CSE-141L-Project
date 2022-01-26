@@ -68,7 +68,7 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 - PC : 11 = special (Program counter)
 
 ### **Control Flow (Branches):**
-We will support one branching instruction, branch if equal (beq). If the values stored in the registers specified are equal, the program counter will jump to the address stored in a particular register that is guaranteed to hold the target address. This makes calculation of the target address simple and it does not need to be encoded within the instruction because if the branching condition is met, the program will jump to the address stored always stored in the same register. The maximum branching distance will be at most 255 bytes, so the register may contain a target address that is within the full range of memory address space.
+We will support one branching instruction, branch if equal (beq). If the values stored in the registers specified are equal, the program counter will jump to the address stored in a particular register, r2, that is guaranteed to hold the target address. This makes calculation of the target address simple and it does not need to be encoded within the instruction because if the branching condition is met, the program will jump to the address stored always stored in the same register, r2. The maximum branching distance will be at most 255 bytes, so that register r2 may contain a target address that is within the full range of memory address space.
 
 **DELETE BELOW AFTER FINALIZATION**
 **ADD BRANCH INSTRUCTION EXAMPLE**
