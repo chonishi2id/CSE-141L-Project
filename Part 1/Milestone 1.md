@@ -1,6 +1,6 @@
 # **Milestone 1 Document**
 ### Date Created: 1/24/2022
-### Date Last Updated: 1/24/2022
+### Date Last Updated: 1/26/2022
 ### Group Members: Daisuke Chon, Angelica Consengco, Matthew Larkins
 * * *
 ## **Component 1:** Introduction
