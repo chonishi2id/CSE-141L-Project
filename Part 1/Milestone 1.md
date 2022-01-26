@@ -103,4 +103,4 @@ If a programmer wants to use a specific 8-bit address, then they must conduct sh
 
 * * *
 ## **Component 5:** Program Implementations
-Please check the attached program files in the submission
+Please contact us at tchon@ucsd.edu so that you can access our private repo and look at our program files under main/Part1/programs
