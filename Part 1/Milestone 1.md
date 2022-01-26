@@ -4,7 +4,7 @@
 ### Group Members: Daisuke Chon, Angelica Consengco, Matthew Larkins
 * * *
 ## **Component 1:** Introduction
-Our group's processor, named "INSERT NAME HERE" is designed to perform the following 3 programs:
+Our group's processor, named "3BC" is designed to perform the following 3 programs:
 1. Hamming Encoding of 11-bit strings
 2. SECDED Hamming Decoding of 11-bit strings
 3. Pattern matching 5-bit strings on 11-bit strings
