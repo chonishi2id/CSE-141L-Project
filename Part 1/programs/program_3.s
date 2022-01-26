@@ -20,7 +20,7 @@
 // 196          flag indicating the patter was recognized within the current byte...set to 1 if yes, 0 if not
 
 /***************
-initializations
+Initializations
 ***************/
 // # of times 5-bit pattern recognized within byte boundaries initially 0
 ldi R2, 0 
@@ -40,13 +40,9 @@ ldi R2, 128   // max immediate is 7, will do shifts and adds to get 128...this i
 ldi R1, 195   // max immediate is 7, will do shifts and adds to get 195...this is the address we will store the index  
 str [R1], R2  // keeping track of current index by storing it in memory (because we will need all three registers sometimes)
 
-
-
-
-
-/**************
-Calculating total number of times the 5-bit pattern occurs with byte boundaries OFF
-**************/
+/***************
+Procedure
+***************/
 L1:
     // flag indicating the pattern was recognized within the current byte initially 0 (false)
     ldi R2, 0 
