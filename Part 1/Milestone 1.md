@@ -57,7 +57,7 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 | 1010 | R | 2's Comp Negation| neg | neg r1, r1 | 1010 01 01 X |
 | 1011 | R | add         | add | add r0, r1  | 1011 00 01 X |
 | 1100 | R | add immediate  | addi | addi r0, #3 | 1100 00 011  |
-| 1101 | X | !=             | neq  | neq r0, r1  | 1101 00 01 X |       
+| 1101 | R | !=             | neq  | neq r0, r1  | 1101 00 01 X |       
 | 1110 | X | nop | 
 | 1111 | X | nop |
 
