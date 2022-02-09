@@ -14,13 +14,18 @@ import definitions::*;
 * even: is the output even?
 */
 
-
 module ALU_tb;
-logic [ 7:0] INPUTA;        // data inputs
+logic [ 7:0] INPUTA;  // data inputs
 logic [ 7:0] INPUTB;
+<<<<<<< HEAD
 logic [ 3:0] op;  // ALU opcode, part of microcode
 wire[ 7:0] OUT;
 //wire Zero;
+=======
+logic [ 3:0] op;      // ALU opcode, part of microcode
+wire  [ 7:0] OUT;
+wire Zero;
+>>>>>>> f1232a57d3eb57cc5e4bc69b8ce79651debb2526
 logic [ 7:0] expected;
 
 // CONNECTION
@@ -33,14 +38,33 @@ ALU uut(
     );
 
 initial begin
+  INPUTA = 1;
+  INPUTB = 1;
+  op = 4'b0000;  // LSH
+  test_alu_func; // void function call
+  #5;
 
+<<<<<<< HEAD
  INPUTA = 1;
  INPUTB = 1;
  op = 4'b0000; //LSH
  test_alu_func; // void function call
  #20;
+=======
+  INPUTA = 1;
+  INPUTB = 1;
+  op= 4'b0001;   // RSH
+  test_alu_func; // void function call
+  #5;
+>>>>>>> f1232a57d3eb57cc5e4bc69b8ce79651debb2526
 
+  INPUTA = 1;
+  INPUTB = 1;
+  op = 4'b0010;  // AND
+  test_alu_func; // void function call
+  #5;
 
+<<<<<<< HEAD
  INPUTA = 1;
  INPUTB = 1;
  op= 4'b0001; // RSH
@@ -88,10 +112,46 @@ initial begin
  op = 4'b1101; //NEQ
  test_alu_func; // void function call
  #20;
+=======
+  INPUTA = 1;
+  INPUTB = 0;
+  op = 4'b0011;  // OR
+  test_alu_func; // void function call
+  #5;
 
+  INPUTA = 3;
+  INPUTB = 4;
+  op = 4'b1000;  // GEQ
+  test_alu_func; // void function call
+  #5;
 
+  INPUTA = 2;
+  INPUTB = 2;
+  op = 4'b1001;  // EQ
+  test_alu_func; // void function call
+  #5;
+
+  INPUTA = 1;
+  INPUTB = 1;
+  op = 4'b1010;  //  NEG
+  test_alu_func; // void function call
+  #5;
+>>>>>>> f1232a57d3eb57cc5e4bc69b8ce79651debb2526
+
+  INPUTA = 1;
+  INPUTB = 1;
+  op = 4'b1011;  // ADD
+  test_alu_func; // void function call
+  #5;
+
+  INPUTA = 1;
+  INPUTB = 3;
+  op = 4'b1101;  // NEQ
+  test_alu_func; // void function call
+  #5;
  end
 
+<<<<<<< HEAD
  task test_alu_func;
  begin
    case (op)
@@ -113,5 +173,27 @@ initial begin
 
  end
  endtask
+=======
+  task test_alu_func;
+  begin
+    case (op)
+      LSH : expected = { INPUTA[6:0] };         // LSH 0000
+      RSH : expected = { 1'b0, INPUTA[7:1] };   // RSH 0001
+      AND : expected = INPUTA & INPUTB;         // AND 0010
+      OR  : expected = INPUTA || INPUTB;        // OR  0011
+      GEQ : expected = INPUTA >= INPUTB         // GEQ 0100
+      EQ  : expected = INPUTA == INPUTB         // EQ  1001
+      NEG : expected = ~INPUTA + 1;             // NEG 1010
+      ADD : expected = INPUTA + INPUTB;         // ADD 0111
+      NEQ : expected = INPUTA != INPUTB         // NEQ 1000
+    endcase
+    #1; if(expected == OUT) begin
+      $display("%t YAY!! inputs = %h %h, opcode = %b, Zero %b",$time, INPUTA,INPUTB,op, Zero);
+    end
+    else begin 
+      $display("%t FAIL! inputs = %h %h, opcode = %b, zero %b",$time, INPUTA,INPUTB,op, Zero);end
+    end
+  endtask
+>>>>>>> f1232a57d3eb57cc5e4bc69b8ce79651debb2526
 
 endmodule

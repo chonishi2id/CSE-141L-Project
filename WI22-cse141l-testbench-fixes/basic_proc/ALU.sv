@@ -19,19 +19,32 @@ module ALU #(parameter W=8, Ops=4)(
 	 
   op_mne op_mnemonic;			          // type enum: used for convenient waveform viewing
 	
+<<<<<<< HEAD
   always@(InputA or InputB or OP) 
 begin
     case(OP)							  
+=======
+  always_comb begin
+    Out = 0;                              // No Op = default
+    case (OP)							  
+>>>>>>> f1232a57d3eb57cc5e4bc69b8ce79651debb2526
       ADD : Out = InputA + InputB;        // add 
       LSH : Out = {InputA[6:0], 1'b0};    // shift left, fill in with zeroes 
 	    RSH : Out = {1'b0, InputA[7:1]};    // shift right
       AND : Out = InputA & InputB;        // bitwise AND
       OR  : Out = InputA || InputB;       // bitwise OR
+<<<<<<< HEAD
       NEG : Out = ~InputA + 1;             //2's comp
       GEQ : Out = (InputA >= InputB);         // Greater than or Equal to
       EQ  : Out = (InputA == InputB);         // Equals to
       NEQ : Out = (InputA != InputB);         // Not Equals to
       default: Out = 0;     
+=======
+      NEG : Out = ~InputA + 1;
+      GEQ : Out = (InputA >= InputB);         // Greater than or Equal to
+      EQ  : Out = (InputA == InputB);        // Equals to
+      NEQ : Out = (InputA != InputB);         // Not Equals to
+>>>>>>> f1232a57d3eb57cc5e4bc69b8ce79651debb2526
     endcase
   end
 
