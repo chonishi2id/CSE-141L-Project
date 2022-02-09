@@ -6,7 +6,7 @@
 // Additional Comments: 
 //   combinational (unclocked) ALU
 import definitions::*;			          // includes package "definitions"
-module ALU #(parameter W=8, Ops=3)(
+module ALU #(parameter W=8, Ops=4)(
   input        [W-1:0]   InputA,      // data inputs
                          InputB,
   input        [Ops-1:0] OP,		      // ALU opcode, part of microcode
@@ -29,9 +29,9 @@ module ALU #(parameter W=8, Ops=3)(
       AND : Out = InputA & InputB;        // bitwise AND
       OR  : Out = InputA || InputB;       // bitwise OR
       NEG : Out = ~InputA + 1;
-      GEQ : Out = (InputA >= InputB)         // Greater than or Equal to
-      EQ  : Out = (InputA == InputB)         // Equals to
-      NEQ : Out = (InputA != InputB)         // Not Equals to
+      GEQ : Out = (InputA >= InputB);         // Greater than or Equal to
+      EQ  : Out = (InputA == InputB);        // Equals to
+      NEQ : Out = (InputA != InputB);         // Not Equals to
     endcase
   end
 
