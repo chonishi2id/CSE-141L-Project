@@ -17,9 +17,9 @@ module ProgCtr #(parameter L=10) (
   
 	 
   // program counter can clear to 0, increment, or jump
-  always_ff @(posedge Clk iff Start)	           // or just always; always_ff is a linting construct
+  always_ff @(posedge Clk)         // or just always; always_ff is a linting construct
 	if(Reset)
-	  ProgCtr <= 0;				       // for first program; want different value for 2nd or 3rd
+	  ProgCtr <= 0;	
 	else if(BranchAbsEn)	               // unconditional absolute jump
 	  ProgCtr <= Target;			   //   how would you make it conditional and/or relative?
 	else

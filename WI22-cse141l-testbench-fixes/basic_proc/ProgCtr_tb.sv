@@ -1,9 +1,7 @@
 //Test bench
 // Program Counter
-
+`timescale 1ns / 1ps
 module ProgCtr_tb;
-
-timeunit 1ns/1ps;
 
 bit Reset;
 bit Start;
@@ -25,7 +23,6 @@ ProgCtr uut(
 
 initial begin
     Reset = 1'b1;
-    Start = '0;
     Clk = '0;
     BranchAbsEn = '0;
     ALU_flag = '0;
@@ -37,20 +34,24 @@ initial begin
     $display("Check Reset");
     assert (ProgCtr_o == 'd0);
     Reset = 1'b0; //turn reset off
-
-    #1 Clk = '0; //advance 1 time unit, check results
-    $display("Check that nothing happens before Start");
-    assert (ProgCtr_o == 'd0);
-    Start = '1;
-    BranchAbs = '1;
+	 BranchAbsEn = '1;
     Target = 10;
 
-    #1 Clk = '1; //advance 1 time unit, latch values
+    #1 Clk = '1; //advance 1 time unit, check results
+    
+    //#1 Clk = '0;
+    //$display("Check that nothing happens before Start");
+    //assert (ProgCtr_o == 'd0);
+    //Start = '1;
+    //BranchAbsEn = '1;
+    //Target = 10;
+
+//    #1 Clk = '1; //advance 1 time unit, latch values
 
     #1 Clk = '0; //advance 1 time unit, check results
     $display("Check if PC jumps to target");
     assert (ProgCtr_o == 10);
-    BranchAbs = '0;
+    BranchAbsEn = '0;
 
     #1 Clk = '1; //advance 1 time unit, latch values
 
