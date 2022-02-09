@@ -1,3 +1,4 @@
+import definitions::*;			
 `timescale 1ns/ 1ps
 
 //Test bench
@@ -37,27 +38,77 @@ initial begin
 
  INPUTA = 1;
  INPUTB = 1;
- op= 'b000; // ADD
+ op = 4'b0000; //LSH
  test_alu_func; // void function call
  #5;
 
 
- INPUTA = 4;
+ INPUTA = 1;
  INPUTB = 1;
- op= 'b100; // AND
+ op= 4'b0001; // RSH
  test_alu_func; // void function call
  #5;
+
+ INPUTA = 1;
+ INPUTB = 1;
+ op = 4'b0010; //AND
+ test_alu_func; // void function call
+ #5;
+
+ INPUTA = 1;
+ INPUTB = 0;
+ op = 4'b0011; //OR
+ test_alu_func; // void function call
+ #5;
+
+ INPUTA = 3;
+ INPUTB = 4;
+ op = 4'b1000; //GEQ
+ test_alu_func; // void function call
+ #5;
+
+ INPUTA = 2;
+ INPUTB = 2;
+ op = 4'b1001; //EQ
+ test_alu_func; // void function call
+ #5;
+
+ INPUTA = 1;
+ INPUTB = 1;
+ op = 4'b1010; //NEG
+ test_alu_func; // void function call
+ #5;
+
+ INPUTA = 1;
+ INPUTB = 1;
+ op = 4'b1011; //ADD
+ test_alu_func; // void function call
+ #5;
+
+ INPUTA = 1;
+ INPUTB = 3;
+ op = 4'b1101; //NEQ
+ test_alu_func; // void function call
+ #5;
+
+
+
+
+
  end
 
  task test_alu_func;
  begin
    case (op)
-  0: expected = INPUTA + INPUTB;  // ADD 
-  1: expected = {INPUTA[6:0], SC_IN};  // LSH
-  2: expected = {1'b0, INPUTA[7:1]};  // RSH
-  3: expected = INPUTA ^ INPUTB;  // XOR
-  4: expected = INPUTA & INPUTB;     //AND
-  5: expected = INPUTA - INPUTB;   // SUB
+  ADD : expected = INPUTA + INPUTB;  // ADD 
+  LSH : expected = {INPUTA[6:0], SC_IN};  // LSH
+  RSH : expected = {1'b0, INPUTA[7:1]};  // RSH
+  AND : expected = INPUTA & INPUTB;     //AND
+  OR  : expected = INPUTA || INPUTB;   // OR
+  NEG : expected = ~INPUTA + 1; //NEG
+  GEQ : expected = INPUTA >= INPUTB // GEQ
+  EQ  : expected = INPUTA == INPUTB //EQ
+  NEQ : expected = INPUTA != INPUTB //NEQ
    endcase
    #1; if(expected == OUT)
   begin
