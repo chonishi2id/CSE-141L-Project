@@ -34,9 +34,9 @@ module ALU #(parameter W=8, Ops=4)(
     endcase
   end
 
-  //assign Zero   = !Out;                   // reduction NOR
-  //assign Parity = ^Out;                   // reduction XOR
-  //assign Odd    = Out[0];				  // odd/even -- just the value of the LSB
+  assign Zero   = !Out;                   // reduction NOR
+  assign Parity = ^Out;                   // reduction XOR
+  assign Odd    = Out[0];				  // odd/even -- just the value of the LSB
 
   always_comb
     op_mnemonic = op_mne'(OP);			  // displays operation name in waveform viewer

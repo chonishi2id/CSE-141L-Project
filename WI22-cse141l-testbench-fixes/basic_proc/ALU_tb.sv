@@ -103,7 +103,7 @@ initial begin
   task test_alu_func;
   begin
     case (op)
-      LSH : expected = { INPUTA[6:0], 1'b0 };         // LSH 0000
+      LSH : expected = { INPUTA[6:0], 1'b0 };   // LSH 0000
       RSH : expected = { 1'b0, INPUTA[7:1] };   // RSH 0001
       AND : expected = INPUTA & INPUTB;         // AND 0010
       OR  : expected = INPUTA || INPUTB;        // OR  0011
