@@ -235,7 +235,6 @@ p2_comparison:
 	eq r0, r1 //check if parity bits match
 	str r0, [222] //store result in address 222
 
-
 p1_exp:
 	// p1 = ^(b11, b9, b7, b5, b4, b2, b1)
 	// b11^b9
@@ -265,8 +264,6 @@ p1_exp:
 	ldr r1, (r2)
 	neq r0, r1
 
-
-
 p1_comparison:
 	str r0, [216] //store expected p1 in address 216
 	//compare actual parity with expected parity
@@ -274,8 +271,6 @@ p1_comparison:
 	ldr r1, [198] 
 	eq r0, r1 //check if parity bits match
 	str r0, [223] //store result in address 223
-
-
 
 p16_loop:
 	// p16 = ^(b11:1, p8, p4, p2, p1)
@@ -337,8 +332,6 @@ p16_loop:
 	addi r2, #(-1)
 	ldr r1, (r2)
 	neq r0, r1
-
-
 
 p16_comparison:
 	str r0, [220] //store expected p16 in address 220
@@ -487,8 +480,3 @@ output:
 end:
 	// we're done, yay
 	fin
-
-
-
-
-
