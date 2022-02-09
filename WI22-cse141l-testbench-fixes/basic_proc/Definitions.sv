@@ -14,11 +14,11 @@ package definitions;
     const logic [3:0]kEQ   = 4'b1001;
 	const logic [3:0]kNEG  = 4'b1010;
     const logic [3:0]kADD  = 4'b1011;
-    const logic [3:0]kNEQ  = 4'b1101;
+	const logic [3:0]kNEQ  = 4'b1101;
 // enum names will appear in timing diagram
-    typedef enum logic[2:0] {
-        ADD, LSH, RSH, XOR,
-        AND, SUB, CLR } op_mne;
+    typedef enum logic[3:0] {
+        LSH, RSH, AND, OR, GEQ,
+        EQ, NEG, ADD, NEQ } op_mne;
 // note: kADD is of type logic[2:0] (3-bit binary)
 //   ADD is of type enum -- equiv., but watch casting
 //   see ALU.sv for how to handle this   

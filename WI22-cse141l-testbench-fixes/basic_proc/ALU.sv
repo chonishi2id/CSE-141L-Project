@@ -6,7 +6,7 @@
 // Additional Comments: 
 //   combinational (unclocked) ALU
 import definitions::*;			          // includes package "definitions"
-module ALU #(parameter W=8, Ops=3)(
+module ALU #(parameter W=8, Ops=4)(
   input        [W-1:0]   InputA,      // data inputs
                          InputB,
   input        [Ops-1:0] OP,		      // ALU opcode, part of microcode
