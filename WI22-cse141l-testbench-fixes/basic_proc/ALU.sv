@@ -29,9 +29,9 @@ module ALU #(parameter W=8, Ops=4)(
       AND : Out = InputA & InputB;        // bitwise AND
       OR  : Out = InputA || InputB;       // bitwise OR
       NEG : Out = ~InputA + 1;
-      GEQ : Out = (InputA >= InputB)         // Greater than or Equal to
-      EQ  : Out = (InputA == InputB)         // Equals to
-      NEQ : Out = (InputA != InputB)         // Not Equals to
+      GEQ : Out = (InputA >= InputB);         // Greater than or Equal to
+      EQ  : Out = (InputA == InputB);        // Equals to
+      NEQ : Out = (InputA != InputB);       // Not Equals to
 
     endcase
   end
