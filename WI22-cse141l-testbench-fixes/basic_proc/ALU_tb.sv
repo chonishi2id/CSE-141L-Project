@@ -92,9 +92,6 @@ initial begin
  #5;
 
 
-
-
-
  end
 
  task test_alu_func;
