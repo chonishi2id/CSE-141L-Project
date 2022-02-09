@@ -18,19 +18,19 @@ module InstROM #(parameter A=10, W=9) (
 
 // First option - manually populating instructions
   always_comb begin 
-	InstOut = 'b000_000_000;        // default
+	InstOut = 'b0000_00_00_0;        // default
 	case (InstAddress)
-//opcode = 3 load, rs = 1, rt = 0, reg[rs] = mem[reg[rt]]
-      0 : InstOut = 'b011_001_000;  // load from address at reg 0 to reg 1  
+//opcode = 5 load, rd = 1, rs = 0, reg[rd] = mem[reg[rs]]
+      0 : InstOut = 'b0101_01_00_0;  // load from address at reg 1 to reg 0  
 
-// opcode = 3 load, rs = 3, rt = 4, reg[rs] = mem[reg[rt]]
-      1 : InstOut = 'b011_011_100;  // load from address at reg 4 to reg 3
+// opcode = 6 store, rd = 2, rs = 1, mem[reg[rd]] = reg[rs]
+      1 : InstOut = 'b0110_10_01_0;  // write reg 1 into address at reg 2
 		
-// opcode = 0 add, rs = 1, rt = 3, reg[rs] = reg[rs]+reg[rt]
-      2 : InstOut = 'b000_001_011;  // add reg 1 and reg 3
+// opcode = 10 add, rd = 1, rs = 2, reg[rd] = reg[rd]+reg[rs]
+      2 : InstOut = 'b1011_01_10_1;  // add reg 1 and reg 2
 		
-// opcode = 6 store, rs = 1, rt = 0, mem[reg[rt]] = reg[rs]
-      3 : InstOut = 'b110_001_000;  // write reg 1 to address at reg 0
+// opcode = 8 equals, rd = 0, rs = 1, reg[rd] == reg[rs]
+      3 : InstOut = 'b1001_00_01_0;  // compare rd to rs for equality
 		
 // opcode = 15 halt
       4 : InstOut = '1;  // equiv to 10'b1111111111 or 'b1111111111    halt
