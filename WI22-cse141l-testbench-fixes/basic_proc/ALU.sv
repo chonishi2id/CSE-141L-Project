@@ -21,7 +21,7 @@ module ALU #(parameter W=8, Ops=3)(
 	
   always_comb begin
     Out = 0;                              // No Op = default
-    case(OP)							  
+    case (OP)							  
       ADD : Out = InputA + InputB;        // add 
       LSH : Out = {InputA[6:0], 1'b0};    // shift left, fill in with zeroes 
       // for logical left shift, tie SC_in = 0
@@ -32,7 +32,6 @@ module ALU #(parameter W=8, Ops=3)(
       GEQ : Out = (InputA >= InputB)         // Greater than or Equal to
       EQ  : Out = (InputA == InputB)         // Equals to
       NEQ : Out = (InputA != InputB)         // Not Equals to
-
     endcase
   end
 
