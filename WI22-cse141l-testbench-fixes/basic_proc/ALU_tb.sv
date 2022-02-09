@@ -27,9 +27,9 @@ ALU uut(
   .InputA(INPUTA),
   .InputB(INPUTB),
   .OP(op),
-  .Out(OUT),
+  .Out(OUT)
   .Zero(Zero)
-    );
+);
 
 initial begin
   INPUTA = 1;
@@ -51,40 +51,53 @@ initial begin
   #5;
 
   INPUTA = 1;
-  INPUTB = 0;
-  op = 4'b0011;  // OR
+  INPUTB = 1;
+  op= 4'b0001; // RSH
   test_alu_func; // void function call
-  #5;
+  #20;
+
+  INPUTA = 1;
+  INPUTB = 1;
+  op = 4'b0010; //AND
+  test_alu_func; // void function call
+  #20;
+
+  INPUTA = 1;
+  INPUTB = 0;
+  op = 4'b0011; //OR
+  test_alu_func; // void function call
+  #20;
 
   INPUTA = 3;
   INPUTB = 4;
-  op = 4'b1000;  // GEQ
+  op = 4'b1000; //GEQ
   test_alu_func; // void function call
-  #5;
+  #20;
 
   INPUTA = 2;
   INPUTB = 2;
-  op = 4'b1001;  // EQ
+  op = 4'b1001; //EQ
   test_alu_func; // void function call
-  #5;
+  #20;
 
   INPUTA = 1;
   INPUTB = 1;
-  op = 4'b1010;  //  NEG
+  op = 4'b1010; //NEG
   test_alu_func; // void function call
-  #5;
+  #20;
 
   INPUTA = 1;
   INPUTB = 1;
-  op = 4'b1011;  // ADD
+  op = 4'b1011; //ADD
   test_alu_func; // void function call
-  #5;
+  #20;
 
   INPUTA = 1;
   INPUTB = 3;
-  op = 4'b1101;  // NEQ
+  op = 4'b1101; //NEQ
   test_alu_func; // void function call
-  #5;
+  #20;
+
  end
 
   task test_alu_func;
