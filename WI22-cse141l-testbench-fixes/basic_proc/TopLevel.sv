@@ -32,16 +32,15 @@ logic[15:0] CycleCt;	   // standalone; NOT PC!
 	.Reset        (Reset   ) ,  // reset to 0
 	.Start        (Start   ) ,  // SystemVerilog shorthand for .grape(grape) is just .grape 
 	.Clk          (Clk     ) ,  //    here, (Clk) is required in Verilog, optional in SystemVerilog
-	.BranchAbs    (Jump    ) ,  // jump enable
-	.BranchRel    (BranchEn) ,  // branch enable
+	.BranchAbsEn    (Jump    ) ,  // jump enable
 	.ALU_flag	  (Zero    ) ,  // 
 	.Target       (PCTarg  ) ,  // "where to?" or "how far?" during a jump or branch
 	.ProgCtr      (PgmCtr  )	   // program count = index to instruction memory
 	);					  
 
-LUT LUT1(.Addr         (TargSel ) ,
-         .Target       (PCTarg  )
-    );
+//LUT LUT1(.Addr         (TargSel ) ,
+//         .Target       (PCTarg  )
+//    );
 
 // instruction ROM -- holds the machine code pointed to by program counter
   InstROM #(.W(9)) IR1(
@@ -65,7 +64,7 @@ LUT LUT1(.Addr         (TargSel ) ,
 
 // reg file
 	RegFile #(.W(8),.A(3)) RF1 (			  // A(3) makes this 2**3=8 elements deep
-		.Clk    				  ,
+		.Clk(Clk)    				  ,
 		.Reset     (Reset),
 		.WriteEn   (RegWrEn)    , 
 		.RaddrA    (Instruction[5:3]),        //concatenate with 0 to give us 4 bits
@@ -87,10 +86,9 @@ LUT LUT1(.Addr         (TargSel ) ,
     ALU ALU1  (
 	  .InputA  (InA),
 	  .InputB  (InB), 
-	  .SC_in   (1'b1),
 	  .OP      (Instruction[8:6]),
 	  .Out     (ALU_out),//regWriteValue),
-	  .Zero		                              // status flag; may have others, if desired
+	  .Zero	(Zero)	                              // status flag; may have others, if desired
 	  );
   
 	DataMem DM1(
@@ -98,7 +96,7 @@ LUT LUT1(.Addr         (TargSel ) ,
 		.WriteEn      (MemWrite), 
 		.DataIn       (ReadA), 
 		.DataOut      (MemReadValue)  , 
-		.Clk 		  		     ,
+		.Clk 		  	  (Clk)     ,
 		.Reset		  (Reset)
 	);
 	
