@@ -10,7 +10,7 @@ module ALU #(parameter W=8, Ops=4)(
   input        [W-1:0]   InputA,      // data inputs
                          InputB,
   input        [Ops-1:0] OP,		      // ALU opcode, part of microcode
-  output logic [W-1:0]   Out		      // data output 
+  output logic [W-1:0]   Out,		      // data output 
   output logic           Zero,        // output = zero flag	 !(Out)
                          Parity,      // outparity flag  ^(Out)
                          Odd			    // output odd flag (Out[0])
@@ -34,9 +34,9 @@ module ALU #(parameter W=8, Ops=4)(
     endcase
   end
 
-  //assign Zero   = !Out;                   // reduction NOR
-  //assign Parity = ^Out;                   // reduction XOR
-  //assign Odd    = Out[0];				  // odd/even -- just the value of the LSB
+  assign Zero   = !Out;                   // reduction NOR
+  assign Parity = ^Out;                   // reduction XOR
+  assign Odd    = Out[0];				  // odd/even -- just the value of the LSB
 
   always_comb
     op_mnemonic = op_mne'(OP);			  // displays operation name in waveform viewer
