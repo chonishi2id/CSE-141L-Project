@@ -27,7 +27,7 @@ ALU uut(
   .InputA(INPUTA),
   .InputB(INPUTB),
   .OP(op),
-  .Out(OUT)
+  .Out(OUT),
   .Zero(Zero)
 );
 
@@ -107,11 +107,11 @@ initial begin
       RSH : expected = { 1'b0, INPUTA[7:1] };   // RSH 0001
       AND : expected = INPUTA & INPUTB;         // AND 0010
       OR  : expected = INPUTA || INPUTB;        // OR  0011
-      GEQ : expected = INPUTA >= INPUTB         // GEQ 0100
-      EQ  : expected = INPUTA == INPUTB         // EQ  1001
+      GEQ : expected = INPUTA >= INPUTB;         // GEQ 0100
+      EQ  : expected = INPUTA == INPUTB;         // EQ  1001
       NEG : expected = ~INPUTA + 1;             // NEG 1010
       ADD : expected = INPUTA + INPUTB;         // ADD 1011
-      NEQ : expected = INPUTA != INPUTB         // NEQ 1101
+      NEQ : expected = INPUTA != INPUTB;         // NEQ 1101
     endcase
     #1; if(expected == OUT) begin
       $display("%t YAY!! inputs = %h %h, opcode = %b, Zero %b",$time, INPUTA,INPUTB,op, Zero);
