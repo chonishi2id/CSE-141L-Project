@@ -1375,6 +1375,9 @@ Our register file does (idk what the fuck to put here)
 ### ALU Timing Diagram 
 <img src = "./Part 2/alu_wave-annotated.png"/>
 
+### ALU Transcript
+<img src = "./Part 2/alu_transcript_annotated.png"/>
+
 * * *
 ## **Component 5:** Answering the Question
  Our ALU will *indirectly* be used for non-arithmetic instructions such as load and store. While we do indeed need to make address pointer calculations, the programmer will be responsible for calculating these addresses via manual shift operations of 3 bit immediates into 8 bit values. As such, the complexity of the design is unaffected.
