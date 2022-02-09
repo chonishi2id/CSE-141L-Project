@@ -8,7 +8,7 @@
 1. Specified that addresses are absolute rather than relative under Component 3, Part iv. of Milestone 1: Machine Specification - Control Flow
 2. Added assembly language instruction to machine code translation example under Component 4 of Milestone 1: Programmer's Model
 * * *
-## **Component 2:** ALU operations
+## **Component 2:** ALU Operations
 
 Our ALU should be able to support the following operations:
   - logical left shift
@@ -21,11 +21,90 @@ Our ALU should be able to support the following operations:
   - Addition
   - Not Equals comparison
 
-Our register file does (idk what the fuck to put here)
+Our register file can read and write into registers. The basic implementation suits our design so we left it as is.
 
 * * *
 ## **Component 3:** Verilog Models
+
+### ALU Diagram
 <img src = "./alu_RTL-1.png"/>
+
+### ALU Code
+    // Create Date:    2018.10.15
+    // Module Name:    ALU 
+    // Project Name:   CSE141L
+    //
+    // Revision 2021.07.27
+    // Additional Comments: 
+    //   combinational (unclocked) ALU
+    import definitions::*;			          // includes package "definitions"
+    module ALU #(parameter W=8, Ops=4)(
+      input        [W-1:0]   InputA,      // data inputs
+                             InputB,
+      input        [Ops-1:0] OP,		      // ALU opcode, part of microcode
+      output logic [W-1:0]   Out,		      // data output 
+      output logic           Zero,        // output = zero flag	 !(Out)
+                             Parity,      // outparity flag  ^(Out)
+                             Odd			    // output odd flag (Out[0])
+    // you may provide additional status flags, if desired
+      );								    
+
+      op_mne op_mnemonic;			          // type enum: used for convenient waveform viewing
+
+      always_comb begin
+        Out = 0;                              // No Op = default
+        case (OP)							  
+          ADD : Out = InputA + InputB;        // add 
+          LSH : Out = {InputA[6:0], 1'b0};    // shift left, fill in with zeroes 
+    	    RSH : Out = {1'b0, InputA[7:1]};    // shift right
+          AND : Out = InputA & InputB;        // bitwise AND
+          OR  : Out = InputA || InputB;       // bitwise OR
+          NEG : Out = ~InputA + 1;
+          GEQ : Out = (InputA >= InputB);         // Greater than or Equal to
+          EQ  : Out = (InputA == InputB);        // Equals to
+          NEQ : Out = (InputA != InputB);         // Not Equals to
+        endcase
+      end
+
+      assign Zero   = !Out;                   // reduction NOR
+      assign Parity = ^Out;                   // reduction XOR
+      assign Odd    = Out[0];				  // odd/even -- just the value of the LSB
+
+      always_comb
+        op_mnemonic = op_mne'(OP);			  // displays operation name in waveform viewer
+
+    endmodule
+### Program Counter Diagram:
+<img src = "progCtr_RTL-1.png"/>
+
+### Program Counter Code:
+    // Design Name:    basic_proc
+    // Module Name:    InstFetch 
+    // Project Name:   CSE141L
+    // Description:    instruction fetch (pgm ctr) for processor
+    //
+    // Revision:  2019.01.27
+    //
+    module ProgCtr #(parameter L=10) (
+      input                Reset,      // reset, init, etc. -- force PC to 0
+                           Start,      // Signal to jump to next program; currently unused 
+                           Clk,        // PC can change on pos. edges only
+    					   BranchAbsEn,  // jump to Target
+    					   ALU_flag,   // Sometimes you may require signals from other modules, can pass around flags if needed
+      input        [L-1:0] Target,     // jump ... "how high?"
+      output logic [L-1:0] ProgCtr     // the program counter register itself
+      );
+
+
+      // program counter can clear to 0, increment, or jump
+      always_ff @(posedge Clk)         // or just always; always_ff is a linting construct
+    	if(Reset)
+    	  ProgCtr <= 0;	
+    	else if(BranchAbsEn)	               // unconditional absolute jump
+    	  ProgCtr <= Target;			   //   how would you make it conditional and/or relative?
+    	else
+    	  ProgCtr <= ProgCtr+'b1; 	       // default increment (no need for ARM/MIPS +4 -- why?)
+    endmodule
 
 * * * 
 ## **Component 4:** Timing Diagrams
@@ -35,6 +114,12 @@ Our register file does (idk what the fuck to put here)
 
 ### ALU Transcript
 <img src = "./alu_transcript_annotated.png"/>
+
+### Program Counter Timing Diagram
+<img src = "./progCtr_wave_annotated.png"/>
+
+### Program Counter Transcript
+<img src = "./progCtr_transcript_annotated.png"/>
 
 * * *
 ## **Component 5:** Answering the Question
