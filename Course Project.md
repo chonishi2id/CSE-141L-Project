@@ -1449,6 +1449,9 @@ Our register file can read and write into registers. The basic implementation su
     	  ProgCtr <= ProgCtr+'b1; 	       // default increment (no need for ARM/MIPS +4 -- why?)
     endmodule
 
+### Top Level Diagram
+<img src = "./Part 2/RTL Files/top_level_RTL-1.png"/>
+
 * * * 
 ## **Component 4:** Timing Diagrams
 ### ALU Timing Diagram 

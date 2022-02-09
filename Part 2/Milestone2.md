@@ -27,7 +27,7 @@ Our register file can read and write into registers. The basic implementation su
 ## **Component 3:** Verilog Models
 
 ### ALU Diagram
-<img src = "./alu_RTL-1.png"/>
+<img src = "./RTL Files/alu_RTL-1.png"/>
 
 ### ALU Code
     // Create Date:    2018.10.15
@@ -75,7 +75,7 @@ Our register file can read and write into registers. The basic implementation su
 
     endmodule
 ### Program Counter Diagram:
-<img src = "progCtr_RTL-1.png"/>
+<img src = "./RTL Files/progCtr_RTL-1.png"/>
 
 ### Program Counter Code:
     // Design Name:    basic_proc
@@ -106,20 +106,23 @@ Our register file can read and write into registers. The basic implementation su
     	  ProgCtr <= ProgCtr+'b1; 	       // default increment (no need for ARM/MIPS +4 -- why?)
     endmodule
 
+### Top Level Diagram
+<img src = "./RTL Files/top_level_RTL-1.png"/>
+
 * * * 
 ## **Component 4:** Timing Diagrams
 [comment]: #Provide well-annotated timing diagrams or transcript listings from your module level Questa/ModelSim runs. It should be clear that your program counter / instruction memory (fetch unit) and ALU works. If your presentation leaves doubt, we’ll assume it doesn’t.
 ### ALU Timing Diagram 
-<img src = "./alu_wave-annotated.png"/>
+<img src = "./Annotated Files/alu_wave-annotated.png"/>
 
 ### ALU Transcript
-<img src = "./alu_transcript_annotated.png"/>
+<img src = "./Annotated Files/alu_transcript_annotated.png"/>
 
 ### Program Counter Timing Diagram
-<img src = "./progCtr_wave_annotated.png"/>
+<img src = "./Annotated Files/progCtr_wave_annotated.png"/>
 
 ### Program Counter Transcript
-<img src = "./progCtr_transcript_annotated.png"/>
+<img src = "./Annotated Files/progCtr_transcript_annotated.png"/>
 
 * * *
 ## **Component 5:** Answering the Question
