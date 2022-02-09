@@ -6,7 +6,7 @@
 // Additional Comments: 
 //   combinational (unclocked) ALU
 import definitions::*;			          // includes package "definitions"
-module ALU #(parameter W=8, Ops=4)(
+module ALU #(parameter W=8, Ops=3)(
   input        [W-1:0]   InputA,      // data inputs
                          InputB,
   input        [Ops-1:0] OP,		      // ALU opcode, part of microcode
@@ -21,7 +21,7 @@ module ALU #(parameter W=8, Ops=4)(
 	
   always_comb begin
     Out = 0;                              // No Op = default
-    case(OP)							  
+    case (OP)							  
       ADD : Out = InputA + InputB;        // add 
       LSH : Out = {InputA[6:0], 1'b0};    // shift left, fill in with zeroes 
       // for logical left shift, tie SC_in = 0
@@ -29,10 +29,9 @@ module ALU #(parameter W=8, Ops=4)(
       AND : Out = InputA & InputB;        // bitwise AND
       OR  : Out = InputA || InputB;       // bitwise OR
       NEG : Out = ~InputA + 1;
-      GEQ : Out = (InputA >= InputB);         // Greater than or Equal to
-      EQ  : Out = (InputA == InputB);        // Equals to
-      NEQ : Out = (InputA != InputB);       // Not Equals to
-
+      GEQ : Out = (InputA >= InputB)         // Greater than or Equal to
+      EQ  : Out = (InputA == InputB)         // Equals to
+      NEQ : Out = (InputA != InputB)         // Not Equals to
     endcase
   end
 

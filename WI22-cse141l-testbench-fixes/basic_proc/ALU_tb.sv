@@ -16,11 +16,10 @@ import definitions::*;
 
 
 module ALU_tb;
-logic [ 7:0] INPUTA;        // data inputs
+logic [ 7:0] INPUTA;  // data inputs
 logic [ 7:0] INPUTB;
-logic [ 2:0] op;  // ALU opcode, part of microcode
-bit SC_IN = 'b0;
-wire[ 7:0] OUT;
+logic [ 3:0] op;      // ALU opcode, part of microcode
+wire  [ 7:0] OUT;
 wire Zero;
 logic [ 7:0] expected;
 
