@@ -7,14 +7,13 @@
 //   combinational (unclocked) ALU
 import definitions::*;			          // includes package "definitions"
 module ALU #(parameter W=8, Ops=3)(
-  input        [W-1:0]   InputA,          // data inputs
+  input        [W-1:0]   InputA,      // data inputs
                          InputB,
   input        [Ops-1:0] OP,		      // ALU opcode, part of microcode
-  input                  SC_in,           // shift or carry in
   output logic [W-1:0]   Out,		      // data output 
-  output logic           Zero,            // output = zero flag	 !(Out)
-                         Parity,          // outparity flag  ^(Out)
-                         Odd			  // output odd flag (Out[0])
+  output logic           Zero,        // output = zero flag	 !(Out)
+                         Parity,      // outparity flag  ^(Out)
+                         Odd			    // output odd flag (Out[0])
 // you may provide additional status flags, if desired
     );								    
 	 
@@ -24,12 +23,16 @@ module ALU #(parameter W=8, Ops=3)(
     Out = 0;                              // No Op = default
     case(OP)							  
       ADD : Out = InputA + InputB;        // add 
-      LSH : Out = {InputA[6:0],SC_in};    // shift left, fill in with SC_in 
-// for logical left shift, tie SC_in = 0
-	  RSH : Out = {1'b0, InputA[7:1]};    // shift right
- 	  XOR : Out = InputA ^ InputB;        // bitwise exclusive OR
+      LSH : Out = {InputA[6:0], 1'b0};    // shift left, fill in with zeroes 
+      // for logical left shift, tie SC_in = 0
+	    RSH : Out = {1'b0, InputA[7:1]};    // shift right
       AND : Out = InputA & InputB;        // bitwise AND
-      SUB : Out = InputA + (~InputB) + 1;
+      OR  : Out = InputA || InputB;       // bitwise OR
+      NEG : Out = ~InputA + 1;
+      GEQ : Out = (InputA >= InputB)         // Greater than or Equal to
+      EQ  : Out = (InputA == InputB)         // Equals to
+      NEQ : Out = (InputA != InputB)         // Not Equals to
+
     endcase
   end
 
