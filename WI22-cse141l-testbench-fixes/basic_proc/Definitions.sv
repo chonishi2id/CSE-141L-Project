@@ -6,13 +6,15 @@
 package definitions;
     
 // Instruction map
-    const logic [2:0]kADD  = 3'b000;
-    const logic [2:0]kLSH  = 3'b001;
-    const logic [2:0]kRSH  = 3'b010;
-    const logic [2:0]kXOR  = 3'b011;
-    const logic [2:0]kAND  = 3'b100;
-	const logic [2:0]kSUB  = 3'b101;
-	const logic [2:0]kCLR  = 3'b110;
+    const logic [3:0]kLSH  = 4'b0000;
+    const logic [3:0]kRSH  = 4'b0001;
+    const logic [3:0]kAND  = 4'b0010;
+    const logic [3:0]kOR   = 4'b0011;
+	const logic [3:0]kGEQ  = 4'b1000;
+    const logic [3:0]kEQ   = 4'b1001;
+	const logic [3:0]kNEG  = 4'b1010;
+    const logic [3:0]kADD  = 4'b1011;
+    const logic [3:0]kNEQ  = 4'b1101;
 // enum names will appear in timing diagram
     typedef enum logic[2:0] {
         ADD, LSH, RSH, XOR,
