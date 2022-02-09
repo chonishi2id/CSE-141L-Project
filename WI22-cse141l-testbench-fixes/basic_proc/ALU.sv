@@ -10,10 +10,10 @@ module ALU #(parameter W=8, Ops=4)(
   input        [W-1:0]   InputA,      // data inputs
                          InputB,
   input        [Ops-1:0] OP,		      // ALU opcode, part of microcode
-  output logic [W-1:0]   Out		      // data output 
-  //output logic           //Zero,        // output = zero flag	 !(Out)
-                         //Parity,      // outparity flag  ^(Out)
-                         //Odd			    // output odd flag (Out[0])
+  output logic [W-1:0]   Out,		      // data output 
+  output logic           Zero,        // output = zero flag	 !(Out)
+                         Parity,      // outparity flag  ^(Out)
+                         Odd			    // output odd flag (Out[0])
 // you may provide additional status flags, if desired
   );								    
 	 
