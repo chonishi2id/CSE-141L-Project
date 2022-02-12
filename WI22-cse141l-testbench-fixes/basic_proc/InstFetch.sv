@@ -18,17 +18,16 @@ module InstFetch(
 	 
 // program counter can clear to 0, increment, or jump
   always_ff @(posedge Clk)	           // or just always; always_ff is a linting construct
-	if(Reset)
-	  ProgCtr <= 0;				       // for first program; want different value for 2nd or 3rd
-	else if(Start)					   // hold while start asserted; commence when released
-	  ProgCtr <= ProgCtr;
-	else if(BranchAbs)	               // unconditional absolute jump
-	  ProgCtr <= Target;			   //   how would you make it conditional and/or relative?
-	else if(BranchRelEn && ALU_flag)   // conditional relative jump
-	  ProgCtr <= Target + ProgCtr;	   //   how would you make it unconditional and/or absolute
-	else
-	  ProgCtr <= ProgCtr+'b1; 	       // default increment (no need for ARM/MIPS +4 -- why?)
-
+    if(Reset)
+      ProgCtr <= 0;				       // for first program; want different value for 2nd or 3rd
+    else if(Start)					   // hold while start asserted; commence when released
+      ProgCtr <= ProgCtr;
+    else if(BranchAbs)	               // unconditional absolute jump
+      ProgCtr <= Target;			   //   how would you make it conditional and/or relative?
+    else if(BranchRelEn && ALU_flag)   // conditional relative jump
+      ProgCtr <= Target + ProgCtr;	   //   how would you make it unconditional and/or absolute
+    else
+      ProgCtr <= ProgCtr+'b1; 	       // default increment (no need for ARM/MIPS +4 -- why?)
 endmodule
 
 /* Note about Start: if your programs are spread out, with a gap in your machine code listing, you will want 

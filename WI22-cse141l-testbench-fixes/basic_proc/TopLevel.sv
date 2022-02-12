@@ -4,11 +4,11 @@
 // CSE141L
 // partial only										   
 module TopLevel(		   // you will have the same 3 ports
-    input     Reset,	   // init/reset, active high
+    input     	 Reset,	   // init/reset, active high
 			     Start,    // start next program
 	             Clk,	   // clock -- posedge used inside design
     output logic Ack	   // done flag from DUT
-    );
+);
 
 wire [ 9:0] PgmCtr,        // program counter
 			PCTarg;
@@ -18,11 +18,11 @@ wire [ 7:0] InA, InB, 	   // ALU operand inputs
             ALU_out;       // ALU result
 wire [ 7:0] RegWriteValue, // data in to reg file
             MemWriteValue, // data in to data_memory
-	    MemReadValue;  // data out from data_memory
+	    	MemReadValue;  // data out from data_memory
 wire        MemWrite,	   // data_memory write enable
-	    RegWrEn,	   // reg_file write enable
-	    Zero,          // ALU output = 0 flag
-            Jump,	   // to program counter: jump 
+	    	RegWrEn,	   // reg_file write enable
+	    	Zero,          // ALU output = 0 flag
+            Jump,	   	   // to program counter: jump 
             BranchEn;	   // to program counter: branch enable
 wire [1:0]  TargSel;
 logic[15:0] CycleCt;	   // standalone; NOT PC!
@@ -37,15 +37,15 @@ logic[15:0] CycleCt;	   // standalone; NOT PC!
 	.ALU_flag	  (Zero    ) ,  // 
 	.Target       (PCTarg  ) ,  // "where to?" or "how far?" during a jump or branch
 	.ProgCtr      (PgmCtr  )	   // program count = index to instruction memory
-	);					  
+);					  
 
-LUT LUT1(.Addr         (TargSel ) ,
+LUT LUT1(.Addr         (TargSel )	,
          .Target       (PCTarg  )
     );
 
 // instruction ROM -- holds the machine code pointed to by program counter
   InstROM #(.W(9)) IR1(
-	.InstAddress  (PgmCtr     ) , 
+	.InstAddress  (PgmCtr     ) 	, 
 	.InstOut      (Instruction)
 	);
 
@@ -65,14 +65,14 @@ LUT LUT1(.Addr         (TargSel ) ,
 
 // reg file
 	RegFile #(.W(8),.A(3)) RF1 (			  // A(3) makes this 2**3=8 elements deep
-		.Clk    				  ,
+		.Clk    				  	 ,
 		.Reset     (Reset),
-		.WriteEn   (RegWrEn)    , 
+		.WriteEn   (RegWrEn)    	 , 
 		.RaddrA    (Instruction[5:3]),        //concatenate with 0 to give us 4 bits
 		.RaddrB    (Instruction[2:0]), 
 		.Waddr     (Instruction[5:3]), 	      // mux above
-		.DataIn    (RegWriteValue) , 
-		.DataOutA  (ReadA        ) , 
+		.DataIn    (RegWriteValue) 	 , 
+		.DataOutA  (ReadA        ) 	 , 
 		.DataOutB  (ReadB		 )
 	);
 /* one pointer, two adjacent read accesses: 
@@ -94,11 +94,11 @@ LUT LUT1(.Addr         (TargSel ) ,
 	  );
   
 	DataMem DM1(
-		.DataAddress  (ReadB)    , 
-		.WriteEn      (MemWrite), 
-		.DataIn       (ReadA), 
-		.DataOut      (MemReadValue)  , 
-		.Clk 		  		     ,
+		.DataAddress  (ReadB)    	, 
+		.WriteEn      (MemWrite)	, 
+		.DataIn       (ReadA)		, 
+		.DataOut      (MemReadValue), 
+		.Clk 		  		     	,
 		.Reset		  (Reset)
 	);
 	
