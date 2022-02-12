@@ -18,7 +18,20 @@ module Ctrl (
   assign MemWrEn = Instruction[8:6]==3'b110;	 //111  110
   assign StoreInst = Instruction[8:6]==3'b110;  // calls out store specially
 
-  assign RegWrEn = Instruction[8:7]!=2'b11;  // !111  !110 
+  assign RegWrEn = Instruction[8:5]==4'b0000 ||
+                   Instruction[8:5]==4'b0001 ||
+                   Instruction[8:5]==4'b0010 ||
+                   Instruction[8:5]==4'b0011 ||
+                   Instruction[8:5]==4'b0100 ||
+                   Instruction[8:5]==4'b0101 ||
+                   Instruction[8:5]==4'b0110 ||
+                   Instruction[8:5]==4'b1000 ||
+                   Instruction[8:5]==4'b1001 ||
+                   Instruction[8:5]==4'b1010 ||
+                   Instruction[8:5]==4'b1011 ||
+                   Instruction[8:5]==4'b1100 ||
+                   Instruction[8:5]==4'b1101;   // all the instructions that result in a reg being written
+  
   assign LoadInst = Instruction[8:6] == 3'b011;
   // reserve instruction = 9'b111111111; for Ack
 

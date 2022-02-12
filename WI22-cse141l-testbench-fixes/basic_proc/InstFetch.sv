@@ -10,7 +10,7 @@ module InstFetch(
                      Start,			   // begin next program in series (request issued by test bench)
                      Clk,			   // PC can change on pos. edges only
                      BranchAbs,	       // jump unconditionally to Target value	   
-                     BranchRelEn,	   // jump conditionally to Target + PC
+                    //  BranchRelEn,	   // jump conditionally to Target + PC
                      ALU_flag,		   // flag from ALU, e.g. Zero, Carry, Overflow, Negative (from ARM)
   input        [9:0] Target,	       // jump ... "how high?"
   output logic [9:0] ProgCtr           // the program counter register itself
@@ -19,13 +19,13 @@ module InstFetch(
 // program counter can clear to 0, increment, or jump
   always_ff @(posedge Clk)	           // or just always; always_ff is a linting construct
     if(Reset)
-      ProgCtr <= 0;				       // for first program; want different value for 2nd or 3rd
-    else if(Start)					   // hold while start asserted; commence when released
+      ProgCtr <= 0;				        // for first program; want different value for 2nd or 3rd
+    else if(Start)					      // hold while start asserted; commence when released
       ProgCtr <= ProgCtr;
     else if(BranchAbs)	               // unconditional absolute jump
       ProgCtr <= Target;			   //   how would you make it conditional and/or relative?
-    else if(BranchRelEn && ALU_flag)   // conditional relative jump
-      ProgCtr <= Target + ProgCtr;	   //   how would you make it unconditional and/or absolute
+    // else if(BranchRelEn && ALU_flag)   // conditional relative jump
+      // ProgCtr <= Target + ProgCtr;	   //   how would you make it unconditional and/or absolute
     else
       ProgCtr <= ProgCtr+'b1; 	       // default increment (no need for ARM/MIPS +4 -- why?)
 endmodule

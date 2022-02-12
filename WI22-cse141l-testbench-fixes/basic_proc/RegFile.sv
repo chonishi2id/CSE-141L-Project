@@ -7,7 +7,7 @@
 /* parameters are compile time directives 
        this can be an any-width, any-depth reg_file: just override the params!
 */
-module RegFile #(parameter W=8, A=4)(		 // W = data path width (leave at 8); A = address pointer width
+module RegFile #(parameter W=8, A=2)(		 // W = data path width (leave at 8); A = address pointer width (only need 2 for ours because we have 4 regs)
   input                Clk,
                        Reset,
                        WriteEn,
@@ -16,7 +16,7 @@ module RegFile #(parameter W=8, A=4)(		 // W = data path width (leave at 8); A =
                        Waddr,
   input        [W-1:0] DataIn,
   output       [W-1:0] DataOutA,			 // showing two different ways to handle DataOutX, for
-  output logic [W-1:0] DataOutB				 //   pedagogic reasons only
+  output logic [W-1:0] DataOutB				 // pedagogic reasons only
     );
 
 // W bits wide [W-1:0] and 2**4 registers deep 	 

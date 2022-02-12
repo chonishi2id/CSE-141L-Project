@@ -67,9 +67,9 @@ logic[15:0] CycleCt;	   // standalone; NOT PC!
 		.Clk(Clk)    				  ,
 		.Reset     (Reset),
 		.WriteEn   (RegWrEn)    	 , 
-		.RaddrA    (Instruction[5:3]),        //concatenate with 0 to give us 4 bits
-		.RaddrB    (Instruction[2:0]), 
-		.Waddr     (Instruction[5:3]), 	      // mux above
+		.RaddrA    (Instruction[4:3]),        // index of first reg  e.g. with add R1, R2, R1 is in Instruction[4:3]
+		.RaddrB    (Instruction[2:1]),		  // index of second reg e.g. with add R1, R2, R2 is in Instruction[2:1]
+		.Waddr     (Instruction[4:3]),		  // store result in first reg, e.g. with add R1, R2, R1 is in Instruction[4:3]
 		.DataIn    (RegWriteValue) 	 , 
 		.DataOutA  (ReadA        ) 	 , 
 		.DataOutB  (ReadB		 )
@@ -92,11 +92,11 @@ logic[15:0] CycleCt;	   // standalone; NOT PC!
 	  );
   
 	DataMem DM1(
-		.DataAddress  (ReadB)    , 
+		.DataAddress  (ReadB), 
 		.WriteEn      (MemWrite), 
 		.DataIn       (ReadA), 
-		.DataOut      (MemReadValue)  , 
-		.Clk 		  	  (Clk)     ,
+		.DataOut      (MemReadValue), 
+		.Clk 		  (Clk),
 		.Reset		  (Reset)
 	);
 	

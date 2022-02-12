@@ -9,8 +9,8 @@ module ProgCtr #(parameter L=10) (
   input                Reset,      // reset, init, etc. -- force PC to 0
                        Start,      // Signal to jump to next program; currently unused 
                        Clk,        // PC can change on pos. edges only
-					   BranchAbsEn,  // jump to Target
-					   ALU_flag,   // Sometimes you may require signals from other modules, can pass around flags if needed
+					             BranchAbsEn,  // jump to Target
+					             ALU_flag,   // Sometimes you may require signals from other modules, can pass around flags if needed
   input        [L-1:0] Target,     // jump ... "how high?"
   output logic [L-1:0] ProgCtr     // the program counter register itself
   );
