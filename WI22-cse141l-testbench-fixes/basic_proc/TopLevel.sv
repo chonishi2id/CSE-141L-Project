@@ -4,8 +4,8 @@
 // CSE141L
 // partial only										   
 module TopLevel(		   // you will have the same 3 ports
-    input     	 Reset,	   // init/reset, active high
-			     Start,    // start next program
+    input     	 Start,    // start next program
+				 Reset,	   // init/reset, active high
 	             Clk,	   // clock -- posedge used inside design
     output logic Ack	   // done flag from DUT
 );
@@ -24,7 +24,6 @@ wire        MemWrite,	   // data_memory write enable
 	    	Zero,          // ALU output = 0 flag
             Jump,	   	   // to program counter: jump 
             BranchEn;	   // to program counter: branch enable
-wire [1:0]  TargSel;
 logic[15:0] CycleCt;	   // standalone; NOT PC!
 
 // Fetch stage = Program Counter + Instruction ROM
@@ -32,47 +31,42 @@ logic[15:0] CycleCt;	   // standalone; NOT PC!
 	.Reset        (Reset   ) ,  // reset to 0
 	.Start        (Start   ) ,  // SystemVerilog shorthand for .grape(grape) is just .grape 
 	.Clk          (Clk     ) ,  //    here, (Clk) is required in Verilog, optional in SystemVerilog
-	.BranchAbsEn    (Jump    ) ,  // jump enable
+	.BranchAbsEn  (Jump    ) ,  // jump enable
 	.ALU_flag	  (Zero    ) ,  // 
 	.Target       (PCTarg  ) ,  // "where to?" or "how far?" during a jump or branch
 	.ProgCtr      (PgmCtr  )	   // program count = index to instruction memory
-);					  
+  );					  
 
-//LUT LUT1(.Addr         (TargSel ) ,
-//         .Target       (PCTarg  )
-//    );
-
-// instruction ROM -- holds the machine code pointed to by program counter
-  InstROM #(.W(9)) IR1(
-	.InstAddress  (PgmCtr     ) 	, 
-	.InstOut      (Instruction)
+	// instruction ROM -- holds the machine code pointed to by program counter
+	InstROM #(.W(9)) IR1(
+		.InstAddress  (PgmCtr) 		, 
+		.InstOut      (Instruction)
 	);
 
-// Decode stage = Control Decoder + Reg_file
-// Control decoder
-  Ctrl Ctrl1 (
-	.Instruction  (Instruction) ,  // from instr_ROM
-	.Jump         (Jump       ) ,  // to PC to handle jump/branch instructions
-	.BranchEn     (BranchEn   )	,  // to PC
-	.RegWrEn      (RegWrEn    )	,  // register file write enable
-	.MemWrEn      (MemWrite   ) ,  // data memory write enable
-    .LoadInst     (LoadInst   ) ,  // selects memory vs ALU output as data input to reg_file
-    .StoreInst    (StoreInst),
-    .TargSel      (TargSel    ) ,  // index into lookup table 
-    .Ack          (Ack        )	   // "done" flag
-  );
+	// Decode stage = Control Decoder + Reg_file
+	// Control decoder
+	Ctrl Ctrl1 (
+		.Instruction  (Instruction) ,  // from instr_ROM
+		.Jump         (Jump) 		,  // to PC to handle jump/branch instructions
+		.BranchEn     (BranchEn)	,  // to PC
+		.RegWrEn      (RegWrEn)		,  // register file write enable
+		.MemWrEn      (MemWrite)	,  // data memory write enable
+		.LoadInst     (LoadInst)	,  // selects memory vs ALU output as data input to reg_file
+		.StoreInst    (StoreInst)	,
+		.Ack          (Ack)			   // "done" flag
+	);
 
-// reg file
-	RegFile #(.W(8),.A(3)) RF1 (			  // A(3) makes this 2**3=8 elements deep
-		.Clk(Clk)    				  ,
+	// reg file
+	RegFile #(.W(8), .A(2)) RF1 (			  // .A(3) makes this 2**2=4 registers deep
+		.Clk	   (Clk)    	     ,
 		.Reset     (Reset),
 		.WriteEn   (RegWrEn)    	 , 
 		.RaddrA    (Instruction[4:3]),        // index of first reg  e.g. with add R1, R2, R1 is in Instruction[4:3]
 		.RaddrB    (Instruction[2:1]),		  // index of second reg e.g. with add R1, R2, R2 is in Instruction[2:1]
 		.Waddr     (Instruction[4:3]),		  // store result in first reg, e.g. with add R1, R2, R1 is in Instruction[4:3]
-		.DataIn    (RegWriteValue) 	 , 
-		.DataOutA  (ReadA        ) 	 , 
-		.DataOutB  (ReadB		 )
+		.DataIn    (ALU_out)	 	 , 
+		.DataOutA  (ReadA)		 	 , 
+		.DataOutB  (ReadB)			 
 	);
 /* one pointer, two adjacent read accesses: 
   (sample optional approach)
@@ -87,8 +81,8 @@ logic[15:0] CycleCt;	   // standalone; NOT PC!
 	  .InputA  (InA),
 	  .InputB  (InB), 
 	  .OP      (Instruction[8:6]),
-	  .Out     (ALU_out),//regWriteValue),
-	  .Zero	(Zero)	                              // status flag; may have others, if desired
+	  .Out     (ALU_out),			// to be written to reg
+	  .Zero	(  Zero)	            // status flag; may have others, if desired
 	  );
   
 	DataMem DM1(
