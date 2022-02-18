@@ -1,13 +1,9 @@
-// Create Date:    2019.01.25
-// Design Name:    CSE141L
-// Module Name:    reg_file 
-//
-// Additional Comments: 					  $clog2
+// Module Name:    RegFile
+// Description:    Register file for a 3BC processor
 
-/* parameters are compile time directives 
-       this can be an any-width, any-depth reg_file: just override the params!
-*/
-module RegFile #(parameter W=8, A=2)(		 // W = data path width (leave at 8); A = address pointer width (only need 2 for ours because we have 4 regs)
+// W = data path width (leave at 8)
+// A = address pointer width (only need 2 for ours because we have 4 regs)
+module RegFile #(parameter W=8, A=2)(		  
   input                Reset    ,
                        Clk      ,
                        WriteEn  ,
@@ -16,7 +12,8 @@ module RegFile #(parameter W=8, A=2)(		 // W = data path width (leave at 8); A =
                        Waddr    ,
   input        [W-1:0] DataIn   ,
   output logic [W-1:0] DataOutA ,
-                       DataOutB
+                       DataOutB,
+                       R3               // to always pass what is in R3 to PC in case of branch
     );
 
 // W bits wide [W-1:0] and 2**2=4 registers deep 	 
@@ -32,6 +29,7 @@ always_comb DataOutB = Registers[RaddrB];
 
 // sequential (clocked) writes 
 always_ff @ (posedge Clk) begin
+  R3 <= Registers[2];
   if (Reset) begin
     Registers[0] <= '0;
     Registers[1] <= '0;
