@@ -7,18 +7,16 @@ import definitions::*;
 // inputs from instrROM, ALU flags
 // outputs to program_counter (fetch unit)
 module Ctrl (
-  input[ 8:0] Instruction,	  // machine code
-  output logic RegWrEn  ,	    // write to reg_file (common)
-	             MemWrEn  ,	    // write to mem (store only)
-	             LoadInst	,	    // mem or ALU to reg_file ?
-      	       StoreInst,     // mem write enable
-	             Ack            // "done w/ program"
+  input[8:0]      Instruction ,	    // machine code
+  output logic    RegWrEn     ,     // write to reg_file (common)
+	                LoadInst	  ,	    // mem or ALU to reg_file ?
+      	          StoreInst   ,     // mem write enable
+	                Ack         ,     // "done w/ program"
+                  AddrSel
   );
 
-  // set for all instructions that result in writing to memory
-  assign MemWrEn = Instruction[8:6]==3'b110;	 //111  110
-  
-  assign StoreInst = Instruction[8:6]==3'b110;  // calls out store specially
+  // set for all instructions that result in writing to memory (just one, str)
+  assign StoreInst = Instruction[8:6]==3'b110;
 
   // set for all the instructions that result in a reg being written
   assign RegWrEn = Instruction[8:5]==4'b0000 || Instruction[8:5]==4'b0001 ||
@@ -30,7 +28,7 @@ module Ctrl (
                    Instruction[8:5]==4'b1101;  
   
   always_comb begin
-    LoadInst = Instruction[8:6] == 3'b011;
+    LoadInst = Instruction[8:6] == 3'b101;  // setif we are loading from data memory into a reg
   end
 
   always_comb begin

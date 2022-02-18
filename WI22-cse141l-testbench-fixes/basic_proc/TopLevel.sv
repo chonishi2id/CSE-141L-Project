@@ -16,14 +16,26 @@ wire [ 7:0] InA, InB, 	   		// ALU operand inputs
             ALU_out;       		// ALU result
 wire [ 7:0] RegWriteValue, 		// data in to reg file
             MemWriteValue, 		// data in to data_memory
+			MemAddr,			// data memory address to write/read to/from
 	    	MemReadValue;  		// data out from data_memory
-wire        MemWrite,	   		// data_memory write enable
+wire        StoreInst,	   		// data_memory write enable (only need to write when instruction is str)
 	    	RegWrEn,	   		// reg_file write enable
 	    	Zero,          		// ALU output = 0 flag
             BranchEn;	   		// to program counter: branch enable
-			PC_en
+			PC_en;				// set when program is running (enables program counter)
+			AddrSel;			// indicates (selects) which register contains the source/destination
+								// address in data memory operations
 logic[15:0] CycleCt;	   		// standalone; NOT PC!
 
+
+	// multiplexer for selecting which register is the source/destination address in 
+	// data memory operations.
+	Mux M1 (
+		.A(ReadA),
+		.B(ReadB),
+		.Sel(AddrSel),
+		.Out(MemAddr)
+	);
 
 	ProgCtrEn PC_EN (
 		.Start(Start),
@@ -53,10 +65,11 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 		.TargSel
 		.Instruction  (Instruction) ,  // from instr_ROM
 		.RegWrEn      (RegWrEn)		,  // register file write enable
-		.MemWrEn      (MemWrite)	,  // data memory write enable
 		.LoadInst     (LoadInst)	,  // selects memory vs ALU output as data input to reg_file
-		.StoreInst    (StoreInst)	,
-		.Ack          (Ack)			   // "done" flag
+		.StoreInst    (StoreInst)	,  // set when the current instruction is str
+		.Ack          (Ack)			,  // "done" flag
+		.AddrSel	  (AddrSel)		   // selects which regfile output contains source/dest address
+									   // for data memory operations
 	);
 
 	// reg file
@@ -67,7 +80,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 		.RaddrA    (Instruction[4:3]),        // index of first reg  e.g. with add R1, R2, R1 is in Instruction[4:3]
 		.RaddrB    (Instruction[2:1]),		  // index of second reg e.g. with add R1, R2, R2 is in Instruction[2:1]
 		.Waddr     (Instruction[4:3]),		  // store result in first reg, e.g. with add R1, R2, R1 is in Instruction[4:3]
-		.DataIn    (ALU_out)	 	 , 
+		.DataIn    (RegWriteValue)	 	 , 
 		.DataOutA  (ReadA)		 	 , 
 		.DataOutB  (ReadB)			 ,
 		.R3		   (R3)	 
@@ -79,8 +92,20 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 */
     assign InA = ReadA;						  // connect RF out to ALU in
 	assign InB = ReadB;	          			  // interject switch/mux if needed/desired
-// controlled by Ctrl1 -- must be high for load from data_mem; otherwise usually low
-	assign RegWriteValue = LoadInst? MemReadValue : ALU_out;  // 2:1 switch into reg_file
+
+	
+	// switch to decide what value is being written to reg (function of 
+	// whether opcode is load, loadi, or otherwise)
+	always_comb begin
+		if LoadInst begin 								// writing from data_mem into reg if set
+			RegWriteValue = MemReadValue;					// data memory output
+		end else if Instruction[8:5] == 4'b0100 begin	// writing immediate value (opcode for loadi)
+			RegWriteValue = Instruction[2:0];				// immediate value
+		end else begin									// writing ALU output to reg otherwise
+			RegWriteValue = ALU_out;						// alu output
+		end
+	end
+
     ALU ALU  (
 	  .InputA  (InA),
 	  .InputB  (InB), 
@@ -90,10 +115,10 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 	  );
   
 	DataMem DM (
-		.DataAddress  (ReadB), 
-		.WriteEn      (MemWrite), 
-		.DataIn       (ReadA), 
-		.DataOut      (MemReadValue), 
+		.DataAddress  (MemAddr), 		// selected by mux M1 (either loading or storing)
+		.WriteEn      (StoreInst), 		// write to DataAddress if we are StoreInst set (i.e. current instruction is str)
+		.DataIn       (ReadB),			// data to write is the second register (DataOutB) in the instruction (see str in ISA spec)
+		.DataOut      (MemReadValue), 	// output data read from data memory
 		.Clk 		  (Clk),
 		.Reset		  (Reset)
 	);
