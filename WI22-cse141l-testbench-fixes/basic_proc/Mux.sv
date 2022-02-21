@@ -1,5 +1,5 @@
 // Module Name:    Mux
-// Description:    General purpose multiplexer for use in a 3BC processor.
+// Description:    General purpose 8-bit wide 2:1 multiplexer for use in a 3BC processor.
 //                    1. Used to select which register is the source/destination
 //                      address in data memory operations.
 
