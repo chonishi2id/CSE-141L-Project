@@ -1,15 +1,15 @@
 // Module Name:    DataMem
 // Description:    Data memory storage and interface for a 3BC processor.
 
-module DataMem #(parameter W=8, A=8)  (
+module DataMem (
   input                 Clk,
                         Reset,
                         WriteEn,
-  input       [A-1:0]   DataAddress,  // A-bit-wide pointer to 256-deep memory
-  input       [W-1:0]   DataIn,		    // W-bit-wide data path, also
-  output logic[W-1:0]   DataOut);
+  input       [7:0]   DataAddress,  // A-bit-wide pointer to 256-deep memory
+  input       [7:0]   DataIn,		    // W-bit-wide data path, also
+  output logic[7:0]   DataOut);
 
-  logic [W-1:0] Core[2**A];       // 8x256 two-dimensional array -- the memory itself
+  logic [7:0] Core[256];       // 8x256 two-dimensional array -- the memory itself
 									 
   always_comb                     // reads are combinational
     DataOut = Core[DataAddress];

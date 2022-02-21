@@ -45,10 +45,9 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 	// Fetch stage = Program Counter + Instruction ROM
 	ProgCtr PC (		       // this is the program counter module
 		.Reset        (Reset   ) ,  // reset to 0
-		.Start        (Start   ) ,  // start signal
 		.Clk          (Clk     ) , 
-		.BranchEn  	  (BranchEn) ,  // tell PC to branch to address in Target
-		.Target       (PCTarg  ) ,  // "where to?" during a jump or branch
+		.BranchEn  	  (BranchEn) ,  // tell PC to branch to offset in Target
+		.Target       (PCTarg  ) ,  // "how far?" during a jump or branch
 		.ProgCtr      (PgmCtr  ) ,	// program count = index to instruction memory
 		.En			  (PC_en)
 	);					  
@@ -59,7 +58,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 		.InstOut      (Instruction)
 	);
 
-	// Decode stage = Control Decoder + Reg_file
+	// Decode stage <= Control Decoder + Register File
 	// Control decoder
 	Ctrl CTRL (
 		.TargSel
@@ -72,24 +71,19 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 									   // for data memory operations
 	);
 
-	// reg file
-	RegFile #(.W(8), .A(2)) RF (			  // .A(3) makes this 2**2=4 registers deep
+	// register file
+	RegFile RF (
+		.Reset     (Reset)			 ,
 		.Clk	   (Clk)    	     ,
-		.Reset     (Reset),
 		.WriteEn   (RegWrEn)    	 , 
 		.RaddrA    (Instruction[4:3]),        // index of first reg  e.g. with add R1, R2, R1 is in Instruction[4:3]
 		.RaddrB    (Instruction[2:1]),		  // index of second reg e.g. with add R1, R2, R2 is in Instruction[2:1]
 		.Waddr     (Instruction[4:3]),		  // store result in first reg, e.g. with add R1, R2, R1 is in Instruction[4:3]
-		.DataIn    (RegWriteValue)	 	 , 
+		.DataIn    (RegWriteValue)	 , 
 		.DataOutA  (ReadA)		 	 , 
-		.DataOutB  (ReadB)			 ,
-		.R3		   (R3)	 
+		.DataOutB  (ReadB)
 	);
-/* one pointer, two adjacent read accesses: 
-  (sample optional approach)
-	.raddrA ({Instruction[5:3],1'b0});
-	.raddrB ({Instruction[5:3],1'b1});
-*/
+
     assign InA = ReadA;						  // connect RF out to ALU in
 	assign InB = ReadB;	          			  // interject switch/mux if needed/desired
 
@@ -106,14 +100,16 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 		end
 	end
 
+	// ALU
     ALU ALU  (
-	  .InputA  (InA),
-	  .InputB  (InB), 
-	  .OP      (Instruction[8:6]),
+	  .InputA  (InA),				// ALU input
+	  .InputB  (InB), 				// ALU input
+	  .OP      (Instruction[8:5]),	// opcode of the current instruction
 	  .Out     (ALU_out),			// to be written to reg
-	  .Zero	   (Zero)				// set when result of ALU is 0...used to decide whether to branch      
+	  .Zero	   (Zero)				// set when result of ALU is 0 (used to decide whether to branch)    
 	  );
   
+	// Data Memory
 	DataMem DM (
 		.DataAddress  (MemAddr), 		// selected by mux M1 (either loading or storing)
 		.WriteEn      (StoreInst), 		// write to DataAddress if we are StoreInst set (i.e. current instruction is str)

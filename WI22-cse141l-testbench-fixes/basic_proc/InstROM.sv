@@ -1,20 +1,17 @@
-// Create Date:    15:50:22 10/02/2019 
-// Design Name: 
-// Module Name:    InstROM 
-// Project Name:   CSE141L
-// Tool versions: 
-// Description: Verilog module -- instruction ROM template	
-//	 preprogrammed with instruction values (see case statement)
+// Module Name:    InstRom 
+// Description:    Instruction memory for a 3BC processor
 //
-// Revision: 2020.08.08
-//
-module InstROM #(parameter A=10, W=9) (
-  input       [A-1:0] InstAddress,
-  output logic[W-1:0] InstOut);
+module InstROM (
+  input       [9:0] InstAddress,    // 10-bit addressing for instructions in case we have need for that many instructions
+  output logic[8:0] InstOut);       // 9-bit instructions per project specification
 	 
-// Sample instruction format: 
-//   {3bit opcode, 3bit rs or rt, 3bit rt, immediate, or branch target}
-//   then use LUT to map 3 bits to 10 for branch target, 8 for immediate	 
+// Sample branch-type instruction format: 
+//   {4-bit opcode, 2-bit register index, 2 bit registe index, 1 don't care}
+//   use one register to store the index to the LUT
+//   use the other to store a 1 or 0 depending on whether we are branching
+//   then use LUT to map the register index value to the appropriate label's absolute address
+// We have 31 total labels. Therefore, we could use the 8-bit register to index the LUT (allowing indexing of up 
+// to 2^8 = 256 data addresses, though we only need 31). 
 
 // First option - manually populating instructions
   always_comb begin 

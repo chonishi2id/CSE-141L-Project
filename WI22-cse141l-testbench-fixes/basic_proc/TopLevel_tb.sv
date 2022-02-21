@@ -18,16 +18,16 @@ module TopLevel_tb;	     // Lab 17
 // Instantiate the Device Under Test (DUT)
   TopLevel DUT (
     .Reset  (Init)  ,
-	.Start  (Req )  , 
-	.Clk    (Clk )  , 
-	.Ack    (Ack )             
+	  .Start  (Req )  , 
+	  .Clk    (Clk )  , 
+	  .Ack    (Ack )             
 	);
 
 initial begin
   #10ns Init = 'b0;
   #10ns Req  = 'b1;
     
-// launch prodvgram in DUT
+// launch program in DUT
   #10ns Req = 0;
 // Wait for done flag, then display results
   wait (Ack);

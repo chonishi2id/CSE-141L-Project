@@ -1,42 +1,31 @@
 // Module Name:    RegFile
 // Description:    Register file for a 3BC processor
 
-// W = data path width (leave at 8)
-// A = address pointer width (only need 2 for ours because we have 4 regs)
-module RegFile #(parameter W=8, A=2)(		  
+module RegFile (		  
   input                Reset    ,
                        Clk      ,
                        WriteEn  ,
-  input        [A-1:0] RaddrA   ,				 // address pointers
+  input        [1:0]   RaddrA   ,				 // 2-bit wide address pointers for the 4 regs in a 3BC processor
                        RaddrB   ,
                        Waddr    ,
-  input        [W-1:0] DataIn   ,
-  output logic [W-1:0] DataOutA ,
-                       DataOutB,
-                       R3               // to always pass what is in R3 to PC in case of branch
+  input        [7:0]   DataIn   ,        // 8-bit wide data in a 3BC processor
+  output logic [7:0]   DataOutA ,
+                       DataOutB
     );
 
-// W bits wide [W-1:0] and 2**2=4 registers deep 	 
-logic [W-1:0] Registers[2**A];
+logic [7:0] Registers[4];
 
 // combinational reads 
-/* can write always_comb in place of assign
-    difference: assign is limited to one line of code, so
-	always_comb is much more versatile     
-*/
-always_comb DataOutA = Registers[RaddrA];	 
-always_comb DataOutB = Registers[RaddrB];	
+always_comb begin 
+  DataOutA = Registers[RaddrA];	 
+  DataOutB = Registers[RaddrB];	
+end
 
-// sequential (clocked) writes 
+// sequential writes 
 always_ff @ (posedge Clk) begin
-  R3 <= Registers[2];
-  if (Reset) begin
-    Registers[0] <= '0;
-    Registers[1] <= '0;
-    Registers[2] <= '0;
-    Registers[3] <= '0;
-  end else if (WriteEn) begin	           // works just like data_memory writes
-    Registers[Waddr] <= DataIn;
+  // when WriteEn set, write input data (DataIn) to the reg at write address (Waddr)
+  if (WriteEn) begin	           
+    Registers[Waddr] <= DataIn; 
   end
 end
 
