@@ -51,7 +51,7 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 | 0100 | I | load immediate | ldi | ldi r0, #7   | 0100 00 111  |
 | 0101 | R | load register  | ldr | ldr r2, (r0) | 0101 10 00 X |
 | 0110 | R | store register | str | str (r2), r0 | 0110 10 00 X |
-| 0111 | R | branch if not equal to zero| bnz | bnz r0, r1   | 0111 XX XX X |
+| 0111 | R | branch if not equal to zero| bnz | bnz r0, r1   | 0111 00 01 X |
 | 1000 | R | >=          | geq | geq r0, r1  | 1000 00 01 X |
 | 1001 | R | ==          | eq  | eq r0, r1   | 1001 00 01 X |
 | 1010 | R | 2's Comp Negation| neg | neg r1, r1 | 1010 01 01 X |
@@ -81,6 +81,19 @@ where `R2` is the *destination* in the sense that it holds the index to the dest
 
 // This is Nishi's new writeup
 Given that our assembly code doesn't employ too many branching and the parts that do do not jump more than 50 - 100 instructions, all jumps will be written as an offset addition to where the program counter is currently at. For example, if we want to jump from line 300 to 250, we would specify for the PC register to have its value subtracted by 50 (that is, by adding by a negative number using the NEG instruction). If we want to jump from there to line 350, we would add 100 to the value stored in the PC register. There are labels written in our assembly code but that should be thought of as a comment for the programmer to know what block/section the code is jumping to.
+
+Programatically, jumping from line 300 to line 250 would look like the following:
+
+	// Create the number 50
+	add r1, #6
+	lsl r1, #3
+	add r1, #2
+	// Make it negative
+	neg r1, r1
+	// Now make sure r2 is equal to 1 (or rather, not equal to zero) to make the jump. For demonstration purposes, this will be hardcoded in but should be done via comparison operations.
+	ldi r2, #1
+	// Perform the bnz operation. bnz adds the offset in r1 to the value stored in the program counter.
+	bnz r1, r2
 
 // This is Matt's old writeup
 If the value stored in the checked register specified is non-zero, the program counter will jump to the address stored in a lookup table whose index is stored in the second register argument. This lookup table method allows us to store addresses larger than reperesentable by a single 8-bit register in the case where we have more than 2^8 total instructions in the instruction memory, and also requires fewer steps than a general purpose addressing method (e.g. there is no need to calculate a target address by adding an offset).
