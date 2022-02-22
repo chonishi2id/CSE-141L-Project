@@ -65,7 +65,7 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 - r0 : 00 - general purpose
 - r1 : 01 - general purpose
 - r2 : 10 - general purpose
-- r2 : 11 - general purpose
+- r3 : 11 - general purpose
 - PC : special (Program counter)
 
 ### **Control Flow (Branches):**
@@ -79,6 +79,10 @@ We will support one branching instruction, branch if not zero (bnz). This will b
 
 where `R2` is the *destination* in the sense that it holds the index to the destination address in a lookup table and `R1` is the *source* in the sense that it is the source value to compare with zero for equality.
 
+// This is Nishi's new writeup
+Given that our assembly code doesn't employ too many branching and the parts that do do not jump more than 50 - 100 instructions, all jumps will be written as an offset addition to where the program counter is currently at. For example, if we want to jump from line 300 to 250, we would specify for the PC register to have its value subtracted by 50 (that is, by adding by a negative number using the NEG instruction). If we want to jump from there to line 350, we would add 100 to the value stored in the PC register. There are labels written in our assembly code but that should be thought of as a comment for the programmer to know what block/section the code is jumping to.
+
+// This is Matt's old writeup
 If the value stored in the checked register specified is non-zero, the program counter will jump to the address stored in a lookup table whose index is stored in the second register argument. This lookup table method allows us to store addresses larger than reperesentable by a single 8-bit register in the case where we have more than 2^8 total instructions in the instruction memory, and also requires fewer steps than a general purpose addressing method (e.g. there is no need to calculate a target address by adding an offset).
 
 
