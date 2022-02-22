@@ -22,7 +22,7 @@ package definitions;
 	const logic [3:0]kNEQ  = 4'b1101;
 // enum names will appear in timing diagram
     typedef enum logic[3:0] {
-        LSH, RSH, AND, OR, LDI, LDR, STR, BEQ, GEQ,
+        LSH, RSH, AND, OR, LDI, LDR, STR, BNZ, GEQ,
         EQ, NEG, ADD, ADDI, NEQ } op_mne;
 // note: kADD is of type logic[2:0] (3-bit binary)
 //   ADD is of type enum -- equiv., but watch casting

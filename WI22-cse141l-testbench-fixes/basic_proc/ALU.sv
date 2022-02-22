@@ -17,14 +17,9 @@ module ALU #(parameter W=8, Ops=4)(
   op_mne op_mnemonic;			          // type enum: used for convenient waveform viewing
 	
   always_comb begin
-<<<<<<< HEAD
-    Out = 0; // No Op = default
-    Branch = 0;                             
-=======
     Out = 0;      
     Branch = 0;
-                        // No Op = default
->>>>>>> b6e1a13cb90fb9071acf05db5ec93a9ed013a787
+    // No Op = default
     case (OP)							  
       ADD : Out = InputA + InputB;        // add 
       LSH : Out = {InputA[6:0], 1'b0};    // shift left, fill in with zeroes 
@@ -35,11 +30,7 @@ module ALU #(parameter W=8, Ops=4)(
       GEQ : Out = (InputA >= InputB);         // Greater than or Equal to
       EQ  : Out = (InputA == InputB);        // Equals to
       NEQ : Out = (InputA != InputB);         // Not Equals to
-<<<<<<< HEAD
       BNZ : Branch = (InputA != 0);      //Branch not equal to zero
-=======
-      BNZ : branch = (InputA != 0);
->>>>>>> b6e1a13cb90fb9071acf05db5ec93a9ed013a787
     endcase
   end
 
