@@ -9,10 +9,9 @@ import definitions::*;
 module Ctrl (
   input[8:0]      Instruction ,	    // machine code
   output logic    RegWrEn     ,     // write to reg_file (common)
-	                LoadInst	  ,	    // mem or ALU to reg_file ?
+	                RegLoadType ,	    // mem, ALU_out, or immediate written to reg_file ?
       	          StoreInst   ,     // mem write enable
-	                Ack         ,     // "done w/ program"
-                  AddrSel
+	                Ack               // "done w/ program"
   );
 
   // set for all instructions that result in writing to memory (just one, str)
@@ -28,7 +27,12 @@ module Ctrl (
                    Instruction[8:5]==4'b1101;  
   
   always_comb begin
-    LoadInst = Instruction[8:6] == 3'b101;  // setif we are loading from data memory into a reg
+    // case to decide what wire the RegFile's DataIn selector should be
+    case (Instruction[8:5])
+      kLDI    : RegLoadType = 2'b00; // 00 to select immediate value
+      kLDR    : RegLoadType = 2'b01; // 01 to select output from DataMem
+      default : RegLoadType = 2'b10; // 10 to select ALU_out
+    endcase
   end
 
   always_comb begin

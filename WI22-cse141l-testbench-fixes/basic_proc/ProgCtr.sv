@@ -6,7 +6,7 @@ module ProgCtr #(parameter L=10) (
                        Clk,        // PC changes on posedge clk
 					             BranchEn,   // branch to Target
                        En,         // enable program counter (set if and only if a program is running)
-  input        [L-1:0] Target,     // branch destination (absolute address, not offset)
+  input        [L-1:0] Offset,     // branch  destination (offset from current PC)
   output logic [L-1:0] ProgCtr     // the program counter register itself
   );
   
@@ -19,7 +19,7 @@ module ProgCtr #(parameter L=10) (
     if (En) begin   // PC counts when program is running (i.e. En is set)
       // count differently depending on whether we are branching or doing normal execution
       if (BranchEn) begin       // branching
-        ProgCtr <= Target;        // branch to target
+        ProgCtr <= ProgCtr + Offset;        // branch to target
       end else                  // normal operation
         ProgCtr <= ProgCtr+'b1;   // run the next instruction
     end else begin
