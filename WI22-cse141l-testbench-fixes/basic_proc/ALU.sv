@@ -17,8 +17,14 @@ module ALU #(parameter W=8, Ops=4)(
   op_mne op_mnemonic;			          // type enum: used for convenient waveform viewing
 	
   always_comb begin
+<<<<<<< HEAD
     Out = 0; // No Op = default
     Branch = 0;                             
+=======
+    Out = 0;      
+    Branch = 0;
+    // No Op = default
+>>>>>>> 78547d48584ba401142a5454c8d63a041d07944f
     case (OP)							  
       ADD : Out = InputA + InputB;        // add 
       LSH : Out = {InputA[6:0], 1'b0};    // shift left, fill in with zeroes 
