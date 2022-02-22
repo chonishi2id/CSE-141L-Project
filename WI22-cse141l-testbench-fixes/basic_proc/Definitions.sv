@@ -13,7 +13,7 @@ package definitions;
     const logic [3:0]kLDI  = 4'b0100;
     const logic [3:0]kLDR  = 4'b0101;
     const logic [3:0]kSTR  = 4'b0110;
-    const logic [3:0]kBEQ  = 4'b0111;
+    const logic [3:0]kBNZ  = 4'b0111;
 	const logic [3:0]kGEQ  = 4'b1000;
     const logic [3:0]kEQ   = 4'b1001;
 	const logic [3:0]kNEG  = 4'b1010;
