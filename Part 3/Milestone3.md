@@ -9,8 +9,8 @@
 1. Changed how jumps are done using the program counter. Information is updated on Milestone 1.
 2. Changed design of how data addressing works. Information is updated on Milestone 1.
 
-## **Component 2:** Input and Output Example
-We wrote the assembler in python. We tested the output by comparing it with an expected output file that we made. The output matched what we specified in milestone 1.
+## **Component 2:** Assembler Input and Output Example
+We wrote the assembler in Python and the code is shown below. For debugging purposes, the rest of the instruction memory is filled with "xxxxxxxxx" as implemented in the original sample code and the "unused bits" in the R-Type instruction are replaced with a '0' padding. To test the assembler, we created an input file 'test_assembly.asm' that used all 14 of our ISA's instructions and mixed in all of possible registers that could be used. We also included comments and blank lines to test if the assembler would handle these cases. We created a file with the expected output of the assembler by typing out the encoding for each instruction so that we could compare this against the actual output. The output produced by the assembler was correct. The input, output, and test files mentioned are all shown below.
 ### Code:
 	import re
 	#!/usr/bin/env python3
@@ -98,7 +98,7 @@ We wrote the assembler in python. We tested the output by comparing it with an e
 
 
 
-### Input: 
+### Input file (test_assembly.asm): 
 	//left shift: r0 = r0 << 2
 	ls r0, #2 
 
@@ -141,7 +141,24 @@ We wrote the assembler in python. We tested the output by comparing it with an e
 	//not equal to: r0 = (r0 != r1)
 	neq r0, r1
 
-### Output:
+### Expected output file (expected_machine_code.txt):
+	000000010 //ls r0, #2 
+	000100011 //rs r0, #3
+	001000010 //and r0, r1 
+	001100010 //or r0, r1
+	010000111 //ldi r0, #7
+	010110000 // ldr r2, r0
+	011010000 //str r2, r0
+	100101100 //eq R1, R2 
+	011111010 //bnz R3, R1
+	100000010 //geq r0, r1 
+	101001010 //neg r1, r1 
+	101100010 //add r0, r1
+	110000011 //addi r0, #3
+	110100010 //neq r0, r1
+
+
+### Actual output file (machine_out.hex), with the 'xxxxxxxxx' lines truncated for space:
 	000000010
 	000100011
 	001000010
