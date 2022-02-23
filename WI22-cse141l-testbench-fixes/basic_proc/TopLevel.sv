@@ -28,13 +28,13 @@ wire        StoreInst,	   		// data_memory write enable (only need to write when
 logic[15:0] CycleCt;	   		// standalone; NOT PC!
 
 
-	// multiplexer for selecting which register is the source/destination address in 
-	// data memory operations.
+	// multiplexer for selecting whether DataIn to RegFile is the immediate value in
+	// Instruction[2:0] or the value of another register.
 	Mux M1 (
-		.A(ReadA),
-		.B(ReadB),
-		.Sel(AddrSel),
-		.Out(MemAddr)
+		.A(),
+		.B(),
+		.Sel(),	//
+		.Out()
 	);
 
 	ProgCtrEn PC_EN (
