@@ -1,13 +1,13 @@
 // Module Name:    ProgCtr 
 // Description:    Program counter (PC) for a 3BC processor
 
-module ProgCtr #(parameter L=10) (
+module ProgCtr (
   input                Reset,      // reset, init, etc. -- force PC to 0
                        Clk,        // PC changes on posedge clk
 					             BranchEn,   // branch to Target
                        En,         // enable program counter (set if and only if a program is running)
-  input        [L-1:0] Offset,     // branch  destination (offset from current PC)
-  output logic [L-1:0] ProgCtr     // the program counter register itself
+  input        [9:0] Offset,     // branch  destination (offset from current PC)
+  output logic [9:0] ProgCtr     // the program counter register itself
   );
   
 	 
