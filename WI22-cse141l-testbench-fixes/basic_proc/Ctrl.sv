@@ -7,11 +7,11 @@ import definitions::*;
 // inputs from instrROM, ALU flags
 // outputs to program_counter (fetch unit)
 module Ctrl (
-  input[8:0]      Instruction ,	    // machine code
-  output logic    RegWrEn     ,     // write to reg_file (common)
-	                RegLoadType ,	    // mem, ALU_out, or immediate written to reg_file ?
-      	          StoreInst   ,     // mem write enable
-	                Ack               // "done w/ program"
+  input[8:0]          Instruction ,	    // machine code
+  output logic [1:0]  RegLoadType ,	    // mem, ALU_out, or immediate written to reg_file ?
+  output logic        RegWrEn     ,     // write to reg_file (common)
+      	              StoreInst   ,     // mem write enable
+	                    Ack               // "done w/ program"
   );
 
   // set for all instructions that result in writing to memory (just one, str)

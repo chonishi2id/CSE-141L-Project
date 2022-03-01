@@ -6,7 +6,7 @@
 // Additional Comments: 
 //   combinational (unclocked) ALU
 import definitions::*;			          // includes package "definitions"
-module ALU #(parameter W=8, Ops=4)(
+module ALU (
   input        [7:0]    InputA,       // data inputs
                         InputB,
   input        [3:0]    OP,		        // ALU opcode, part of microcode
@@ -23,7 +23,7 @@ module ALU #(parameter W=8, Ops=4)(
     // No Op = default
     case (OP)							  
       ADD : Out = InputA + InputB;        // add two regs
-      ADDI: Out = InputA + Im             // add an immediate value to regA
+      ADDI: Out = InputA + Im;            // add an immediate value to regA
       LSH : begin                         // shift left Im places, fill in with zeroes 
         case (Im)
           3'b001: Out = {InputA[6:0], 1'b0};

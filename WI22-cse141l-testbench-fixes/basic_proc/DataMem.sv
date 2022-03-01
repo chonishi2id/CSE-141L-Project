@@ -2,11 +2,11 @@
 // Description:    Data memory storage and interface for a 3BC processor.
 
 module DataMem (
-  input                 Clk,
-                        Reset,
-                        WriteEn,
-  input       [7:0]   DataAddress,  // A-bit-wide pointer to 256-deep memory
-  input       [7:0]   DataIn,		    // W-bit-wide data path, also
+  input               Clk,
+                      Reset,
+                      WriteEn,
+  input       [7:0]   DataAddress,  // 8-bit-wide pointer to 256-deep memory
+  input       [7:0]   DataIn,		    // 8-bit-wide data path, also
   output logic[7:0]   DataOut);
 
   logic [7:0] Core[256];       // 8x256 two-dimensional array -- the memory itself

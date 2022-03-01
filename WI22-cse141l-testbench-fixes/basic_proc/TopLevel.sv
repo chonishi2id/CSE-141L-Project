@@ -17,6 +17,7 @@ wire [ 7:0] InA, InB, 	   		// ALU operand inputs
 wire [ 7:0] RegWriteValue, 		// data in to reg file
             MemWriteValue, 		// data in to data_memory
 	    	MemReadValue;  		// data out from data_memory
+wire [1:0]	RegLoadType,		// whether value to load into reg is from DataMem, ALU, or is an immed. value
 wire        StoreInst,	   		// data_memory write enable (only need to write when instruction is str)
 	    	RegWrEn,	   		// reg_file write enable
 	    	Zero,          		// ALU output = 0 flag
@@ -35,10 +36,11 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 	// multiplexer for selecting whether DataIn to RegFile is the immediate value in
 	// Instruction[2:0] or the value of another register.
 	Mux M1 (
-		.A(),
-		.B(),
-		.Sel(),	//
-		.Out()
+		.A		(MemReadValue),						// load from data memory
+		.B		( {5'b00000, Instruction[2:0] } ),	// load immediate value in Instruction[2:0]
+		.C		(ALU_out),							// load from ALU
+		.Sel	(RegLoadType),						// determines load from ALU, data memory, or immediate
+		.Out	(RegWriteValue)						// either A, B, or C depending on Sel
 	);
 
 	ProgCtrEn PC_EN (
@@ -57,7 +59,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 	);					  
 
 	// instruction ROM -- holds the machine code pointed to by program counter
-	InstROM #(.W(9)) IR(
+	InstROM IR(
 		.InstAddress  (PgmCtr) 		, 
 		.InstOut      (Instruction)
 	);
@@ -65,14 +67,11 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 	// Decode stage consists of Control Decoder and Register File
 	// Control decoder
 	Ctrl CTRL (
-		.TargSel
 		.Instruction  (Instruction) ,  // from instr_ROM
 		.RegWrEn      (RegWrEn)		,  // register file write enable
-		.LoadInst     (LoadInst)	,  // selects memory vs ALU output as data input to reg_file
-		.StoreInst    (StoreInst)	,  // set when the current instruction is str
+		.RegLoadType  (RegLoadType)	,  // encode to indicate load from ALU, data memory, or immediate
+		.StoreInst	  (StoreInst)	,  // set if the current instruction stores a value to data memory	
 		.Ack          (Ack)			,  // "done" flag
-		.AddrSel	  (AddrSel)		   // selects which regfile output contains source/dest address
-									   // for data memory operations
 	);
 
 	// register file
@@ -91,19 +90,6 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
     assign InA = ReadA;						  // connect RF out to ALU in
 	assign InB = ReadB;	          			  // interject switch/mux if needed/desired
 
-	
-	// switch to decide what value is being written to reg (function of 
-	// whether opcode is load, loadi, or otherwise)
-	always_comb begin
-		if LoadInst begin 								// writing from data_mem into reg if set
-			RegWriteValue = MemReadValue;					// data memory output
-		end else if Instruction[8:5] == 4'b0100 begin	// writing immediate value (opcode for loadi)
-			RegWriteValue = Instruction[2:0];				// immediate value
-		end else begin									// writing ALU output to reg otherwise
-			RegWriteValue = ALU_out;						// alu output
-		end
-	end
-
 	// ALU
     ALU ALU  (
 	  .InputA  (InA),				// ALU input
@@ -111,7 +97,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 	  .OP      (Instruction[8:5]),	// opcode of the current instruction
 	  .Im	   (Instruction[2:0])	// immediate value for I-type instructions
 	  .Out     (ALU_out),			// to be written to reg
-	  .Zero	   (Zero)				// set when result of ALU is 0 (used to decide whether to branch)    
+	  .Branch  (BranchEn)    		// set when instruction is a bnz instruction and InputA != 0
 	  );
   
 	// Data Memory
