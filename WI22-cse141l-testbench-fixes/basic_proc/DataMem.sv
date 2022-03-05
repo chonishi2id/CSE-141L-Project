@@ -12,11 +12,12 @@ module DataMem (
   logic [7:0] Core[256];       // 8x256 two-dimensional array -- the memory itself
 									 
   always_comb                     // reads are combinational
-    DataOut = Core[DataAddress];
-
-
+    DataOut = Core[DataAddress];  // yes, DataOut will always be the value at the current
+                                  // DataAddress, even during a write. This is fine, since
+                                  // the output will only be used with relevant instructions
+                                  
   always_ff @ (posedge Clk)		    // writes are sequential
-    // set DataMem core to all 0's initially for clean slate
+    // set DataMem core to all 0's initially (may come in handy for debugging)
     if(Reset) begin
       for(int i=0;i<256;i++)
 	      Core[i] <= 0;

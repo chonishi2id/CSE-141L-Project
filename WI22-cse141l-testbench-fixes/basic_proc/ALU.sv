@@ -48,11 +48,11 @@ module ALU (
       end
       AND : Out = InputA & InputB;        // bitwise AND
       OR  : Out = InputA || InputB;       // bitwise OR
-      NEG : Out = ~InputA + 1;
-      GEQ : Out = (InputA >= InputB);         // Greater than or Equal to
-      EQ  : Out = (InputA == InputB);        // Equals to
-      NEQ : Out = (InputA != InputB);         // Not Equals to
-      BNZ : Branch = (InputA != 0);      //Branch not equal to zero
+      NEG : Out = ~InputA + 1;            // 2's complement negation
+      GEQ : Out = (InputA >= InputB);     // Greater than or Equal to
+      EQ  : Out = (InputA == InputB);     // Equals to
+      NEQ : Out = (InputA != InputB);     // Not Equals to
+      BNZ : Branch = (InputA != 0);       // Branch not equal to zero
     endcase
   end
 
