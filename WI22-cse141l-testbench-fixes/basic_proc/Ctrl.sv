@@ -15,31 +15,26 @@ module Ctrl (
   );
 
   // set for all instructions that result in writing to memory (just one, str)
-  assign StoreInst = Instruction[8:6]==3'b110;
+  assign StoreInst = Instruction[8:5] == 4'b0110;
 
   // set for all the instructions that result in a reg being written
   assign RegWrEn = Instruction[8:5]==4'b0000 || Instruction[8:5]==4'b0001 ||
                    Instruction[8:5]==4'b0010 || Instruction[8:5]==4'b0011 ||
                    Instruction[8:5]==4'b0100 || Instruction[8:5]==4'b0101 ||
-                   Instruction[8:5]==4'b0110 || Instruction[8:5]==4'b1000 ||
-                   Instruction[8:5]==4'b1001 || Instruction[8:5]==4'b1010 ||
-                   Instruction[8:5]==4'b1011 || Instruction[8:5]==4'b1100 ||
-                   Instruction[8:5]==4'b1101;  
+                   Instruction[8:5]==4'b1000 || Instruction[8:5]==4'b1001 || 
+                   Instruction[8:5]==4'b1010 || Instruction[8:5]==4'b1011 || 
+                   Instruction[8:5]==4'b1100 || Instruction[8:5]==4'b1101;
   
   always_comb begin
     // case to decide what wire the RegFile's DataIn selector should be
     case (Instruction[8:5])
       kLDI    : RegLoadType = 2'b00; // 00 to select immediate value
       kLDR    : RegLoadType = 2'b01; // 01 to select output from DataMem
-      default : RegLoadType = 2'b10; // 10 to select ALU_out
+      default : RegLoadType = 2'b10; // 10 to select ALU_out, yes this implies that ALU out will be
+                                     // at DataIn for RegFile even on instructions that don't load,
+                                     // but this is fine since RegFile only actually loads when the 
+                                     // instruction is relevant
     endcase
-  end
-
-  always_comb begin
-    if(Instruction[2:0] ==  kRSH)
-      Jump = 1;
-    else
-      Jump = 0;
   end
 
   // reserve instruction = 9'b111111111; for Ack
