@@ -8,11 +8,11 @@ module InstROM (
 // Sample branch-type instruction format: 
 //   {4-bit opcode, 2-bit register index, 2 bit registe index, 1 don't care}
 //   use one register to store the index to the LUT
-//   use the other to store a 1 or 0 depending on whether we are branching
-//   then use LUT to map the register index value to the appropriate label's absolute address
+//   then use LUT to map the index to the appropriate label's absolute address
 // We have 31 total labels. Therefore, we could use the 8-bit register to index the LUT (allowing indexing of up 
 // to 2^8 = 256 data addresses, though we only need 31). 
 
+/*
 // First option - manually populating instructions
   always_comb begin 
 	InstOut = 'b0000_00_00_0;        // default
@@ -34,12 +34,11 @@ module InstROM (
 // (default case already covered by opening statement)
     endcase
   end
+*/
 
-/* Uncomment this part if reading from machine_code.txt
-// Second option (usually recommended) alternative expression
-//   need $readmemh or $readmemb to initialize all of the elements
+// Second option - read instructions from file machine_code.txt
 // declare 2-dimensional array, W bits wide, 2**A words deep
-  logic[W-1:0] inst_rom[2**A];
+  logic[8:0] inst_rom[2**10];
   always_comb InstOut = inst_rom[InstAddress];
 
   // Load instruction memory from external file
@@ -52,8 +51,6 @@ module InstROM (
 	// So you are probably better off with an absolute path,
 	// but you will have to change this example path when you
 	// try this on your machine most likely:
-	//$readmemb("//vmware-host/Shared Folders/Downloads/basic_proc2/machine_code.txt", inst_rom);
+	$readmemb("/Users/matthewalanlarkins/Desktop/machine_code.txt", inst_rom);
   end 
-*/
-  
 endmodule
