@@ -9,7 +9,7 @@ module LUT(
 
     always_comb begin
         // populate the lookup table with proper addresses when the time comes
-        case(Addr)
+        case(Index)
             0: Out = -459;  // this many instructions jumped in program 2's loop (Line 477->Line 18)
             1: Out = -356;  // this many instructions jumped in program 1's loop (Line 375->Line 19)
             2: Out = -302;  // this many instructions jumped in program 3's loop (Line 350->Line 48)

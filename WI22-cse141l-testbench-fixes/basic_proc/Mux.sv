@@ -4,7 +4,7 @@
 //                       output of ALU, or the immediate value encoded in the current instruction.
 module Mux (
     input [1:0]         Sel,        // selector for the mux
-    input [7:0]         A, B, C     // inputs to the mux
+    input [7:0]         A, B, C,    // inputs to the mux
     output logic [7:0]  Out );      // output of the mux
 
     // A if Sel==0

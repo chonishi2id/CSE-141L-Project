@@ -17,12 +17,12 @@ wire [ 7:0] InA, InB, 	   		// ALU operand inputs
 wire [ 7:0] RegWriteValue, 		// data in to reg file
             MemWriteValue, 		// data in to data_memory
 	    	MemReadValue;  		// data out from data_memory
-wire [1:0]	RegLoadType,		// whether value to load into reg is from DataMem, ALU, or is an immed. value
+wire [1:0]	RegLoadType;		// whether value to load into reg is from DataMem, ALU, or is an immed. value
 wire        StoreInst,	   		// data_memory write enable (only need to write when instruction is str)
 	    	RegWrEn,	   		// reg_file write enable
 	    	Zero,          		// ALU output = 0 flag
-            BranchEn;	   		// to program counter: branch enable
-			PC_en;				// set when program is running (enables program counter)
+            BranchEn,	   		// to program counter: branch enable
+			PC_en,				// set when program is running (enables program counter)
 			AddrSel;			// indicates (selects) which register contains the source/destination
 								// address in data memory operations
 logic[15:0] CycleCt;	   		// standalone; NOT PC!
