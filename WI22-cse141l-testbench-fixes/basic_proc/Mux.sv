@@ -15,7 +15,7 @@ module Mux (
         case(Sel)
             2'b00   : Out = A;
             2'b01   : Out = B;
-            1'b10   : Out = C;
+            2'b10   : Out = C;
             default : Out = 0;
         endcase
     end

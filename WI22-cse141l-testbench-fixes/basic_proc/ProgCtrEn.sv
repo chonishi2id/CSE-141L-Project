@@ -7,12 +7,8 @@ module ProgCtrEn (
   
     logic running;
 	 
-    always @(negedge Start) begin
-        running <= 1;
-    end
-
-    always @(posedge Start) begin
-        running <= 0;
+    always @(posedge clk) begin
+        running <= (Start == 0);
     end
 
     always_comb begin
