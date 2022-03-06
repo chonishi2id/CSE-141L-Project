@@ -71,7 +71,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 		.RegWrEn      (RegWrEn)		,  // register file write enable
 		.RegLoadType  (RegLoadType)	,  // encode to indicate load from ALU, data memory, or immediate
 		.StoreInst	  (StoreInst)	,  // set if the current instruction stores a value to data memory	
-		.Ack          (Ack)			,  // "done" flag
+		.Ack          (Ack)			   // "done" flag
 	);
 
 	// register file
@@ -95,7 +95,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 	  .InputA  (InA),				// ALU input
 	  .InputB  (InB), 				// ALU input
 	  .OP      (Instruction[8:5]),	// opcode of the current instruction
-	  .Im	   (Instruction[2:0])	// immediate value for I-type instructions
+	  .Im	   (Instruction[2:0]),	// immediate value for I-type instructions
 	  .Out     (ALU_out),			// to be written to reg
 	  .Branch  (BranchEn)    		// set when instruction is a bnz instruction and InputA != 0
 	  );
