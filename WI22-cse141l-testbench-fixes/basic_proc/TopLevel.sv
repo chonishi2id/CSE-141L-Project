@@ -44,6 +44,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 	);
 
 	ProgCtrEn PC_EN (
+		.Clk(Clk),
 		.Start(Start),
 		.CountEn(PC_en)
 	);
