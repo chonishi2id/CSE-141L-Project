@@ -19,8 +19,13 @@ module DataMem (
   always_ff @ (posedge Clk)		    // writes are sequential
     // set DataMem core to all 0's initially (may come in handy for debugging)
     if(Reset) begin
-      for(int i=0;i<256;i++)
+      for(int i=0;i<256;i++) begin
 	      Core[i] <= 0;
+      end
+
+      // program 1
+      Core[]
+      
 	  end else if(WriteEn) 
       Core[DataAddress] <= DataIn;
 
