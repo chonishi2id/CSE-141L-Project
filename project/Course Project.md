@@ -1,8 +1,7 @@
 # **Milestone 1**
 ### Date Created: 1/24/2022
-### Date Last Updated: 2/9/2022
+### Date Last Updated: 2/23/2022
 ### Group Members: Daisuke Chon, Angelica Consengco, Matthew Larkins
-### PIDs: A15388691, A14113566, A16052530
 * * *
 ## **Component 1:** Introduction
 Our group's processor, named "3BC" is designed to perform the following 3 programs:
@@ -10,11 +9,11 @@ Our group's processor, named "3BC" is designed to perform the following 3 progra
 2. SECDED Hamming Decoding of 11-bit strings
 3. Pattern matching 5-bit strings on 11-bit strings
 
-The machine takes major influence from typical load-store architectures. Although being constrained to 9 bits in our ISA, we strived to come up with a processor that would make writing the three assigned programs a relatively simple endeavor. As such, we agreed we should try to have 3 general purpose registers. This should also help make the programs run faster.
+The machine takes major influence from typical load-store architectures. Although being constrained to 9 bits in our ISA, we strived to come up with a processor that would make writing the three assigned programs a relatively simple endeavor. As such, we agreed we should try to have 4 general purpose registers. This should also help make the programs run faster.
 
 To achieve this, one of the things we do differently from a typical load-store architecture is that when we load and store registers, we use one of the two as both a source and a destination. This allows for a more efficient use of space per instruction because we only need 4 bits to specify which registers we will use during execution.
 
-Another thing we do differently is that our I-Type instructions have 3 bits dedicated to representing immediate values. We represent any 8 bit number in the system via shifting and adding. A demonstration will be shown below.
+Another thing we do differently is that our I-Type instructions have 3 bits dedicated to representing immediate values. We represent any 8 bit number in the system via shifting and adding (see demonstration in Component 4).
 
 * * *
 ## **Component 2:** Architectural Overview
@@ -50,9 +49,9 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 | 0010 | R | AND         | and | and r0, r1  | 0010 00 01 X |
 | 0011 | R | OR          | or  | or r0, r1   | 0011 00 01 X |
 | 0100 | I | load immediate | ldi | ldi r0, #7   | 0100 00 111  |
-| 0101 | R | load register  | ldr | ldr r2, (r0) | 0101 10 00 X |
-| 0110 | R | store register | str | str (r2), r0 | 0110 10 00 X |
-| 0111 | R | branch if equal| beq | beq r0, r1   | 0111 XX XX X |
+| 0101 | R | load from datamem into register  | ldr | ldr r2, (r0) | 0101 10 00 X |
+| 0110 | R | store from register into datamem | str | str (r2), r0 | 0110 10 00 X |
+| 0111 | R | branch if not equal to zero| bnz | bnz r0, r1   | 0111 00 01 X |
 | 1000 | R | >=          | geq | geq r0, r1  | 1000 00 01 X |
 | 1001 | R | ==          | eq  | eq r0, r1   | 1001 00 01 X |
 | 1010 | R | 2's Comp Negation| neg | neg r1, r1 | 1010 01 01 X |
@@ -66,46 +65,54 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 - r0 : 00 - general purpose
 - r1 : 01 - general purpose
 - r2 : 10 - general purpose
-- PC : 11 = special (Program counter)
+- r3 : 11 - general purpose
+- PC : special (Program counter)
 
 ### **Control Flow (Branches):**
-We will support one branching instruction, branch if equal (beq). If the values stored in the registers specified are equal, the program counter will jump to the address stored in a particular register, r2, that is guaranteed to hold the target address. This *absolute addressing* method makes calculation of the target address simple and it does not need to be encoded within the instruction because if the branching condition is met, the program will jump to the address stored always stored in the same register, r2. The maximum branching distance will be at most 255 bytes, so that register r2 may contain a target address that is within the full range of memory address space.
-An example is shown below:
+We will support one branching instruction, branch if not zero (bnz). This will be an R-Type instruction of the form 
 
-	//access target memory address and load into r2
-	ldi r1, #3    -- r1: 00000011
-	ls r1, #3     -- r1: 00011000
-	addi r1, #5   -- r1: 00011101
-	ls r1, #2     -- r1: 01110100
-	addi r1, #1   -- r1: 01110101
-	ldr r2, (r1)  == value stored in memory address r1 = [170]
-	//load two values to compare into registers
-	ldi r0, #1   
-	ldi r1, #2 
-	beq r0, r1 // if r0 == r1, jump to address stored in r2
+`bnz destination, source`
+
+ e.g.
+
+````bnz R2, R1````
+
+where `R2` is the *destination* in the sense that it holds the index to the destination address in a lookup table and `R1` is the *source* in the sense that it is the source value to compare with zero for equality.
+
+Given that our assembly code doesn't employ too many branching and the parts that do do not jump more than 50 - 100 instructions, all jumps will be written as an offset addition to where the program counter is currently at. For example, if we want to jump from line 300 to 250, we would specify for the PC register to have its value subtracted by 50 (that is, by adding by a negative number using the NEG instruction). If we want to jump from there to line 350, we would add 100 to the value stored in the PC register. There are labels written in our assembly code but that should be thought of as a comment for the programmer to know what block/section the code is jumping to.
+
+Programatically, jumping from line 300 to line 250 would look like the following:
+
+	// Create the number 50
+	add r1, #6
+	lsl r1, #3
+	add r1, #2
+	// Make it negative
+	neg r1, r1
+	// Now make sure r2 is equal to 1 (or rather, not equal to zero) to make the jump. For demonstration purposes, this will be hardcoded in but should be done via comparison operations.
+	ldi r2, #1
+	// Perform the bnz operation. bnz adds the offset in r1 to the value stored in the program counter.
+	bnz r1, r2
 
 ### **Addressing Modes:**
-We support direct memory addressing via registers. However, if a programmer wants to access a specific memory address, they must perform several shifting and masking operations. An example is outlined below: 
+We support addressing exclusively via indexing to a lookup table. This is reasonable for the 3BC processor because it is designed to perform 3 static procedures where addresses are the same for every use. Thus, there is no need for supporting generalized addressing - we know in advance the finite number and values of the addresses the programs will be using. It will be simpler to just look them up, then, and not implement unnecessary functionality like calculating a destination address from any offset that can be given by an instruction.
 
-**Task: load address 01110101**
-	
-	ldi r1, #3    -- r1: 00000011
-	ls r1, #3     -- r1: 00011000
-	addi r1, #5   -- r1: 00011101
-	ls r1, #2     -- r1: 01110100
-	addi r1, #1   -- r1: 01110101
-	ldr r0, (r1)  == value stored in memory address r1 = [170]
+The three instructions in the 3BC ISA that use addressing are `str`, `ldr`, and `bnz`. In the cases of `ldr` and `str`, addresses are indexes to bytes in the 256-byte data memory, whereas in the case of `bnz`, addresses represent addresses of instructions in the separate instruction memory. Both sets of addresses can be stored in a lookup table and accessed/used similarly.
 	
 * * *
 ## **Component 4:** Programmer's Model
 As mentioned in the introduction, our machine takes inspriation from a typical load-store architecture. As such, if a programmer wants to do anything, they must load values into a register, conduct the operation, and then store it back.
 
-If a programmer wants to use a specific 8-bit address, then they must conduct shifting and masking operations as outlined in the previous part.
+If a programmer wants to use a specific 8-bit value, then they can use ldi and conduct shifting and masking operations to create any desired 8-bit value. For example:
 
-**Example:** 
+**Task: put value 01110101 in r1**
+	
+	ldi r1, #3    -- r1: 00000011
+	ls r1, #3     -- r1: 00011000
+	addi r1, #5   -- r1: 00011101
+	ls r1, #2     -- r1: 01110100
+	addi r1, #1   -- r1: 01110101
 
-	ldi r1, #3
-	0100_01_011
 
 * * *
 ## **Component 5:** Program Implementations
@@ -1469,3 +1476,185 @@ Our register file can read and write into registers. The basic implementation su
 * * *
 ## **Component 5:** Answering the Question
  Our ALU will *indirectly* be used for non-arithmetic instructions such as load and store. While we do indeed need to make address pointer calculations, the programmer will be responsible for calculating these addresses via manual shift operations of 3 bit immediates into 8 bit values. As such, the complexity of the design is unaffected.
+
+
+# **MILESTONE 3**
+### Date Created: 2/22/2022
+### Date Last Updated: 2/23/2022
+### Group Members: Daisuke Chon, Angelica Consengco, Matthew Larkins
+### PIDs: A15388691, A14113566, A16052530
+* * *
+## **Component 1:** Changelog
+1. Changed how jumps are done using the program counter. Information is updated on Milestone 1.
+2. Changed design of how data addressing works. Information is updated on Milestone 1.
+
+## **Component 2:** Assembler Input and Output Example
+We wrote the assembler in Python and the code is shown below. For debugging purposes, the rest of the instruction memory is filled with "xxxxxxxxx" as implemented in the original sample code and the "unused bits" in the R-Type instruction are replaced with a '0' padding. To test the assembler, we created an input file 'test_assembly.asm' that used all 14 of our ISA's instructions and mixed in all of possible registers that could be used. We also included comments and blank lines to test if the assembler would handle these cases. We created a file with the expected output of the assembler by typing out the encoding for each instruction so that we could compare this against the actual output. The output produced by the assembler was correct. The input, output, and test files mentioned are all shown below.
+
+### Code:
+	import re
+	#!/usr/bin/env python3
+
+	# Totally optional, here's a neat thing:
+	# You can create a reverse-mapping, such that waveform tools will show the
+	# original instruction.
+	# The waveform viewing tool needs a mapping of # `$value $display_string`.
+	# Only want to write each unique machine code once though.
+	mcodes = set()
+
+	# Here's a lookup table for opcodes
+	ops = {
+					'ls': '0000',
+					'rs': '0001',
+					'and': '0010',
+					'or' : '0011',
+					'ldi' : '0100',
+					'ldr' : '0101',
+					'str' : '0110',
+					'bnz' : '0111',
+					'geq' : '1000',
+					'eq' : '1001',
+					'neg' : '1010',
+					'add' : '1011',
+					'addi' : '1100',
+					'neq' : '1101'
+					}
+
+	# This is a neat trick to catch programming errors
+	TOTAL_IMEM_SIZE = 2**10
+
+	# Don't need to do anything fancy here
+	with open('test_assembly.asm') as ifile, open('machine_out.hex', 'w') as imem, open('gtkwave/mcode.fmt', 'w') as wavefmt:
+			for lineno, line in enumerate(ifile):
+					try:
+							# Skip over blank lines, remove comments
+							line = line.strip()
+							line = line.split('//')[0].strip()
+							if line == '':
+									continue
+			
+							# Special-case this:
+							if line[:4] == 'halt':
+									machine_code = '111111111'
+							# I-Type: Op rs, imm
+							# R-Type: Op rd, rs (plus one zero for padding unused bit)
+							insn = re.split(' |, ', line)
+							op = insn[0]
+							#if instruction is I-Type: Op rs, imm
+							if insn[2].startswith('#'):
+									imm = '{:03b}'.format(int(insn[2].split('#')[1]))
+									rs = '{:02b}'.format(int(insn[1].split('r')[1]))
+									machine_code = ops[op] + rs + imm
+							#if instruction is nop
+							elif (op == 'nop'):
+									machine_code = '111100000'
+							#if instruction is R-type: Op rd, rs (plus one zero for padding unused bit)
+							else:
+									rd = '{:02b}'.format(int(insn[1].split('r')[1]))
+									rs = '{:02b}'.format(int(insn[2].split('r')[1]))
+									machine_code = ops[op] + rd + rs + '0'
+							# Write the imem entry
+							imem.write(machine_code + '\n')
+							TOTAL_IMEM_SIZE -= 1
+
+							# Write out our waveform decoder
+							if machine_code not in mcodes:
+									line = line.replace('\t', ' ')
+									wavefmt.write('{} {}\n'.format(machine_code, line))
+									mcodes.add(machine_code)
+					except:
+							print("Error Parsing Line ", lineno)
+							print(">>>{}<<<".format(line))
+							print()
+							raise
+
+			# This is a neat trick to catch programming errors:
+			# Fill the rest of instruction memory with illegal instructions.
+			#
+			wavefmt.write('xxxxxxxxx ILLEGAL!')
+			while TOTAL_IMEM_SIZE:
+					imem.write('xxxxxxxxx\n')
+					TOTAL_IMEM_SIZE -= 1
+
+
+
+### Input file (test_assembly.asm): 
+	//left shift: r0 = r0 << 2
+	ls r0, #2 
+
+	//right shift: r0 = r0 << 3
+	rs r0, #3
+
+	//bitwise AND: r0 = r0 & r1
+	and r0, r1 
+
+	//bitwise OR: r0 = r0 || r1
+	or r0, r1
+
+	//load immediate: r0 = 7
+	ldi r0, #7
+
+	//load register: r2 = MEM[r0]
+	ldr r2, r0
+
+	//store register: MEM[r0] = r2
+	str r2, r0
+
+	//equals: r1 = (r1 == r2)
+	eq r1, r2 
+
+	//branch if not equal to zero: if r1 == 1, go to address in R3
+	bnz r3, r1
+
+	//greater than or equal to: r0 = (r0 >= r1)
+	geq r0, r1
+
+	//2's complement: r1 = (~r1 + 1)
+	neg r1, r1 
+
+	//add: r0 = r0 + r1
+	add r0, r1
+
+	//add immediate: r0 = r0 + 3
+	addi r0, #3
+
+	//not equal to: r0 = (r0 != r1)
+	neq r0, r1
+
+### Expected output file (expected_machine_code.txt):
+	000000010 //ls r0, #2 
+	000100011 //rs r0, #3
+	001000010 //and r0, r1 
+	001100010 //or r0, r1
+	010000111 //ldi r0, #7
+	010110000 // ldr r2, r0
+	011010000 //str r2, r0
+	100101100 //eq R1, R2 
+	011111010 //bnz R3, R1
+	100000010 //geq r0, r1 
+	101001010 //neg r1, r1 
+	101100010 //add r0, r1
+	110000011 //addi r0, #3
+	110100010 //neq r0, r1
+
+
+### Actual output file (machine_out.hex), with the 'xxxxxxxxx' lines truncated for space:
+	000000010
+	000100011
+	001000010
+	001100010
+	010000111
+	010110000
+	011010000
+	100101100
+	011111010
+	100000010
+	101001010
+	101100010
+	110000011
+	110100010
+* * *
+## **Component 3:** Architectural Overview figure
+<img src="./Part 3/architecturalFigure.PNG">
+
+* * * 
