@@ -1,0 +1,101 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "ProgCtr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[3]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[4]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[5]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[6]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[7]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[8]",
+					"strict" : false
+				},
+				{
+					"name" : "ProgCtr[9]",
+					"strict" : false
+				},
+				{
+					"name" : "Clk",
+					"strict" : false
+				},
+				{
+					"name" : "Target[0]",
+					"strict" : false
+				},
+				{
+					"name" : "Reset",
+					"strict" : false
+				},
+				{
+					"name" : "BranchAbsEn",
+					"strict" : false
+				},
+				{
+					"name" : "Target[1]",
+					"strict" : false
+				},
+				{
+					"name" : "Target[2]",
+					"strict" : false
+				},
+				{
+					"name" : "Target[3]",
+					"strict" : false
+				},
+				{
+					"name" : "Target[4]",
+					"strict" : false
+				},
+				{
+					"name" : "Target[5]",
+					"strict" : false
+				},
+				{
+					"name" : "Target[6]",
+					"strict" : false
+				},
+				{
+					"name" : "Target[7]",
+					"strict" : false
+				},
+				{
+					"name" : "Target[8]",
+					"strict" : false
+				},
+				{
+					"name" : "Target[9]",
+					"strict" : false
+				}
+			]
+		}
+	]
+}
