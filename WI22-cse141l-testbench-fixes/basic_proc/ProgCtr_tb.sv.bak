@@ -23,6 +23,7 @@ ProgCtr uut(
 
 initial begin
     Reset = 1'b1;
+    Start = '0;
     Clk = '0;
     BranchAbsEn = '0;
     ALU_flag = '0;
@@ -39,6 +40,15 @@ initial begin
 
     #1 Clk = '1; //advance 1 time unit, check results
     
+    //#1 Clk = '0;
+    //$display("Check that nothing happens before Start");
+    //assert (ProgCtr_o == 'd0);
+    //Start = '1;
+    //BranchAbsEn = '1;
+    //Target = 10;
+
+//    #1 Clk = '1; //advance 1 time unit, latch values
+
     #1 Clk = '0; //advance 1 time unit, check results
     $display("Check if PC jumps to target");
     assert (ProgCtr_o == 10);

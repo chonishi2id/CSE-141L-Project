@@ -1,0 +1,61 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/simulation/modelsim
+vProgCtr
+Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+!s110 1644397688
+!i10b 1
+!s100 ZYznN6CYQ;BHZHC^Q[V`61
+IeGR7bRlXU>iXzHB;?70233
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+!s105 ProgCtr_sv_unit
+S1
+R0
+w1644397555
+8C:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/ProgCtr.sv
+FC:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/ProgCtr.sv
+L0 8
+Z3 OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1644397688.000000
+!s107 C:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/ProgCtr.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc|C:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/ProgCtr.sv|
+!i113 1
+o-sv -work work
+!s92 -sv -work work +incdir+C:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc
+Z4 tCvgOpt 0
+n@prog@ctr
+vProgCtr_tb
+R1
+!s110 1644397766
+!i10b 1
+!s100 bIZm91[];d@5RBjkmE`Q51
+InBRHmI5c[I_A2_7Tef9B<3
+R2
+!s105 ProgCtr_tb_sv_unit
+S1
+R0
+w1644397611
+8C:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/ProgCtr_tb.sv
+FC:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/ProgCtr_tb.sv
+L0 4
+R3
+r1
+!s85 0
+31
+!s108 1644397765.000000
+!s107 C:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/ProgCtr_tb.sv|
+!s90 -reportprogress|300|-work|work|C:/Users/johna/Desktop/Angelica-CSE141L/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/ProgCtr_tb.sv|
+!i113 1
+o-work work
+R4
+n@prog@ctr_tb

@@ -18,9 +18,8 @@ module ALU (
   op_mne op_mnemonic;			            // type enum: used for convenient waveform viewing
 	
   always_comb begin
-    Out = 0;      
-    Branch = 0;
-    // No Op = default
+    Out = 0; // No Op = default
+    Branch = 0;                             
     case (OP)							  
       ADD : Out = InputA + InputB;        // add two regs
       ADDI: Out = InputA + Im;            // add an immediate value to regA
