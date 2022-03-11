@@ -479,7 +479,7 @@
 	addi r1, 5
 	ls	r1, 1
 	addi r1, 1
-	ldi r3, 1				// To Func 2 loop. Use the lut
+	ldi r3, 1				// To Func 2 loop. Use the lut 482 - 12 = 470 lines to jump back
 	neq r0, r1
 	ldi r1, 1
 	eq r0, r1				// r0 = 1 if r0 == r1
