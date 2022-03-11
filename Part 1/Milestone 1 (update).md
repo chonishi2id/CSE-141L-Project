@@ -1,6 +1,6 @@
 # **Milestone 1 Document**
 ### Date Created: 1/24/2022
-### Date Last Updated: 1/26/2022
+### Date Last Updated: 3/10/2022
 ### Group Members: Daisuke Chon, Angelica Consengco, Matthew Larkins
 * * *
 ## **Component 1:** Introduction
@@ -51,14 +51,14 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 | 0100 | I | load immediate | ldi | ldi r0, #7   | 0100 00 111  |
 | 0101 | R | load from datamem into register  | ldr | ldr r2, (r0) | 0101 10 00 X |
 | 0110 | R | store from register into datamem | str | str (r2), r0 | 0110 10 00 X |
-| 0111 | R | branch if not equal to zero| bnz | bnz r0, r1   | 0111 00 01 X |
+| 0111 | R | branch if not equal to zero register mode | bnzr | bnzr r0, r1   | 0111 00 01 X |
 | 1000 | R | >=          | geq | geq r0, r1  | 1000 00 01 X |
 | 1001 | R | ==          | eq  | eq r0, r1   | 1001 00 01 X |
 | 1010 | R | 2's Comp Negation| neg | neg r1, r1 | 1010 01 01 X |
 | 1011 | R | add         | add | add r0, r1  | 1011 00 01 X |
 | 1100 | R | add immediate  | addi | addi r0, #3 | 1100 00 011  |
 | 1101 | R | !=             | neq  | neq r0, r1  | 1101 00 01 X |       
-| 1110 | X | nop | 
+| 1110 | X | branch if not equal to zero lookup table mode | bnzl | bnzl r0, r1 | 1110 00 01 X |
 | 1111 | X | nop |
 
 ### **Internal Operands/Registers:**
@@ -69,18 +69,25 @@ Note: The max value we can represent naively with 3 bits is 7. We can represent 
 - PC : special (Program counter)
 
 ### **Control Flow (Branches):**
-We will support one branching instruction, branch if not zero (bnz). This will be an R-Type instruction of the form 
+We will support two branching instructions that follow the general format of branching to a specified location (in a register) if a (separate) register is not zero. This branching format will handle two modes: register mode (bnzr) and lookup table mode (bnzl). These will be R-Type instruction of the form 
 
-`bnz destination, source`
+`bnzr destination, source`
+
+and
+
+`bnzl destination, source`
 
  e.g.
 
-````bnz R2, R1````
+````bnzr R2, R1````
+
+````bnzl R2, R1````
 
 where `R2` is the *destination* in the sense that it holds the index to the destination address in a lookup table and `R1` is the *source* in the sense that it is the source value to compare with zero for equality.
 
 // This is Nishi's new writeup
-Given that our assembly code doesn't employ too many branching and the parts that do do not jump more than 50 - 100 instructions, all jumps will be written as an offset addition to where the program counter is currently at. For example, if we want to jump from line 300 to 250, we would specify for the PC register to have its value subtracted by 50 (that is, by adding by a negative number using the NEG instruction). If we want to jump from there to line 350, we would add 100 to the value stored in the PC register. There are labels written in our assembly code but that should be thought of as a comment for the programmer to know what block/section the code is jumping to.
+
+Given that our assembly code doesn't employ too much branching, all jumps will be written as an offset addition to where the program counter is currently at. For example, if we want to jump from line 300 to 250, we would specify for the PC register to have its value subtracted by 50 (that is, by adding by a negative number using the NEG instruction). If we want to jump from there to line 350, we would add 100 to the value stored in the PC register. There are labels written in our assembly code but that should be thought of as a comment for the programmer to know what block/section the code is jumping to. Jumps that are within 8 bits of instructions will use the Register Mode. Larger jumps such as one that loops across the entire program will employ the Lookup Table Mode where the Lookup table will contain the exact values needed to jump.
 
 Programatically, jumping from line 300 to line 250 would look like the following:
 
@@ -93,9 +100,10 @@ Programatically, jumping from line 300 to line 250 would look like the following
 	// Now make sure r2 is equal to 1 (or rather, not equal to zero) to make the jump. For demonstration purposes, this will be hardcoded in but should be done via comparison operations.
 	ldi r2, #1
 	// Perform the bnz operation. bnz adds the offset in r1 to the value stored in the program counter.
-	bnz r1, r2
+	bnzr r1, r2
 
 // This is Matt's old writeup
+
 If the value stored in the checked register specified is non-zero, the program counter will jump to the address stored in a lookup table whose index is stored in the second register argument. This lookup table method allows us to store addresses larger than reperesentable by a single 8-bit register in the case where we have more than 2^8 total instructions in the instruction memory, and also requires fewer steps than a general purpose addressing method (e.g. there is no need to calculate a target address by adding an offset).
 
 
