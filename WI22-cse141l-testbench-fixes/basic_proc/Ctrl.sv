@@ -44,7 +44,7 @@ module Ctrl (
   end
 
   always_comb begin
-    OffsetSrc = (Instruction[8:5] == 4'b0101);   // 1 if offset is from ref, 0 otherwise (will be from LUT then)
+    OffsetSrc = (Instruction[8:5] == kBNZR);   // 1 if offset is from reg, else 0 (will be from LUT then)
   end
 endmodule
 
