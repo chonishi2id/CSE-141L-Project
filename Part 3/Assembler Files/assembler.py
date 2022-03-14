@@ -17,13 +17,14 @@ ops = {
         'ldi' : '0100',
         'ldr' : '0101',
         'str' : '0110',
-        'bnz' : '0111',
+        'bnzr' : '0111',
         'geq' : '1000',
         'eq' : '1001',
         'neg' : '1010',
         'add' : '1011',
         'addi' : '1100',
-        'neq' : '1101'
+        'neq' : '1101',
+        'bnzl' : '1110'
         }
 
 # This is a neat trick to catch programming errors
@@ -73,10 +74,10 @@ with open('test_assembly.asm') as ifile, open('machine_out.hex', 'w') as imem, o
             print(">>>{}<<<".format(line))
             print()
             raise
-
+    #append nop to end for ACK signal
+    imem.write('111100000' + '\n')
     # This is a neat trick to catch programming errors:
     # Fill the rest of instruction memory with illegal instructions.
-    #
     wavefmt.write('xxxxxxxxx ILLEGAL!')
     while TOTAL_IMEM_SIZE:
         imem.write('xxxxxxxxx\n')
