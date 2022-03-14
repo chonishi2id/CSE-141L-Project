@@ -23,8 +23,9 @@ wire        StoreInst,	   		// data_memory write enable (only need to write when
 	    	Zero,          		// ALU output = 0 flag
             BranchEn,	   		// to program counter: branch enable
 			PC_en,				// set when program is running (enables program counter)
-			AddrSel;			// indicates (selects) which register contains the source/destination
+			AddrSel,			// indicates (selects) which register contains the source/destination
 								// address in data memory operations
+			PCOffsetSrc;		// whether PC offset is from reg or LUT
 logic[15:0] CycleCt;	   		// standalone; NOT PC!
 
 	// lookup table to get 10-bit output PC branch targets and data memory addresses
@@ -51,12 +52,14 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 
 	// Fetch stage consists of Program Counter and Instruction ROM
 	ProgCtr PC (		       // this is the program counter module
-		.Reset        (Reset   ) ,  // reset to 0
-		.Clk          (Clk     ) , 
-		.BranchEn  	  (BranchEn) ,  // tell PC to branch to offset in Target
-		.Offset       (LUTOut  ) ,  // "how far?" during a jump or branch
-		.ProgCtr      (PgmCtr  ) ,	// program count = index to instruction memory
-		.En			  (PC_en)
+		.Reset        (Reset   	  ) ,  // reset to 0
+		.Source		  (PCOffsetSrc)	,
+		.Clk          (Clk     	  ) , 
+		.BranchEn  	  (BranchEn	  ) ,  // tell PC to branch to offset in Target
+		.LUTin        (LUTOut  	  )	,  // "how far?" during a jump or branch
+		.RegIn		  (ReadA   	  )	,
+		.ProgCtr      (PgmCtr  	  ) ,	// program count = index to instruction memory
+		.En			  (PC_en	  )
 	);					  
 
 	// instruction ROM -- holds the machine code pointed to by program counter
@@ -72,7 +75,8 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 		.RegWrEn      (RegWrEn)		,  // register file write enable
 		.RegLoadType  (RegLoadType)	,  // encode to indicate load from ALU, data memory, or immediate
 		.StoreInst	  (StoreInst)	,  // set if the current instruction stores a value to data memory	
-		.Ack          (Ack)			   // "done" flag
+		.Ack          (Ack),		   // "done" flag
+		.Source		  (PCOffsetSrc)
 	);
 
 	// register file
@@ -103,7 +107,8 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
   
 	// Data Memory
 	DataMem DM (
-		.DataAddress  (LUTOut), 		// selected by mux M1 (either loading or storing)
+		.ReadA  	  (ReadA), 			// register output
+		.ReadB		  (ReadB),			// register output
 		.WriteEn      (StoreInst), 		// write to DataAddress if we are StoreInst set (i.e. current instruction is str)
 		.DataIn       (ReadB),			// data to write is the second register (DataOutB) in the instruction (see str in ISA spec)
 		.DataOut      (MemReadValue), 	// output data read from data memory

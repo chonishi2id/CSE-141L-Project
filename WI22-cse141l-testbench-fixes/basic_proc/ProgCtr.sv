@@ -6,8 +6,10 @@ module ProgCtr (
                        Clk,        // PC changes on posedge clk
 					             BranchEn,   // branch to Target
                        En,         // enable program counter (set if and only if a program is running)
-  input        [9:0] Offset,     // branch  destination (offset from current PC)
-  output logic [9:0] ProgCtr     // the program counter register itself
+                       Source,     // signals the source of the branch offset { 0: LUTin, 1: RegIn }
+  input        [7:0]   RegIn,      // branch destination (offset from current PC)   [used with bnzr]
+  input        [9:0]   LUTin,      // branch  destination (offset from current PC)  [used with bnzl]
+  output logic [9:0]   ProgCtr     // the program counter register itself
   );
   
 	 
@@ -18,7 +20,7 @@ module ProgCtr (
     end else if (En) begin   // PC counts when program is running (i.e. En is set)
       // count differently depending on whether we are branching or doing normal execution
       if (BranchEn) begin       // branching
-        ProgCtr <= ProgCtr + Offset;        // branch to target
+        ProgCtr <= ProgCtr + (Source ? {2'b00, RegIn} : LUTin); // branch to target
       end else                  // normal operation
         ProgCtr <= ProgCtr+'b1;   // run the next instruction
     end else begin

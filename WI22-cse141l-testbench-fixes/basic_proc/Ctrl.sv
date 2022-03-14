@@ -11,7 +11,8 @@ module Ctrl (
   output logic [1:0]  RegLoadType ,	    // mem, ALU_out, or immediate written to reg_file ?
   output logic        RegWrEn     ,     // write to reg_file (common)
       	              StoreInst   ,     // mem write enable
-	                    Ack               // "done w/ program"
+	                    Ack         ,     // "done w/ program"
+                      OffsetSrc
   );
 
   // set for all instructions that result in writing to memory (just one, str)
@@ -40,6 +41,10 @@ module Ctrl (
   // reserve instruction = 9'b111111111; for Ack
   always_comb begin 
     Ack = &Instruction;
+  end
+
+  always_comb begin
+    OffsetSrc = (Instruction[8:5] == 4'b0101);   // 1 if offset is from ref, 0 otherwise (will be from LUT then)
   end
 endmodule
 
