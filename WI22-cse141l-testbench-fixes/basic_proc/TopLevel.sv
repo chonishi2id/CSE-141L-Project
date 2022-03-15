@@ -30,7 +30,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 
 	// lookup table to get 10-bit output PC branch targets and data memory addresses
 	LUT L2 (
-		.Index(ReadA),
+		.Index(ReadA[3:0]),
 		.Out(LUTOut)
 	);
 
