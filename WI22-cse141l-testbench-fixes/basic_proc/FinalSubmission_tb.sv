@@ -43,7 +43,7 @@ initial begin
 
   // Load the "golden image" data memory once at the beginning
   // Did you choose the 11-bit or 16-bit interpretation for Program 2?
-  $readmemh("data_mem_01-golden-P2_11.hex", DataMemoryAtFinish);
+  $readmemh("C:\\Users\\Matthew\\Desktop\\CSE-141L-Project\\WI22-cse141l-testbench-fixes\\basic_proc\\simulation\\data_mem_01-golden-P2_11.hex", DataMemoryAtFinish);
   //$readmemh("data_mem_01-golden-P2_16.hex", DataMemoryAtFinish);
 
   // De-assert Reset, Assert Start to "load" P1 as-needed

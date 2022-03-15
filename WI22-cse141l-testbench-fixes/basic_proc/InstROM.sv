@@ -12,7 +12,7 @@ module InstROM (
 
   // Load instruction memory from external file
   initial begin
-	$readmemb("machine_out_prog1.hex", inst_rom);
+	$readmemb("C:\\Users\\Matthew\\Desktop\\CSE-141L-Project\\WI22-cse141l-testbench-fixes\\basic_proc\\simulation\\machine_out_prog1.hex", inst_rom);
       // could also use absolute path 
 	//$readmemb("/Users/matthewalanlarkins/Desktop/machine_code.txt", inst_rom);
   end 

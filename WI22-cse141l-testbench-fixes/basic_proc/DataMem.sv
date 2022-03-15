@@ -20,7 +20,7 @@ module DataMem (
   always_ff @ (posedge Clk)		    // writes are sequential
     if(Reset) begin
       // prepare data memory for testing with data_mem_01 (i.e. test case #1, see data_mems folder)
-      $readmemh("data_mem_01-initial.hex", Core);
+      $readmemh("C:\\Users\\Matthew\\Desktop\\CSE-141L-Project\\WI22-cse141l-testbench-fixes\\basic_proc\\simulation\\data_mem_01-initial.hex", Core);
 	  end else if(WriteEn) 
       Core[ReadA] <= ReadB;
 endmodule
