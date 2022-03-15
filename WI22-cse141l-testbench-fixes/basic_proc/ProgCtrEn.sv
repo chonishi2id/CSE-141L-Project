@@ -7,9 +7,15 @@ module ProgCtrEn (
     output logic          CountEn );    // output to PC indicating whether it should be counting or not
   
     logic running;
+    logic start_went_low;
 	 
+    always @(negedge Start) begin
+        start_went_low = 1;
+    end
+
     always @(posedge Clk) begin
-        running <= (Start == 0);
+        if (start_went_low) running <= 0;
+        else running <= (Start == 0);
     end
 
     always_comb begin
