@@ -30,7 +30,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 
 	// lookup table to get 10-bit output PC branch targets and data memory addresses
 	LUT L2 (
-		.Index(ReadA),
+		.Index(ReadA[3:0]),
 		.Out(LUTOut)
 	);
 
@@ -76,7 +76,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 		.RegLoadType  (RegLoadType)	,  // encode to indicate load from ALU, data memory, or immediate
 		.StoreInst	  (StoreInst)	,  // set if the current instruction stores a value to data memory	
 		.Ack          (Ack),		   // "done" flag
-		.Source		  (PCOffsetSrc)
+		.OffsetSrc	  (PCOffsetSrc)
 	);
 
 	// register file

@@ -43,7 +43,7 @@ initial begin
 
   // Load the "golden image" data memory once at the beginning
   // Did you choose the 11-bit or 16-bit interpretation for Program 2?
-  $readmemh("data_mem_01-golden-P2_11.hex", DataMemoryAtFinish);
+  $readmemh("C:\\Users\\Matthew\\Desktop\\CSE-141L-Project\\WI22-cse141l-testbench-fixes\\basic_proc\\simulation\\data_mem_01-golden-P2_11.hex", DataMemoryAtFinish);
   //$readmemh("data_mem_01-golden-P2_16.hex", DataMemoryAtFinish);
 
   // De-assert Reset, Assert Start to "load" P1 as-needed
@@ -64,14 +64,14 @@ initial begin
 
   // Test the correctness
   for(int j=30; j<60; j++) begin
-    if (DUT.DM1.Core[j] == DataMemoryAtFinish[j])
+    if (DUT.DM.Core[j] == DataMemoryAtFinish[j])
       $display("    DM[%d] - Good.", j);
     else
-      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM1.Core[j]);
+      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM.Core[j]);
   end
 
   // Display any relevant diagnostic or performance measurments for P1
-  $display("last instruction = %d", DUT.PC1.ProgCtr);
+  $display("last instruction = %d", DUT.PC.ProgCtr);
 
 
 
@@ -92,14 +92,14 @@ initial begin
 
   // Test the correctness
   for(int j=94; j<124; j++) begin
-    if (DUT.DM1.Core[j] == DataMemoryAtFinish[j])
+    if (DUT.DM.Core[j] == DataMemoryAtFinish[j])
       $display("    DM[%d] - Good.", j);
     else
-      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM1.Core[j]);
+      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM.Core[j]);
   end
 
   // Display any relevant diagnostic or performance measurments for P2
-  $display("last instruction = %d", DUT.PC1.ProgCtr);
+  $display("last instruction = %d", DUT.PC.ProgCtr);
 
 
 
@@ -120,14 +120,14 @@ initial begin
 
   // Test the correctness
   for(int j=192; j<195; j++) begin
-    if (DUT.DM1.Core[j] == DataMemoryAtFinish[j])
+    if (DUT.DM.Core[j] == DataMemoryAtFinish[j])
       $display("    DM[%d] - Good.", j);
     else
-      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM1.Core[j]);
+      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM.Core[j]);
   end
 
   // Display any relevant diagnostic or performance measurments for P3
-  $display("last instruction = %d", DUT.PC1.ProgCtr);
+  $display("last instruction = %d", DUT.PC.ProgCtr);
 
 
 
