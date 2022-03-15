@@ -14,8 +14,8 @@ module ProgCtrEn (
     end
 
     always @(posedge Clk) begin
-        if (start_went_low) running <= 0;
-        else running <= (Start == 0);
+        if (start_went_low) running <= (Start == 0);
+        else running <= 0;
     end
 
     always_comb begin
