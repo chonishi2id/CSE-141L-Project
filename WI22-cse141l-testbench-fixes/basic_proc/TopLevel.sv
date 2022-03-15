@@ -76,7 +76,7 @@ logic[15:0] CycleCt;	   		// standalone; NOT PC!
 		.RegLoadType  (RegLoadType)	,  // encode to indicate load from ALU, data memory, or immediate
 		.StoreInst	  (StoreInst)	,  // set if the current instruction stores a value to data memory	
 		.Ack          (Ack),		   // "done" flag
-		.Source		  (PCOffsetSrc)
+		.OffsetSrc	  (PCOffsetSrc)
 	);
 
 	// register file
