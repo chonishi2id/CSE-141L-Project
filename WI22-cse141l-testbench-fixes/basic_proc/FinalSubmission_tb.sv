@@ -64,14 +64,14 @@ initial begin
 
   // Test the correctness
   for(int j=30; j<60; j++) begin
-    if (DUT.DM1.Core[j] == DataMemoryAtFinish[j])
+    if (DUT.DM.Core[j] == DataMemoryAtFinish[j])
       $display("    DM[%d] - Good.", j);
     else
-      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM1.Core[j]);
+      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM.Core[j]);
   end
 
   // Display any relevant diagnostic or performance measurments for P1
-  $display("last instruction = %d", DUT.PC1.ProgCtr);
+  $display("last instruction = %d", DUT.PC.ProgCtr);
 
 
 
@@ -92,14 +92,14 @@ initial begin
 
   // Test the correctness
   for(int j=94; j<124; j++) begin
-    if (DUT.DM1.Core[j] == DataMemoryAtFinish[j])
+    if (DUT.DM.Core[j] == DataMemoryAtFinish[j])
       $display("    DM[%d] - Good.", j);
     else
-      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM1.Core[j]);
+      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM.Core[j]);
   end
 
   // Display any relevant diagnostic or performance measurments for P2
-  $display("last instruction = %d", DUT.PC1.ProgCtr);
+  $display("last instruction = %d", DUT.PC.ProgCtr);
 
 
 
@@ -120,14 +120,14 @@ initial begin
 
   // Test the correctness
   for(int j=192; j<195; j++) begin
-    if (DUT.DM1.Core[j] == DataMemoryAtFinish[j])
+    if (DUT.DM.Core[j] == DataMemoryAtFinish[j])
       $display("    DM[%d] - Good.", j);
     else
-      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM1.Core[j]);
+      $display("!!! DM[%d] - WRONG. Expected 0x%02h  Got 0x%02h", j, DataMemoryAtFinish[j], DUT.DM.Core[j]);
   end
 
   // Display any relevant diagnostic or performance measurments for P3
-  $display("last instruction = %d", DUT.PC1.ProgCtr);
+  $display("last instruction = %d", DUT.PC.ProgCtr);
 
 
 
