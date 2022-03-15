@@ -378,7 +378,7 @@
 	ls r2, #1			// 12 = 00001100
 	addi r2, #1         // 13 = 00001101
 	ls r2, #4           // 208 = 11010000	
-	addi r2, #2 //r2 = 210
+	addi r2, #2 		//r2 = 210
 	ldr r1, r2
 	neq r0, r1
 	addi r2, #1
@@ -394,21 +394,21 @@
 	ls r3, #1			// 12 = 00001100
 	addi r3, #1         // 13 = 00001101
 	ls r3, #4           // 208 = 11010000	
-	addi r3, #1 //r3 = 209
-	ldr r1, r3 //p16_end:
+	addi r3, #1 		//r3 = 209
+	ldr r1, r3 			//p16_end:
 	or r1, r0
 	str r1, r3
-	addi r3, #7 //r3 = 215
-	addi r3, #1 //r3 = 216
-	ldr r0, r3 //gen_word:
+	addi r3, #7 		//r3 = 215
+	addi r3, #1 		//r3 = 216
+	ldr r0, r3 			//gen_word:
 	ldi r3, #6          // 6 = 00000110
 	ls r3, #1			// 12 = 00001100
 	addi r3, #1         // 13 = 00001101
 	ls r3, #4           // r3 = 208 	
 	ldr r1, r3
 	str r1, r0
-	addi r0, #1 // store msw
-	addi r3, #1 //r3 = 209
+	addi r0, #1 		// store msw
+	addi r3, #1 		//r3 = 209
 	ldr r1, r3
 	str r1, r0
 	addi r0, #1
@@ -419,9 +419,9 @@
 	addi r3, #7         // 215
 	addi r3, #1         // r3 = 216
 	str r0, r3
-	ldi r1, #7 //00000111
-	ls r1, #3 // 00111000
-	addi r1, #3 // r1 = 59 = 00111011
-	ldi r2, #5 //let 5 be a placeholder for the index for offset into LUT for "func1_loop)
-	neq r0, r1 // r0 = (r0 != r1)
-	bnzl r2, r0 //OFFSET: -408; r2 holds offset to index LUT and get offset to func1_loop (on line 19)
+	ldi r1, #7 			//00000111
+	ls r1, #3 			// 00111000
+	addi r1, #3 		// r1 = 59 = 00111011
+	ldi r2, #5 			//let 5 be a placeholder for the index for offset into LUT for "func1_loop)
+	neq r0, r1 			// r0 = (r0 != r1)
+	bnzl r2, r0 		//OFFSET: -408; r2 holds offset to index LUT and get offset to func1_loop (on line 19)
