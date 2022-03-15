@@ -419,9 +419,18 @@ ldi r2, #3  			//00000011
 	addi r3, #7     // 215
 	addi r3, #1     // r3 = 216
 	str r0, r3
+<<<<<<< HEAD
+	ldi r1, #7 //00000111
+	ls r1, #3 // 00111000
+	addi r1, #3 // r1 = 59 = 00111011
+	ldi r2, #0 // 0 is index for offset into LUT for "func1_loop"
+	neq r0, r1 // r0 = (r0 != r1)
+	bnzl r2, r0 //OFFSET: -408; r2 holds offset to index LUT and get offset to func1_loop (on line 19)
+=======
 	ldi r1, #7 		//00000111
 	ls r1, #3 		// 00111000
 	addi r1, #3 	// r1 = 59 = 00111011
 	ldi r2, #5 		//let 5 be a placeholder for the index for offset into LUT for "func1_loop)
 	neq r0, r1 		// r0 = (r0 != r1)
 	bnzl r2, r0 	//OFFSET: -408; r2 holds offset to index LUT and get offset to func1_loop (on line 19)
+>>>>>>> 74adb188d4e07ee07c42166f88eb4a943933c820
