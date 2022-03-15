@@ -422,6 +422,6 @@
 	ldi r1, #7 //00000111
 	ls r1, #3 // 00111000
 	addi r1, #3 // r1 = 59 = 00111011
-	ldi r2, #5 //let 5 be a placeholder for the index for offset into LUT for "func1_loop)
+	ldi r2, #0 // 0 is index for offset into LUT for "func1_loop"
 	neq r0, r1 // r0 = (r0 != r1)
 	bnzl r2, r0 //OFFSET: -408; r2 holds offset to index LUT and get offset to func1_loop (on line 19)
