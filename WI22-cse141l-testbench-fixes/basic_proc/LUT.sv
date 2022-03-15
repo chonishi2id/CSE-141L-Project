@@ -10,22 +10,22 @@ module LUT(
     always_comb begin
         // powers of 4
         case(Index)
-            0:  Out = 0;  
-            1:  Out = 0;  
-            2:  Out = 0;  
-            3:  Out = 0;  
-            4:  Out = 0;  
-            5:  Out = -408; // (prog1 bnzl instruction)
-            6:  Out = 0;
-            7:  Out = 0;
-            8:  Out = 0;  
-            9:  Out = 0;  
-            10: Out = 0; 
-            11: Out = 0; 
-            12: Out = 0; 
-            13: Out = 0; 
-            14: Out = 0; 
-            15: Out = 0; 
+            0:  Out = -408;  
+            1:  Out = 1;  
+            2:  Out = 1;  
+            3:  Out = 1;  
+            4:  Out = 1;  
+            5:  Out = 1; // (prog1 bnzl instruction)
+            6:  Out = 1;
+            7:  Out = 1;
+            8:  Out = 1;  
+            9:  Out = 1;  
+            10: Out = 1; 
+            11: Out = 1; 
+            12: Out = 1; 
+            13: Out = 1; 
+            14: Out = 1; 
+            15: Out = 1;
         endcase
     end
 endmodule
