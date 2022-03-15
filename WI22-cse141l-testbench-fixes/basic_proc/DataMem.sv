@@ -23,5 +23,4 @@ module DataMem (
       $readmemh("data_mem_01-initial.hex", Core);
 	  end else if(WriteEn) 
       Core[ReadA] <= ReadB;
-
 endmodule
