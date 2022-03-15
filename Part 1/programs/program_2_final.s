@@ -479,9 +479,9 @@
 	addi r1, #5
 	ls	r1, #1
 	addi r1, #1
-	ldi r3, #1			// To Func 2 loop. Use the lut 482 - 12 = 470 lines to jump back
+	ldi r3, #1			// To Func 2 loop. Use lut[1] to load 482 - 12 = 470 lines to jump back
 	neq r0, r1
 	ldi r1, #1
 	eq r0, r1				// r0 = 1 if r0 == r1
-	bnzl r3, r1			// jump to lut[r3] if r1 != 0
+	bnzl r3, r1			// jump to lut[r3 = 1] if r1 != 0
 	fin							// We're done yay
