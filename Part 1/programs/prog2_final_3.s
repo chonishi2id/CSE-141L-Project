@@ -387,7 +387,7 @@ eq r2, r0				// if p16_exp == p16	we assume we do nothing if two errors are dete
 ldi r2, #6			// output: Start with LSW. Prep to load dm209 = 11010001
 ls r2, #3			// Prep to laod b8 from dm 209 = 11010001
 addi r2, #4
-ls r2, #3
+ls r2, #2
 addi r2, #1
 ldr r0, r2
 ls r0, #1
