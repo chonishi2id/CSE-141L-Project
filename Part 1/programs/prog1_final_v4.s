@@ -373,7 +373,7 @@ addi r3, #1 		// r3 = 209
 ldr r1, r3			// r1 = data_mem[209] = 01101010
 str r0, r1			// data_mem[31] = 01101010 (store MSW)
 addi r0, #1			// r0 = 32
-add r3, #7          // r3 = 216
+addi r3, #7          // r3 = 216
 str r3, r0			// data_mem[216] = 32
 ldi r1, #7 			// r1 = 00000111
 ls r1, #3 			// r1 = 00111000
