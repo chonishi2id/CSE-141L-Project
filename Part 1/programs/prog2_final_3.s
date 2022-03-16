@@ -1,4 +1,4 @@
-ldi r0, #4  		// Prepare to load 64 = 1000000 Func2_start:
+ldi r0, #4  		// Func2_start: Prepare to load 64 = 1000000 
 ls  r0, #4
 ldi r1, #7			// Prepare to store into data mem[225] = 111000001
 ls	r1, #5
@@ -10,7 +10,7 @@ addi r0, #7
 ls  r0, #1
 addi r1, #1     // Prepare to store into data mem[226] = 11100010 inc from 225
 str r1, r0			// store 94 for later
-ldi r3, #7      // Prepare to load address 225 = 11100001 Func2_loop:
+ldi r3, #7      // Func2_loop: Prepare to load address 225 = 11100001 
 ls  r3, #5
 addi r3, #1
 ldr r0, r3			// Load current input address
@@ -105,9 +105,7 @@ ldr r2, r0
 rs r2, #7				// b11			
 addi r3, #1			// Prepare to store into dm212 inc from 211
 str r3, r2
-p8_exp:
-// b11^b10
-ldr r0, r3			// b11^b10
+ldr r0, r3			// p8_exp: b11^b10
 ldi r2, #1			// Load from dm212
 neg r2, r2
 add r3, r2  		// Load from dm211 dec from 212
@@ -150,7 +148,6 @@ ldr r0, r3
 addi r3, r2   	// dec to load dm211
 ldr r1, r3
 neq r0, r1
-        
 addi r3, r2   	// b11^b10^b9
 ldr r1, r3			// dec to load dm210
 neq r0, r1
@@ -235,7 +232,6 @@ addi r2, #7
 ls	r2, #3
 addi r2, #2
 str r2, r0 			//store result in address 222
-p1_exp:
 ldi r2, #6			// p1_exp: Prepare to load from dm212 = 11010100
 ls	r2, #3			// b11^b9
 addi r2, #5
@@ -273,7 +269,6 @@ ldr r1, r3
 eq r0, r1 			//check if parity bits match
 addi r2, #7			// Prep to store to dm223 by inc 7 from 216
 str r3, r0 			//store result in address 223
-p16_loop:
 ldi r2, #6			// p16_loop: Prep dm205 = 11001101
 ls	r2, #3			// p8^b4
 addi r2, #3
@@ -338,16 +333,20 @@ ldr r0, r3 			//get result of comparing expected parity with actual parity
 add r2, r0
 ldi r1, #4			// check number of errors
 ldr r0, r2			// if number of errors == 0
-ldi r3, #60			// Jump by 60 = 111100 to output
+ldi r3, #6			// Jump by 48 = 110000 to output
+ls	r3, #3
 eq r0, r1				// If r0 == r1, r0 = 1
 bnzr r3, r0   	// Jump by value in r3 if r0 = 1.
 ldi r1, #3			// if number of errors == 1
-ldi r3, #9			// To error Correction
+ldi r3, #1			// To error Correction: Jump by 8
+ls  r3, #3
 ldr r0, r2			// reload num errors
 eq r0, r1				// If r0 == r1, r0 = 1
 bnzr r3, r0			// Jump by value in r3 if r0 = 1
 ldi r1, #2			// if number of errors == 2
-ldi r3, #40  		// To error detection
+ldi r3, #7  		// To error_detection: 30 lines
+ls  r2, #2
+addi r2, #2
 ldr r0, r2			// reload num errors
 eq r0, r1
 bnzr r3, r0			// Jump by value in r3 if r0 = 1
@@ -377,15 +376,14 @@ ldi r0, #0
 eq r2, r1				// if incorrect bit = 1, eq(1, 0) gives us 0. If incorrect bit = 0, eq(0, 0) gives us 1
 str r1, r2  
 ldi r1, #0			
-ldi r3, #20			// jumpo output
+ldi r3, #6			// jump output by 6
 eq r0, r1				// r0 = 1 if r0 == r1
 bnzr r3, r0 		// Jump by value in r3 if r0 = 1
-ldi r2, #1			// error:detection: if p16 is correct as expected then there is a two-bit error
-ldi r3, #7			//load result of comparing expected parity with actual parity 
+ldi r2, #1			// error_detection: if p16 is correct as expected then there is a two-bit error
+ldi r3, #7			// load result of comparing expected parity with actual parity 
 ls  r3, #5			// Prep to load dm224 = 11100000
 ldr r0, r3
-eq r2, r0				//if p16_exp == p16	we assume we do nothing if two errors are detected from a Piazza post
-output:
+eq r2, r0				// if p16_exp == p16	we assume we do nothing if two errors are detected from a Piazza post
 ldi r2, #6			// output: Start with LSW. Prep to load dm209 = 11010001
 ls  r2, #3			// Prep to laod b8 from dm 209 = 11010001
 addi r2, #4
