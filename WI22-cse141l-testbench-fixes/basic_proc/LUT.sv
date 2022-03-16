@@ -4,7 +4,7 @@
 
 module LUT(
     input        [ 3:0] Index,
-    output logic [ 9:0] Out
+    output logic [ 10:0] Out
 );
 
     always_comb begin

@@ -8,7 +8,7 @@ module TopLevel(		   // you will have the same 3 ports
     output logic Ack	   // done flag from DUT
 );
 
-wire [ 9:0] PgmCtr,        		// program counter
+wire [ 10:0] PgmCtr,        		// program counter
 			LUTOut;				// output of LUT, either PC branch offset or Data Memory address
 wire [ 8:0] Instruction;   		// our 9-bit opcode
 wire [ 7:0] ReadA, ReadB, R3;  	// reg_file outputs
