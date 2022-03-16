@@ -1,974 +1,103 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ldi r2, #0              // R2 = 0: number of times 5-bit pattern recognized within byte boundaries initially 0
-ldi r1, #3              // R1 = 00000011
-ls r1, #6              // R1 = 11000000 = 192
+ldi r2, #0              // r2 = 0: number of times 5-bit pattern recognized within byte boundaries initially 0
+ldi r1, #3              // r1 = 00000011
+ls r1, #6               // r1 = 11000000 = 192
 str r1, r2              // data_mem[192] = 0: total number of times the 5-bit pattern occurs (byte boundaries ON) is initially 0
-addi r1, #1             // R1 = 193
+addi r1, #1             // r1 = 193
 str r1, r2              // data_mem[193] = 0: total number of bytes within which the 5-bit pattern occurs is initially 0
-addi r1, #1             // R1 = 194
+addi r1, #1             // r1 = 194
 str r1, r2              // data_mem[194] = 0: total number of times the 5-bit pattern occurs (byte boundaries OFF) is initially 0
-ldi r2, #1              // R2 = 00000001
-ls r2, #7               // R2 = 10000000 = 128: index of the current byte of memory we are referencing while scanning the input string initially 128 (first byte)
-addi r1, #1             // R1 = 194+1=195: this is the address we will store the index  
-str r1, r2              // data_mem[195] = 128: keeping track of current index by storing it in memory (because we will need all three registers sometimes)
-ldi r2, #0              // 'L1:' flag indicating the pattern was recognized within the current byte initially 0 (false)
-addi r1, #1             // R1 = 195+1=196
+ldi r3, #1              // r3 = 00000001
+ls r3, #7               // r3 = 10000000 = 128: index of the current byte of memory we are referencing while scanning the input string initially 128 (first byte)
+addi r1, #1             // r1 = 194+1=195: this is the address we will store the index  
+str r1, r3              // data_mem[195] = 128: keeping track of current index by storing it in memory (because we will need all three registers sometimes)
+ldi r2, #0              // r2 = 0 'L1:' flag indicating the pattern was recognized within the current byte initially 0 (false)
+addi r1, #1             // r1 = 196
 str r1, r2              // data_mem[196] = 0
-ldi r3, #5              // R3 = 00000101
-ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldr r0, r3              // R0 = data_mem[160] = PPPPPxxx (get the byte with pattern stored in bits 7:3)
-rs r0, #3                // R0 = 000PPPPP (shift the top 5 bits to the lower 5, padding most significant bits with 0s to get 000PPPPP)
-ldi r3, #3              // R3 = 00000011
-ls r3, #6               // R3 = 11000000
-addi r3, #3             // R3 = 11000011 = 195 (index of current byte in string [data_mem[idx] bits 7:3])
-ldr r1, r3              // R1 = data_mem[195] = index of current byte in string = 128 initially
-rs r1, #3               // right shift R1 by 3, padding with 0s...we have 000_(bits 7:3 of input string)
-eq r1, r0               // R1 = (R1 == R0); [1 if true, 0 if false]
-ldi r3, #3              // R3 = 00000011
-ls r3, #6              // R3 = 11000000 = 192
-addi r3, #2             // R3 = 11000010 = 194 (i.e. storage addr for total number of times 5-bit pattern occurs with byte boundaries OFF)
-ldr r2, r3              // R2 = data_mem[194] (current total number of times 5-bit pattern occurs with byte boundaries OFF)
-add r2, r1              // R2 = R2 + R1 (+1 if the pattern was recognized, +0 if not)
-str r3, r2              // data_mem[194] = R2 (store updated total)
-ldi r0, #1
-eq r0, r1
+ldi r3, #5              // r3 = 00000101
+ls r3, #5               // r3 = 10100000 = 160 (address of 5-bit pattern to recognize)
+ldr r0, r3              // r0 = 01010xxx = data_mem[160] (get the byte with pattern stored in bits 7:3)
+rs r0, #3               // r0 = 00001010 (shift the top 5 bits to the lower 5, padding most significant bits with 0s to get 000PPPPP)
+ldi r3, #3              // r3 = 00000011
+ls r3, #6               // r3 = 11000000
+addi r3, #3             // r3 = 11000011 = 195 (index of current byte in string [data_mem[idx] bits 7:3])
+ldr r2, r3              // r2 = 128 = data_mem[195] = index of current byte in string = 128 initially
+ldr r1, r2              // r1 = 01011010 = data_mem[128]
+rs r1, #3               // r1 = 00001011 (i.e. 000_(bits 7:3 of input string))
+eq r1, r0               // r1 = 0 = (R1 == R0) = (00001011 == 00001010)
+ldi r3, #3              // r3 = 00000011
+ls r3, #6               // r3 = 11000000 = 192
+addi r3, #2             // r3 = 11000010 = 194 (i.e. storage addr for total number of times 5-bit pattern occurs with byte boundaries OFF)
+ldr r2, r3              // r2 = 0 = data_mem[194] (current total number of times 5-bit pattern occurs with byte boundaries OFF)
+add r2, r1              // r2 = 0 = 0 + 0 = r2 + r1 (+1 if the pattern was recognized, +0 if not)
+str r3, r2              // data_mem[194] = 0 = r2 (store updated total)
+ldi r0, #1              // r0 = 1
+neq r0, r1               // r0 = 0 = (1 == 0) = (r0 == r1)
 ldi r3 #1               // R3 = 00000001
 ls r3, #4               // R3 = 00010000 = 16
 addi r3, #2             // R3 = 00010010 = 18 (OFFSET to 'NEXT_STEP_1')
 bnzr r3, r0             // if (R0==R1) PC += R3, else PC = PC + 1 (default PC increment)
 ldi r3, #3              // R3 = 00000011
-ls r3, #6              // R3 = 11000000 = 192
+ls r3, #6               // R3 = 11000000 = 192
 ldr r2, r3              // R2 = data_mem[192]: if here, we did not jump, therefore we know R1 == 1 (i.e. pattern found in current byte)
-addi r2, #1              // first, increment number of times pattern found with byte boundaries ON
+addi r2, #1             // first, increment number of times pattern found with byte boundaries ON
 str r3, r2              // data_mem[192] = R2 (i.e. previous data_mem[192] + 1)
 addi r3, #4             // R3 = 192+4=196
 ldr r2, r3              // R2 = data_mem[196] (get flag indicating pattern was found in current byte)
 str r3, #1              // we found the pattern, so set the --pattern found in current byte-- byte to 1
 neq r1, r2              // R1 = R1 != R2 : used to increment number of bytes containing pattern if necessary. since we know R1 = 1, it will stay 1 if R2 is 0 (pattern not found in current byte), and become 0 otherwise
 ldi r3, #3              // R3 = 00000011
-ls r3, #6              // R3 = 11000000 = 192
+ls r3, #6               // R3 = 11000000 = 192
 addi r3, #1             // R3 = 192+1=193
 ldr r2, r3              // R2 = data_mem[193] (i.e. number of bytes in which pattern was recognized)
 add r2, r1              // R2 = R2 + R1 (+1 if pattern was not already found in current byte, +0 otherwise
 str r3, r2              // data_mem[193] = R2 (update number of bytes in which pattern was recognized)
 ldi r2, #5              // R2 = 00000101
 ls r2, #5               // R2 = 10100000 = 160 'NEXT_STEP_1:' put 5-bit pattern to recognize in R0
-ldr r0, r2              // R0 = data_mem[R2] (get the byte with pattern stored in bits 7:3)
-rs r0, #3                // shift the top 5 bits to the lower 5, padding most significant bits with 0s to get 0007:3
+ldr r0, r2              // R0 = 01010xxx = data_mem[160] (get the byte with pattern stored in bits 7:3)
+rs r0, #3               // R0 = 00001010 (shift the top 5 bits to the lower 5, padding most significant bits with 0s to get 0007:3)
 ldi r3, #3              // R3 = 00000011
 ls r3, #6               // R3 = 11000000
 addi r3, #3             // R3 = 11000011 = 195
-ldi r2, r3              // R2 = data_mem[195] = current index // data_mem[idx] bits 6:2
-ldr r1, r2              // R1 = data_mem[current_index]
-ls r1, #1                // left shift R1 by 1, fill least significant bits with 0s...we have [6:0]0
-rs r1, #3                // right shift R1 by 2, padding most significant bits with 0s...we have 000[6:2]
-eq r1, r0               // R1 = (R1 == R0); [1 if true, 0 if false]
+ldr r2, r3              // R2 = 128 = data_mem[195] = current index // going for bits 6:2
+ldr r1, r2              // R1 = 01011010 = data_mem[128]
+ls r1, #1               // r1 = 10110100 (we have [6:0]0 now)
+rs r1, #3               // r1 = 00010110 (we have 000[6:2] now)
+eq r1, r0               // r1 = 0 = (r1 == r0) = (00010110 == 00001010)
 ldi r3, #3              // R3 = 00000011 = 3
 ls r3, #6               // R3 = 11000000
 addi r3, #2             // R3 = 11000010 = 194
-ldr r2, r3              // R2 = data_mem[194] (total number of times 5-bit pattern occurs with byte boundaries OFF)
-add r2, r1              // +1 if the pattern was recognized, +0 if not
-str r3, r2              // data_mem[194] = R2 store updated total
-ldi r0, #1
-eq r0, r1
-ldi r3 #1               // R3 = 00000001
-ls r3, #4               // R3 = 00010000 = 16
-addi r3, #2             // R3 = 00010010 = 18 (OFFSET to 'NEXT_STEP_2')
-bnzr r3, r0             // if (R0==R1) PC += OFFSET (to 'NEXT_STEP_2'), else PC = PC + 1 (default PC increment)
-ldi r3, #3              // R3 = 00000011
-ls r3, #6              // R3 = 11000000 = 192
-ldr r2, r3              // R2 = data_mem[192] (if here, we did not jump, therefore we know R1 == 1 (i.e. pattern found in current byte)) // first, increment number of times pattern found with byte boundaries ON
-addi r2, #1              // R2 = R2 + 1
+ldr r2, r3              // R2 = 0 = data_mem[194] (total number of times 5-bit pattern occurs with byte boundaries OFF)
+add r2, r1              // r2 = 0 (pattern was not recognized)
+str r3, r2              // data_mem[194] = 0 (updated total)
+neq r0, r1              // r0 = 1 = (r0 != r1) = (1 != 0)
+ldi r3 #1               // r3 = 00000001
+ls r3, #4               // r3 = 00010000 = 16
+addi r3, #2             // r3 = 00010010 = 18 (OFFSET to 'NEXT_STEP_2')
+bnzr r3, r0             // r0 = 1 => branch, PC = PC+18 (GOTO NEXT_STEP_2)
+ldi r3, #3              // r3 = 00000011
+ls r3, #6               // r3 = 11000000 = 192
+ldr r2, r3              // r2 = data_mem[192] (if here, we did not jump, therefore we know R1 == 1 (i.e. pattern found in current byte)) // first, increment number of times pattern found with byte boundaries ON
+addi r2, #1             // r2 = R2 + 1
 str r3, r2              // data_mem[192] = R2
-addi r3, #4             // R3 = 196
-ldr r2, r3              // R2 = data_mem[196] (second, increment number of bytes containing pattern if necessary) // get flag indicating pattern was found in current byte   
+addi r3, #4             // r3 = 196
+ldr r2, r3              // r2 = data_mem[196] (second, increment number of bytes containing pattern if necessary) // get flag indicating pattern was found in current byte   
 neq r1, r2              // since we know R1 = 1, this will be 1 if R2 is 0, and 0 otherwise
-ldi r3, #3              // R3 = 00000011
-ls r3, #6              // R3 = 11000000 = 192
-addi r3, #1             // R3 = 11000001 = 193
+ldi r3, #3              // r3 = 00000011
+ls r3, #6               // r3 = 11000000 = 192
+addi r3, #1             // r3 = 11000001 = 193
 ldr r2, r3              // get number of bytes in which pattern was recognized
 add r2, r1              // recall that R1 is now 1 if the pattern was found and the "pattern found in current byte" byte was false, 0 otherwise, so we increment in the proper instance
-addi r3, #3             // R3 = 196
-str r3, #1               // we found the pattern, so set the "pattern found in current byte" byte to 1   
-ldi r3, #5              // R2 = 00000101
-ls r3, #5               // R2 = 10100000 = 160 'NEXT_STEP_1:' put 5-bit pattern to recognize in R0
-ldi r2, r3              // 'NEXT_STEP_2:' put 5-bit pattern to recognize in R0
-ldr r0, r2              // R0 = data_mem[R2] (get the byte with pattern stored in bits 7:3)
-rs r0, #3                // shift the top 5 bits to the lower 5, padding MSBs with 0s to get 0007:3
+addi r3, #3             // r3 = 196
+str r3, #1              // we found the pattern, so set the "pattern found in current byte" byte to 1   
+ldi r3, #5              // r3 = 00000101
+ls r3, #5               // r3 = 10100000 = 160 'NEXT_STEP_1:' put 5-bit pattern to recognize in R0
+ldr r2, r3              // r2 = data_mem[160] 'NEXT_STEP_2:' put 5-bit pattern to recognize in R0
+ldr r0, r2              // r0 = data_mem[R2] (get the byte with pattern stored in bits 7:3)
+rs r0, #3               // shift the top 5 bits to the lower 5, padding MSBs with 0s to get 0007:3
 ldi r3, #3              // R3 = 00000011
 ls r3, #6               // R3 = 11000000
 addi r3, #3             // R3 = 11000011 = 195
-ldi r2, r3              // R2 = data_mem[195] (going for data_mem[idx] bits 5:1), R2 = current index
+ldr r2, r3              // R2 = data_mem[195] (going for data_mem[idx] bits 5:1), R2 = current index
 ldr r1, r2              // R1 = data_mem[R2] = data_mem[current_index]
 ls r1, #2                // left shift R1 by 2, fill least significant bits with 0s...we have [5:0]00
 rs r1, #3                // right shift R1 by 3, padding with 0s...we have 000[5:1]
@@ -1006,13 +135,13 @@ addi r3, #4             // R3 = 11000100 = 196
 str r3, #1               // we found the pattern, so set the "pattern found in current byte" byte to 1   
 ldi r3, #5              // R3 = 00000101
 ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldi r2, r3              // 'NEXT_STEP_3:' put 5-bit pattern to recognize in R0
+ldr r2, r3              // 'NEXT_STEP_3:' put 5-bit pattern to recognize in R0
 ldr r0, r2              // get the byte with pattern stored in bits 7:3
 rs r0, #3                // shift the top 5 bits to the lower 5, padding msb's with 0's to get 0007:3
 ldi r3, #3              // R3 = 00000011
 ls r3, #6               // R3 = 11000000
 addi r3, #3             // R3 = 11000011 = 195 (index of current byte in string [data_mem[idx] bits 7:3])
-ldi r2, r3              // data_mem[idx] bits 4:0 // max immediate is 7, will do shifts and adds to get 195...R2 = current index
+ldr r2, r3              // data_mem[idx] bits 4:0 // max immediate is 7, will do shifts and adds to get 195...R2 = current index
 ldr r1, r2              // R1 = data_mem[current_index]
 ls r1, #3                // left shift R1 by 3, fill least significant bits with 0s...we have [4:0]000
 rs r1, #4                // right shift R1 by 3, padding with 0s...we have 0000[4:0]
@@ -1050,7 +179,7 @@ addi r3, #4             // R3 = 11000100 = 196
 str r3, #1              // we found the pattern, so set the "pattern found in current byte" byte to 1
 ldi r3, #5              // R3 = 00000101
 ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldi r2, r3              // 'NEXT_STEP_4:' put 5-bit pattern to recognize in R0
+ldr r2, r3              // 'NEXT_STEP_4:' put 5-bit pattern to recognize in R0
 ldr r0, r2              // get the byte with pattern stored in bits 7:3
 rs r0, #3               // shift the top 5 bits to the lower 5, padding msb's with 0's to get 0007:3 
 ldi r3, #3              // R3 = 00000011
@@ -1068,7 +197,7 @@ add r3, #3              // R3 = 00011011 = 27 = OFFSET to NEXT_STEP_5
 bnzr r3, r1             // PC += OFFSET to NEXT_STEP_5 if the pattern is not already a partial match, otherwise PC=PC+1 (default increment)
 ldi r3, #5              // R3 = 00000101
 ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldi r2, r3              // put 5-bit pattern to recognize in R0
+ldr r2, r3              // put 5-bit pattern to recognize in R0
 ldr r0, r2              // get the byte with pattern stored in bits 7:3
 rs r0, #3               // shift the top 5 bits to the lower 5, padding msb's with 0's to get 0007:3
 ldi r3, #3              // R3 = 00000011
@@ -1087,12 +216,12 @@ bnzr r3, r1             // go to NEXT_STEP_5 if the remainder of the pattern is 
 ldi r3, #3              // R3 = 00000011 = 3
 ls r3, #6               // R3 = 11000000
 addi r3, #2             // R3 = 11000010 = 194
-ldi r1, r3              // pattern was found crossing over bytes, increment the number of times pattern was found without regard to byte boundaries
+ldr r1, r3              // pattern was found crossing over bytes, increment the number of times pattern was found without regard to byte boundaries
 addi r1, #1
 str r3, r1
 ldi r3, #5              // R3 = 00000101
 ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldi r2, r3              // 'NEXT_STEP_5:' put 5-bit pattern to recognize in R0
+ldr r2, r3              // 'NEXT_STEP_5:' put 5-bit pattern to recognize in R0
 ldr r0, r2              // get the byte with pattern stored in bits 7:3
 rs r0, #3               // shift the top 5 bits to the lower 5, padding msb's with 0's to get 0007:3
 ldi r3, #3              // R3 = 00000011
@@ -1110,7 +239,7 @@ ls r3, #2               // R3 = 00011100 = 28 = OFFSET to NEXT_STEP_6
 bnzr r3, r1             // go to NEXT_STEP_6 if the pattern is not already a partial match, otherwise PC=PC+1 (default increment)
 ldi r3, #5              // R3 = 00000101
 ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldi r2, r3              // put 5-bit pattern to recognize in R0
+ldr r2, r3              // put 5-bit pattern to recognize in R0
 ldr r0, r2              // get the byte with pattern stored in bits 7:3
 rs r0, #3                // shift the top 5 bits to the lower 5, padding msb's with 0's to get 0007:3
 ldi r3, #3              // R3 = 00000011
@@ -1130,12 +259,12 @@ bnzr r3, r1             // go to NEXT_STEP_6 if the remainder of the pattern is 
 ldi r3, #3              // R3 = 00000011 = 3
 ls r3, #6               // R3 = 11000000
 addi r3, #2             // R3 = 11000010 = 194
-ldi r1, r3              // pattern was found crossing over bytes, increment the number of times pattern was found without regard to byte boundaries
+ldr r1, r3              // pattern was found crossing over bytes, increment the number of times pattern was found without regard to byte boundaries
 addi r1, #1
 str r3, r1
 ldi r3, #5              // R3 = 00000101
 ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldi r2, r3              // 'NEXT_STEP_6:' put 5-bit pattern to recognize in R0
+r r2, r3              // 'NEXT_STEP_6:' put 5-bit pattern to recognize in R0
 ldr r0, r2              // get the byte with pattern stored in bits 7:3
 rs r0, #3                // shift the top 5 bits to the lower 5, padding msb's with 0's to get 0007:3
 ldi r3, #3              // R3 = 00000011
@@ -1197,7 +326,7 @@ addi r3, #1             // R3 = 29 = OFFSET to NEXT_STEP_8
 bnzr r3, r1             // go to NEXT_STEP_8 if the pattern is not already a partial match, otherwise PC=PC+1 (default increment)
 ldi r3, #5              // R3 = 00000101
 ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldi r2, r3              // put 5-bit pattern to recognize in R0
+ldr r2, r3              // put 5-bit pattern to recognize in R0
 ldr r0, r2              // get the byte with pattern stored in bits 7:3
 rs r0, #3               // shift the top 5 bits to the lower 5, padding msb's with 0's to get 0007:3
 ldi r3, #3              // R3 = 00000011
@@ -1217,13 +346,13 @@ bnzr r3, r1             // go to NEXT_STEP_8 if the remainder of the pattern is 
 ldi r3, #3              // R3 = 00000011 = 3
 ls r3, #6               // R3 = 11000000
 addi r3, #2             // R3 = 11000010 = 194
-ldi r1, r3              // pattern was found crossing over bytes, increment the number of times pattern was found without regard to byte boundaries
+ldr r1, r3              // pattern was found crossing over bytes, increment the number of times pattern was found without regard to byte boundaries
 addi r1, #1
 str r3, r1
 ldi r3, #3              // R3 = 00000011
 ls r3, #6               // R3 = 11000000
 addi r3, #3             // R3 = 11000011 = 195 (index of current byte in string [data_mem[idx] bits 7:3])
-ldi r1, r3              // 'NEXT_STEP_8:' increment index of current byte in string
+ldr r1, r3              // 'NEXT_STEP_8:' increment index of current byte in string
 addi r1, #1
 ldi r3, #3              // R3 = 00000011
 ls r3, #6               // R3 = 11000000
@@ -1231,11 +360,11 @@ addi r3, #3             // R3 = 11000011 = 195 (index of current byte in string 
 str r3, r1
 ldi r3, #5              // R3 = 00000101
 ls r3, #5                          // branch back to L1 if idx < 160 // 1 byte past the string (string is on bytes 128:159)
-ldi r0, r3
+ldr r0, r3
 ldi r3, #3              // R3 = 00000011
 ls r3, #6               // R3 = 11000000
 addi r3, #3             // R3 = 11000011 = 195 (index of current byte in string [data_mem[idx] bits 7:3])
-ldi r1, r3              // get the current index
+ldr r1, r3              // get the current index
 neq r1, r0              // true if current index has not yet reached 160
 ldi r3, #7             // branch by offset at LUT[7] = -356
 bnzl r3, r1             // go to address of L1 if R0 != R1 (i.e. if R1, the current index, is not equal to 160)...otherwise, continue, i.e. program is finished // end
