@@ -1,0 +1,105 @@
+# Compile of ALU.sv was successful.
+# Compile of Ctrl.sv was successful.
+# Compile of DataMem.sv was successful.
+# Compile of Definitions.sv was successful.
+# Compile of FinalSubmission_tb.sv was successful.
+# Compile of InstROM.sv was successful.
+# Compile of LUT.sv was successful.
+# Compile of Mux.sv was successful.
+# Compile of ProgCtr.sv was successful.
+# Compile of ProgCtrEn.sv was successful.
+# Compile of RegFile.sv was successful.
+# Compile of TopLevel.sv was successful.
+# 12 compiles, 0 failed with no errors.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.FinalSubmission_tb
+# Loading work.TopLevel
+# Loading work.LUT
+# Loading work.Mux
+# Loading work.ProgCtrEn
+# Loading work.ProgCtr
+# Loading work.InstROM
+# Loading work.definitions
+# Loading work.Ctrl_sv_unit
+# Loading work.Ctrl
+# Loading work.RegFile
+# Loading work.ALU_sv_unit
+# Loading work.ALU
+# Loading work.DataMem
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# *** P1 Start
+#     DM[         30] - Good.
+#     DM[         31] - Good.
+#     DM[         32] - Good.
+#     DM[         33] - Good.
+#     DM[         34] - Good.
+#     DM[         35] - Good.
+#     DM[         36] - Good.
+#     DM[         37] - Good.
+#     DM[         38] - Good.
+#     DM[         39] - Good.
+#     DM[         40] - Good.
+#     DM[         41] - Good.
+#     DM[         42] - Good.
+#     DM[         43] - Good.
+#     DM[         44] - Good.
+#     DM[         45] - Good.
+#     DM[         46] - Good.
+#     DM[         47] - Good.
+#     DM[         48] - Good.
+#     DM[         49] - Good.
+#     DM[         50] - Good.
+#     DM[         51] - Good.
+#     DM[         52] - Good.
+#     DM[         53] - Good.
+#     DM[         54] - Good.
+#     DM[         55] - Good.
+#     DM[         56] - Good.
+#     DM[         57] - Good.
+#     DM[         58] - Good.
+#     DM[         59] - Good.
+# last instruction =  383
+# *** P2 Start
+#     DM[         94] - Good.
+# !!! DM[         95] - WRONG. Expected 0x01  Got 0x05
+# !!! DM[         96] - WRONG. Expected 0xxx  Got 0x34
+# !!! DM[         97] - WRONG. Expected 0xxx  Got 0x06
+# !!! DM[         98] - WRONG. Expected 0xxx  Got 0x1f
+# !!! DM[         99] - WRONG. Expected 0xxx  Got 0x05
+#     DM[        100] - Good.
+#     DM[        101] - Good.
+#     DM[        102] - Good.
+#     DM[        103] - Good.
+# !!! DM[        104] - WRONG. Expected 0x4e  Got 0x4f
+#     DM[        105] - Good.
+# !!! DM[        106] - WRONG. Expected 0xxx  Got 0xe7
+# !!! DM[        107] - WRONG. Expected 0xxx  Got 0x05
+#     DM[        108] - Good.
+#     DM[        109] - Good.
+# !!! DM[        110] - WRONG. Expected 0x4c  Got 0x6c
+#     DM[        111] - Good.
+#     DM[        112] - Good.
+#     DM[        113] - Good.
+#     DM[        114] - Good.
+#     DM[        115] - Good.
+# !!! DM[        116] - WRONG. Expected 0x40  Got 0x41
+#     DM[        117] - Good.
+# !!! DM[        118] - WRONG. Expected 0x48  Got 0x40
+#     DM[        119] - Good.
+#     DM[        120] - Good.
+#     DM[        121] - Good.
+# !!! DM[        122] - WRONG. Expected 0x5b  Got 0xdb
+#     DM[        123] - Good.
+# last instruction =  844
+# *** P3 Start
+# !!! DM[        192] - WRONG. Expected 0x09  Got 0x44
+# !!! DM[        193] - WRONG. Expected 0x05  Got 0x16
+# !!! DM[        194] - WRONG. Expected 0x12  Got 0x08
+# last instruction = 1201
+# ** Note: $stop    : C:/Users/Matthew/Desktop/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/FinalSubmission_tb.sv(134)
+#    Time: 502305 ns  Iteration: 0  Instance: /FinalSubmission_tb
+# Break in Module FinalSubmission_tb at C:/Users/Matthew/Desktop/CSE-141L-Project/WI22-cse141l-testbench-fixes/basic_proc/FinalSubmission_tb.sv line 134
