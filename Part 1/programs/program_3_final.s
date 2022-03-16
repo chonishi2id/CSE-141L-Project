@@ -366,5 +366,5 @@ ls r3, #6               // R3 = 11000000
 addi r3, #3             // R3 = 11000011 = 195 (index of current byte in string [data_mem[idx] bits 7:3])
 ldi r1, r3              // get the current index
 neq r1, r0              // true if current index has not yet reached 160
-ldi r3, #15             // branch by offset at LUT[15] = -356
+ldi r3, #15             // branch by offset at LUT[15] = -357
 bnzl r3, r1             // go to address of L1 if R0 != R1 (i.e. if R1, the current index, is not equal to 160)...otherwise, continue, i.e. program is finished // end
