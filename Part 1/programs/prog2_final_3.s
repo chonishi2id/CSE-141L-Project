@@ -155,7 +155,7 @@ addi r3, r2			// (b11^b10^b9)^b8
 ldr r1, r3			// dec to load dm209
 neq r0, r1
 ldi r3, #6			// ^b11:b8^b4
-ls	r3, #3			// Prepare to load from dm204 = 11001100
+ls r3, #3			// Prepare to load from dm204 = 11001100
 addi r3, #3
 ls r3, #2
 ldr r1, r3
@@ -258,7 +258,7 @@ add r2, r3			// b11^b9^b7^b5^b4^b2^b1
 ldr r1, r2			// dec by 2 to load from dm200
 neq r0, r1
 ldi r2, #6			// p1_comparison: Prep to load from dm216 = 11011000
-ls  r2, #3
+ls r2, #3
 addi r2, #6
 ls r2, #3
 str r2, r0 			//store expected p1 in address 216
