@@ -4,7 +4,7 @@
 
 module LUT(
     input        [ 3:0] Index,
-    output logic [ 9:0] Out
+    output logic [ 10:0] Out
 );
 
     always_comb begin
@@ -25,7 +25,7 @@ module LUT(
             12: Out = 1; 
             13: Out = 1; 
             14: Out = 1; 
-            15: Out = 1;
+            15: Out = -357;
         endcase
     end
 endmodule

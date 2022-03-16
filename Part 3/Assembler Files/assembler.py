@@ -31,7 +31,8 @@ ops = {
 TOTAL_IMEM_SIZE = 2**10
 
 # Don't need to do anything fancy here
-with open('prog2_final_2.s') as ifile, open('machine_out_prog2.hex', 'w') as imem, open('gtkwave/mcode.fmt', 'w') as wavefmt:
+#replace "program.s" with program to be assembled and "output.hex" with desired machine code output file name
+with open('program.s') as ifile, open('output.hex', 'w') as imem, open('gtkwave/mcode.fmt', 'w') as wavefmt:
     for lineno, line in enumerate(ifile):
         try:
             # Skip over blank lines, remove comments
