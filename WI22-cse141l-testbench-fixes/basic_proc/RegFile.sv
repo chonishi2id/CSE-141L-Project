@@ -25,10 +25,10 @@ end
 always_ff @ (posedge Clk) begin
   // clear on reset bc it might come in handy for debugging purposes
   if (Reset) begin
-    Registers[0] = 0;
-    Registers[1] = 0;
-    Registers[2] = 0;
-    Registers[3] = 0;
+    Registers[0] <= 0;
+    Registers[1] <= 0;
+    Registers[2] <= 0;
+    Registers[3] <= 0;
   end
   
   // when WriteEn set, write input data (DataIn) to the reg at write address (Waddr)

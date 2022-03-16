@@ -51,8 +51,8 @@ module ALU (
       GEQ : Out = (InputA >= InputB);     // Greater than or Equal to
       EQ  : Out = (InputA == InputB);     // Equals to
       NEQ : Out = (InputA != InputB);     // Not Equals to
-      BNZL : Branch = (InputA != 0);       // Branch not equal to zero
-      BNZR : Branch = (InputA != 0);       // Branch not equal to zero
+      BNZL : Branch = (InputB != 0);       // Branch not equal to zero
+      BNZR : Branch = (InputB != 0);       // Branch not equal to zero
     endcase
   end
 

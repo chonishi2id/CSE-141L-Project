@@ -8,7 +8,7 @@ import definitions::*;
 // outputs to program_counter (fetch unit)
 module Ctrl (
   input[8:0]          Instruction ,	    // machine code
-  output logic [1:0]  RegLoadType ,	    // mem, ALU_out, or immediate written to reg_file ?
+  output logic [1:0]  RegLoadType ,	    // mem, immediate written to reg_file, or ALU_out?
   output logic        RegWrEn     ,     // write to reg_file (common)
       	              StoreInst   ,     // mem write enable
 	                    Ack         ,     // "done w/ program"
@@ -29,8 +29,8 @@ module Ctrl (
   always_comb begin
     // case to decide what wire the RegFile's DataIn selector should be
     case (Instruction[8:5])
-      kLDI    : RegLoadType = 2'b00; // 00 to select immediate value
-      kLDR    : RegLoadType = 2'b01; // 01 to select output from DataMem
+      kLDI    : RegLoadType = 2'b01; // 00 to select immediate value
+      kLDR    : RegLoadType = 2'b00; // 01 to select output from DataMem
       default : RegLoadType = 2'b10; // 10 to select ALU_out, yes this implies that ALU out will be
                                      // at DataIn for RegFile even on instructions that don't load,
                                      // but this is fine since RegFile only actually loads when the 
