@@ -8,7 +8,7 @@
 	ldi r2, #7          // 7 = 00000111
 	ls r2, #2           // 28 = 00011100
 	addi r2, #2         // r2 = 30 = 00011110
-	ldi r0, r2			// load data mem[30]
+	ldr r0, r2			// load data mem[30]
 	addi r1, #1        // r1 = 216
 	str r0, r1		// store data mem[30] for later
 	ldi r2, #6          // 6 = 00000110
