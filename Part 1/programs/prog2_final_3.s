@@ -387,7 +387,7 @@ eq r2, r0				// if p16_exp == p16	we assume we do nothing if two errors are dete
 ldi r2, #6			// output: Start with LSW. Prep to load dm209 = 11010001
 ls r2, #3			// Prep to laod b8 from dm 209 = 11010001
 addi r2, #4
-ls r2, #3
+ls r2, #2
 addi r2, #1
 ldr r0, r2
 ls r0, #1
@@ -430,19 +430,21 @@ str r1, r0			// store LSW in output address
 addi r1, #1			// increment output address
 ldi r2, #6			// MSW: prep to load b11 from dm212 = 11010100
 ls r2, #3
-ldi r2, #5
+addi r2, #5
 ls r2, #2
 ldr r0, r2
 ls r0, #1
+ldi r3, #1
+neg r3, r3
 add r2, r3			// dec to load b10 from dm211
 ldr r3, r2
-or r0, r1
+or r0, r3
 ls r0, #1
 ldi r3, #1
 neg r3, r3
 add r2, r3			// dec to load b9 from dm210
 ldr r3, r2
-or r0, r1
+or r0, r3
 str r1, r0			// We already have output address in r1 so we use it to store MSW
 addi r1, #1			// increment output address
 ldi r2, #7			// prep to load dm226=11100010 to store output address
