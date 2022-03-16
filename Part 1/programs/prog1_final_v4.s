@@ -396,28 +396,28 @@
 	str r3, r1
 	addi r3, #7 //r3 = 215
 	addi r3, #1 //r3 = 216
-	ldr r0, r3 //gen_word:
+	ldr r0, r3 //gen_word: r0 = data_mem[216] = 30 initially
 	ldi r3, #6          // 6 = 00000110
 	ls r3, #1			// 12 = 00001100
 	addi r3, #1         // 13 = 00001101
 	ls r3, #4           // r3 = 208 	
-	ldr r1, r3
-	str r0, r1
-	addi r0, #1 // store msw
-	addi r3, #1 //r3 = 209
-	ldr r1, r3
-	str r0, r1
-	addi r0, #1
+	ldr r1, r3		// r1 = data_mem[208]
+	str r0, r1		// data_mem[r0] = r1 (e.g. data_mem[30] initially), (store lsw)
+	addi r0, #1 	// store msw
+	addi r3, #1 	//r3 = 209
+	ldr r1, r3		// r1 = data_mem[209]
+	str r0, r1		// data_mem[r0] = r1 (msw) (store msw in data_mem[r0]) (e.g. 31)
+	addi r0, #1		// r0 = r0 + 1  (31+1=32 on intial run)
 	ldi r3, #6          // 6 = 00000110
 	ls r3, #1			// 12 = 00001100
 	addi r3, #1         // 13 = 00001101
 	ls r3, #4           // 208 = 11010000	
 	addi r3, #7         // 215
 	addi r3, #1         // r3 = 216
-	str r3, r0
+	str r3, r0			// data_mem[216] = r0 (e.g. 32 on initial run)
 	ldi r1, #7 //00000111
 	ls r1, #3 // 00111000
-	addi r1, #3 // r1 = 59 = 00111011
+	addi r1, #4 // r1 = 60 = 00111100
 	ldi r2, #0 // 0 is index for offset into LUT for "func1_loop"
 	neq r0, r1 // r0 = (r0 != r1)
 	bnzl r2, r0 //OFFSET: -408; r2 holds offset to index LUT and get offset to func1_loop (on line 19)
