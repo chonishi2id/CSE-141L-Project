@@ -31,7 +31,7 @@ ops = {
 TOTAL_IMEM_SIZE = 2**10
 
 # Don't need to do anything fancy here
-with open('test_assembly.asm') as ifile, open('machine_out.hex', 'w') as imem, open('gtkwave/mcode.fmt', 'w') as wavefmt:
+with open('prog2_final_2.s') as ifile, open('machine_out_prog2.hex', 'w') as imem, open('gtkwave/mcode.fmt', 'w') as wavefmt:
     for lineno, line in enumerate(ifile):
         try:
             # Skip over blank lines, remove comments
@@ -70,16 +70,16 @@ with open('test_assembly.asm') as ifile, open('machine_out.hex', 'w') as imem, o
                 wavefmt.write('{} {}\n'.format(machine_code, line))
                 mcodes.add(machine_code)
         except:
-            print("Error Parsing Line ", lineno)
+            print("Error Parsing Line ", lineno + 1)
             print(">>>{}<<<".format(line))
             print()
             raise
     #append nop to end for ACK signal
-    imem.write('111100000' + '\n')
+    imem.write('111111111')
     # This is a neat trick to catch programming errors:
     # Fill the rest of instruction memory with illegal instructions.
     wavefmt.write('xxxxxxxxx ILLEGAL!')
-    while TOTAL_IMEM_SIZE:
-        imem.write('xxxxxxxxx\n')
-        TOTAL_IMEM_SIZE -= 1
+    #while TOTAL_IMEM_SIZE:
+    #    imem.write('xxxxxxxxx\n')
+    #    TOTAL_IMEM_SIZE -= 1
 
