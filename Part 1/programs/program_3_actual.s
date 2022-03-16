@@ -11,13 +11,13 @@
 // 128          s[0] where s is the stored input string 
 // .            s[x] where s is the stored input string 
 // 159          s[31] where s is the stored input string
-// 160          5-bit pattern to recognize in bits 7:3, XXX (don't care) in bits 2:0
+// 160          5-bit pattern to recognize in bits 7:3XXX (don't care) in bits 2:0
 // .            X (don't care)
 // 192          # of times 5-bit pattern recognized within byte boundaries
 // 193          # of bytes in which the 5 bit pattern is recognized at least once 
 // 194          # of times the 5-bit pattern recognized in string without regarding byte boundaries
 // 195          index of the current byte of memory we are referencing while scanning the input string
-// 196          flag indicating the patter was recognized within the current byte...set to 1 if yes, 0 if not
+// 196          flag indicating the pattern was recognized within the current byte...set to 1 if yes, 0 if not
 
 /***************
 Initializations

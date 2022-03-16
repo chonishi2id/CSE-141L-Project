@@ -17,7 +17,7 @@ module LUT(
             4:  Out = 1;  
             5:  Out = 1; 
             6:  Out = 1;
-            7:  Out = -357; // (prog3 bnzl instruction)
+            7:  Out = -343; // (prog3 bnzl instruction)
             8:  Out = 1;  
             9:  Out = 1;  
             10: Out = 1; 
