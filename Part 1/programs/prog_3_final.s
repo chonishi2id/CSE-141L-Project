@@ -31,7 +31,7 @@ ldr r2, r3              // r2 = 0 = data_mem[194] (current total number of times
 add r2, r1              // r2 = 0 = 0 + 0 = r2 + r1 (+1 if the pattern was recognized, +0 if not)
 str r3, r2              // data_mem[194] = 0 = r2 (store updated total)
 ldi r0, #1              // r0 = 1
-neq r0, r1               // r0 = 0 = (1 == 0) = (r0 == r1)
+neq r0, r1              // r0 = 0 = (1 == 0) = (r0 == r1)
 ldi r3 #1               // R3 = 00000001
 ls r3, #4               // R3 = 00010000 = 16
 addi r3, #2             // R3 = 00010010 = 18 (OFFSET to 'NEXT_STEP_1')
@@ -51,8 +51,8 @@ addi r3, #1             // R3 = 192+1=193
 ldr r2, r3              // R2 = data_mem[193] (i.e. number of bytes in which pattern was recognized)
 add r2, r1              // R2 = R2 + R1 (+1 if pattern was not already found in current byte, +0 otherwise
 str r3, r2              // data_mem[193] = R2 (update number of bytes in which pattern was recognized)
-ldi r2, #5              // R2 = 00000101
-ls r2, #5               // R2 = 10100000 = 160 'NEXT_STEP_1:' put 5-bit pattern to recognize in R0
+ldi r2, #5              // R2 = 00000101   'NEXT_STEP_1:'
+ls r2, #5               // R2 = 10100000 = 160 put 5-bit pattern to recognize in R0
 ldr r0, r2              // R0 = 01010xxx = data_mem[160] (get the byte with pattern stored in bits 7:3)
 rs r0, #3               // R0 = 00001010 (shift the top 5 bits to the lower 5, padding most significant bits with 0s to get 0007:3)
 ldi r3, #3              // R3 = 00000011
@@ -108,33 +108,33 @@ ldr r2, r3              // r2 = 0 = data_mem[194] (# recognized with byte bounda
 add r2, r1              // r2 = 0 = (0 + 0) = (r2 + r1)
 str r3, r2              // data_mem[194] = 0 = R2 (store updated total)
 ldi r0, #1              // r0 = 1
-eq r0, r1               // r0 = 0 = (1 == 0) = (r0 == r1)
+neq r0, r1              // r0 = 1 = (1 != 0) = (r0 != r1)
 ldi r3 #1               // r3 = 00000001
 ls r3, #4               // r3 = 00010000 = 16
 addi r3, #6             // r3 = 00010010 = 22 (OFFSET to 'NEXT_STEP_3')
-bnzr r3, r0             // if (R0==R1) PC += OFFSET to 'NEXT_STEP_3', else PC = PC + 1 (default PC increment)
-ldi r3, #3              // R3 = 00000011
-ls r3, #6               // R3 = 11000000 = 192
+bnzr r3, r0             // r0 == 1 => branch to NEXT_STEP_3
+ldi r3, #3              // r3 = 00000011
+ls r3, #6               // r3 = 11000000 = 192
 ldr r2, r3              // if here, we did not jump, therefore we know R1 == 1 (i.e. pattern found in current byte) // first, increment number of times pattern found with byte boundaries ON
 addi r2, #1
 str r3, r2
-ldi r3, #3              // R3 = 00000011
-ls r3, #6              // R3 = 11000000 = 192
-addi r3, #4             // R3 = 11000100 = 196
+ldi r3, #3              // r3 = 00000011
+ls r3, #6               // r3 = 11000000 = 192
+addi r3, #4             // r3 = 11000100 = 196
 ldr r2, r3              // second, increment number of bytes containing pattern if necessary // get flag indicating pattern was found in current byte   
 neq r1, r2              // since we know R1 = 1, this will be 1 if R2 is 0, and 0 otherwise
-ldi r3, #3              // R3 = 00000011
-ls r3, #6              // R3 = 11000000 = 192
-addi r3, #1             // R3 = 11000001 = 193
+ldi r3, #3              // r3 = 00000011
+ls r3, #6               // r3 = 11000000 = 192
+addi r3, #1             // r3 = 11000001 = 193
 ldr r2, r3              // get number of bytes in which pattern was recognized
 add r2, r1              // recall that R1 is now 1 if the pattern was found and the "pattern found in current byte" byte was false, 0 otherwise, so we increment in the proper instance
-ldi r3, #3              // R3 = 00000011
-ls r3, #6              // R3 = 11000000 = 192
-addi r3, #4             // R3 = 11000100 = 196
-str r3, #1               // we found the pattern, so set the "pattern found in current byte" byte to 1   
-ldi r3, #5              // R3 = 00000101
-ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
-ldr r2, r3              // 'NEXT_STEP_3:' put 5-bit pattern to recognize in R0
+ldi r3, #3              // r3 = 00000011
+ls r3, #6               // r3 = 11000000 = 192
+addi r3, #4             // r3 = 11000100 = 196
+str r3, #1              // we found the pattern, so set the "pattern found in current byte" byte to 1   
+ldi r3, #5              // r3 = 00000101 'NEXT_STEP_3:'
+ls r3, #5               // r3 = 10100000 = 160 (address of 5-bit pattern to recognize)
+ldr r2, r3              // put 5-bit pattern to recognize in R0
 ldr r0, r2              // get the byte with pattern stored in bits 7:3
 rs r0, #3                // shift the top 5 bits to the lower 5, padding msb's with 0's to get 0007:3
 ldi r3, #3              // R3 = 00000011
