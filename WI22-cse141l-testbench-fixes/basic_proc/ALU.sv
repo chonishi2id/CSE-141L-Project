@@ -46,7 +46,7 @@ module ALU (
         endcase
       end
       AND : Out = InputA & InputB;        // bitwise AND
-      OR  : Out = InputA || InputB;       // bitwise OR
+      OR  : Out = InputA | InputB;       // bitwise OR
       NEG : Out = ~InputA + 1;            // 2's complement negation
       GEQ : Out = (InputA >= InputB);     // Greater than or Equal to
       EQ  : Out = (InputA == InputB);     // Equals to
