@@ -430,7 +430,7 @@ str r1, r0			// store LSW in output address
 addi r1, #1			// increment output address
 ldi r2, #6			// MSW: prep to load b11 from dm212 = 11010100
 ls r2, #3
-ldi r2, #5
+addi r2, #5
 ls r2, #2
 ldr r0, r2
 ls r0, #1
