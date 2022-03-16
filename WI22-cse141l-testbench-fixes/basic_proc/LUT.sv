@@ -25,7 +25,7 @@ module LUT(
             12: Out = 1; 
             13: Out = 1; 
             14: Out = 1; 
-            15: Out = 1;
+            15: Out = -357;
         endcase
     end
 endmodule
