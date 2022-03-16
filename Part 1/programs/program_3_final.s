@@ -77,7 +77,7 @@ bnzr R3, R0             // if (R0==R1) PC += OFFSET (to 'NEXT_STEP_2'), else PC 
 ldi R3, #3              // R3 = 00000011
 ls  R3, #6              // R3 = 11000000 = 192
 ldr R2, R3              // R2 = data_mem[192] (if here, we did not jump, therefore we know R1 == 1 (i.e. pattern found in current byte)) // first, increment number of times pattern found with byte boundaries ON
-addi R2, 1              // R2 = R2 + 1
+addi R2, #1              // R2 = R2 + 1
 str R3, R2              // data_mem[192] = R2
 addi R3, #4             // R3 = 196
 ldr R2, R3              // R2 = data_mem[196] (second, increment number of bytes containing pattern if necessary) // get flag indicating pattern was found in current byte   
