@@ -11,7 +11,7 @@ module LUT(
         // powers of 4
         case(Index)
             0:  Out = -370;  // (prog1 bnzl instruction)
-            1:  Out = 1;  
+            1:  Out = -445;  
             2:  Out = 1;  
             3:  Out = 1;  
             4:  Out = 1;  
