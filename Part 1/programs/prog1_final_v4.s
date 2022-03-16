@@ -8,9 +8,8 @@
 	ldi r2, #7          // 7 = 00000111
 	ls r2, #2           // 28 = 00011100
 	addi r2, #2         // r2 = 30 = 00011110
-	ldr r0, r2			// load data mem[30]
 	addi r1, #1        	// r1 = 216
-	str r1, r0			// store data mem[30] for later
+	str r1, r2			// data_mem[216] = 30 (store initial output index 30)
 	ldi r2, #6          // 'Func1_loop:' // 6 = 00000110
 	ls r2, #1			// 12 = 00001100
 	addi r2, #1         // 13 = 00001101
