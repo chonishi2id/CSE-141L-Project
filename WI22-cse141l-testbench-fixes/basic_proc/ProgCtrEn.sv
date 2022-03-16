@@ -15,7 +15,7 @@ module ProgCtrEn (
     end
 
     always @(posedge Clk) begin
-        clock_start <= 1;
+        clock_started <= 1;
         if (start_went_low) running <= (Start == 0);
         else running <= 0;
     end
