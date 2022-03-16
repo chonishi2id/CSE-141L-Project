@@ -358,7 +358,9 @@ ldi r3, #3              // R3 = 00000011
 ls r3, #6               // R3 = 11000000
 addi r3, #3             // R3 = 11000011 = 195 (index of current byte in string [data_mem[idx] bits 7:3])
 str r3, r1
-ldi r0, 160             // branch back to L1 if idx < 160 // 1 byte past the string (string is on bytes 128:159)
+ldi r3, #5              // R3 = 00000101
+ls r3, #5               // R3 = 10100000 = 160 (address of 5-bit pattern to recognize)
+ldi r0, r3              // branch back to L1 if idx < 160 // 1 byte past the string (string is on bytes 128:159)
 ldi r3, #3              // R3 = 00000011
 ls r3, #6               // R3 = 11000000
 addi r3, #3             // R3 = 11000011 = 195 (index of current byte in string [data_mem[idx] bits 7:3])
