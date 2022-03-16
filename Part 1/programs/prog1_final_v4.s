@@ -9,14 +9,14 @@
 	ls r2, #2           // 28 = 00011100
 	addi r2, #2         // r2 = 30 = 00011110
 	ldr r0, r2			// load data mem[30]
-	addi r1, #1        // r1 = 216
-	str r1, r0		// store data mem[30] for later
-	ldi r2, #6          // 6 = 00000110
+	addi r1, #1        	// r1 = 216
+	str r1, r0			// store data mem[30] for later
+	ldi r2, #6          // 'Func1_loop:' // 6 = 00000110
 	ls r2, #1			// 12 = 00001100
 	addi r2, #1         // 13 = 00001101
 	ls r2, #4           // 208 = 11010000	
 	addi r2, #7			// r2 = 215
-	ldr r0, r2		// Func1_loop:
+	ldr r0, r2		
 	ldr r1, r0		// Load LSW of input string into r1 
 	addi r0, #1			// Prepare to load MSW of input string
   	ldr r2, r0    // Load MSW of input string into r2
