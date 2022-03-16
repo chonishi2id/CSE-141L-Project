@@ -8,12 +8,14 @@ module ProgCtrEn (
   
     logic running;
     logic start_went_low;
+    logic clock_started;
 	 
     always @(negedge Start) begin
-        start_went_low = 1;
+        if (clock_start == 1) start_went_low <= 1;
     end
 
     always @(posedge Clk) begin
+        clock_start <= 1;
         if (start_went_low) running <= (Start == 0);
         else running <= 0;
     end
