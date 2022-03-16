@@ -11,7 +11,7 @@ module ProgCtrEn (
     logic clock_started;
 	 
     always @(negedge Start) begin
-        if (clock_start == 1) start_went_low <= 1;
+        if (clock_started == 1) start_went_low <= 1;
     end
 
     always @(posedge Clk) begin
