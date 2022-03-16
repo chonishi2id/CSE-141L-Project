@@ -10,7 +10,7 @@ module LUT(
     always_comb begin
         // powers of 4
         case(Index)
-            0:  Out = -409;  
+            0:  Out = -370;  
             1:  Out = 1;  
             2:  Out = 1;  
             3:  Out = 1;  
