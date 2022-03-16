@@ -333,8 +333,9 @@ ldr r0, r3 			//get result of comparing expected parity with actual parity
 add r2, r0
 ldi r1, #4			// check number of errors
 ldr r0, r2			// if number of errors == 0
-ldi r3, #6			// Jump by 48 = 110000 to output
+ldi r3, #7			// Jump by 57 = 111001 to output
 ls r3, #3
+addi r3, #1
 eq r0, r1				// If r0 == r1, r0 = 1
 bnzr r3, r0   	// Jump by value in r3 if r0 = 1.
 ldi r1, #3			// if number of errors == 1
@@ -344,27 +345,36 @@ ldr r0, r2			// reload num errors
 eq r0, r1				// If r0 == r1, r0 = 1
 bnzr r3, r0			// Jump by value in r3 if r0 = 1
 ldi r1, #2			// if number of errors == 2
-ldi r3, #7  		// To error_detection: 30 lines
-ls r2, #2
-addi r2, #2
+ldi r3, #5  		// To error_detection: 44 lines = 101100
+ls r2, #4
+addi r2, #4
 ldr r0, r2			// reload num errors
 eq r0, r1
 bnzr r3, r0			// Jump by value in r3 if r0 = 1
-ldi r3, #6   		// error_correction: Prep to load dm220 = 11011100
+ldi r3, #6   		// error_correction: Prep to load dm205 = 11001101
 ls r3, #3
-addi r3, #7
+addi r3, #3
 ls r3, #2
+addi r3, #1
 ldr r0, r3
 ls r0, #1
-addi r3, #1	 		// Inc to load dm221
+ldi r3, #6	 		// Load dm201 = 11001001
+ls r3, #3
+addi r3, #2
+ls r3, #2
+addi r3, #1
 ldr r1, r3
 or r0, r1
 ls r0, #1
-addi r3, #1			// Inc to load dm222
+ldi r3, #6			// Load dm199 = 11000111
+ls r3, #5
+addi r3, #7
 ldr r1, r3
 or r0, r1
 ls r0, #1
-addi r3, #1			// Inc to load dm223
+ldi r3, #6			// Load dm198 = 11000110
+ls r3, #5
+addi r3, #6
 ldr r1, r3
 or r0, r1
 ldi r1, #6			// Find the incorrect bit and flip it: load 197 = 11000101 as that's where p16 is
